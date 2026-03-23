@@ -2,6 +2,8 @@ import { useState } from "react";
 
 const BRAND_NAME = "IDC";
 const BRAND_TAGLINE = "Международная дверная компания";
+const BRAND_SLOGAN = "Лучшим людям — лучшие двери";
+const BRAND_PRODUCT = "Двери в эмалевом покрытии с накладным багетом";
 
 const IMG_MOCKUP = "https://cdn.poehali.dev/projects/09f16a6e-be66-48d6-bebd-d73db1df54a7/files/b8a6700f-251f-4c2f-abc9-9a3ffdc52cf0.jpg";
 const IMG_SHOWROOM = "https://cdn.poehali.dev/projects/09f16a6e-be66-48d6-bebd-d73db1df54a7/files/faffcab9-610a41f8-be7a-adefe2227f7c.jpg";
@@ -224,6 +226,15 @@ export default function Index() {
                   <p className="font-sans text-sm text-brand-stone-light tracking-[0.3em] uppercase">{BRAND_TAGLINE}</p>
                   <p className="text-xs text-brand-stone mt-1">Montserrat Light · 300</p>
                 </div>
+                <div>
+                  <p className="text-xs text-brand-stone mb-2">Слоган</p>
+                  <p className="font-display text-xl text-brand-gold italic">{BRAND_SLOGAN}</p>
+                  <p className="text-xs text-brand-stone mt-1">Cormorant Garamond · Italic</p>
+                </div>
+              </div>
+              <div className="mt-6 pt-6 border-t border-brand-gold border-opacity-20">
+                <p className="text-xs text-brand-stone mb-2">Специализация</p>
+                <p className="font-sans text-xs text-brand-stone-light tracking-[0.15em] uppercase">{BRAND_PRODUCT}</p>
               </div>
             </div>
           </Section>
@@ -291,8 +302,11 @@ export default function Index() {
                   />
                   <div className="relative z-10 text-center">
                     <LogoFull variant="dark" size={1.4} />
-                    <p className="font-sans text-xs text-brand-stone tracking-[0.25em] uppercase mt-6">
-                      Качество. Стиль. Надёжность.
+                    <p className="font-display text-lg text-brand-gold italic mt-5 tracking-wide">
+                      {BRAND_SLOGAN}
+                    </p>
+                    <p className="font-sans text-xs text-brand-stone tracking-[0.2em] uppercase mt-2">
+                      {BRAND_PRODUCT}
                     </p>
                   </div>
                 </div>
@@ -310,10 +324,10 @@ export default function Index() {
                   <div className="text-center">
                     <LogoFull variant="light" size={1.2} />
                     <p
-                      className="font-sans text-xs tracking-[0.25em] uppercase mt-6"
-                      style={{ color: "#8A8070" }}
+                      className="font-display text-base italic mt-5 tracking-wide"
+                      style={{ color: "#9A7040" }}
                     >
-                      Качество. Стиль. Надёжность.
+                      {BRAND_SLOGAN}
                     </p>
                   </div>
                 </div>
