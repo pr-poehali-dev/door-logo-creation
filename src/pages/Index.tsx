@@ -1,7 +1,7 @@
 import { useState } from "react";
 import SeriesCatalog from "@/components/SeriesCatalog";
 
-const BRAND_NAME = "IDC";
+const BRAND_NAME = "МДК";
 const BRAND_TAGLINE = "Международная дверная компания";
 const BRAND_SLOGAN = "Лучшим людям — лучшие двери";
 const BRAND_PRODUCT = "Двери в эмалевом покрытии с накладным багетом";
@@ -467,7 +467,7 @@ export default function Index() {
                 </div>
               </div>
               <p className="text-xs text-brand-stone mt-8 text-center">
-                Минимальный отступ от края логотипа — высота буквы «I» в названии бренда
+                Минимальный отступ от края логотипа — высота буквы «М» в названии бренда
               </p>
             </div>
           </Section>
@@ -617,7 +617,7 @@ export default function Index() {
       <div className="border-t border-brand-gold border-opacity-10 py-8">
         <div className="max-w-5xl mx-auto px-8 flex items-center justify-between">
           <p className="font-sans text-xs text-brand-stone tracking-widest uppercase">
-            {BRAND_NAME} · Brand Identity © 2024
+            МДК · Международная Дверная Компания © 2024
           </p>
           <p className="font-display text-brand-gold text-lg tracking-[0.2em]">{BRAND_NAME}</p>
         </div>
