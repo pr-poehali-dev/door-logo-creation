@@ -18,23 +18,67 @@ const colors = [
   { name: "Тёмное золото", hex: "#9A7040", label: "Тёмный акцент" },
 ];
 
-const LogoMark = ({ dark = false, size = 1 }: { dark?: boolean; size?: number }) => {
-  const s = (v: number) => v * size;
-  const fill = dark ? "#0F0E0C" : "#F5EFE0";
-  const gold = "#C8A96E";
-  return (
-    <svg width={s(80)} height={s(96)} viewBox="0 0 80 96" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect x={s(4)} y={s(2)} width={s(72)} height={s(92)} rx={s(2)} stroke={gold} strokeWidth={s(2)} fill="none" />
-      <rect x={s(10)} y={s(8)} width={s(60)} height={s(80)} rx={s(1)} stroke={gold} strokeWidth={s(1)} strokeDasharray={`${s(4)} ${s(2)}`} fill="none" opacity={0.4} />
-      <circle cx={s(64)} cy={s(48)} r={s(4)} fill={gold} />
-      <line x1={s(18)} y1={s(48)} x2={s(56)} y2={s(48)} stroke={gold} strokeWidth={s(1.5)} />
-      <rect x={s(22)} y={s(22)} width={s(36)} height={s(20)} rx={s(1)} stroke={fill} strokeWidth={s(1)} fill="none" opacity={0.3} />
-      <rect x={s(22)} y={s(54)} width={s(36)} height={s(20)} rx={s(1)} stroke={fill} strokeWidth={s(1)} fill="none" opacity={0.3} />
-    </svg>
-  );
+// Монограмма 1 — М крупно, ДК наложены поверх справа, тонкий штрих
+const Monogram1 = ({ accent = "#C8A96E", light = "#F5EFE0", size = 1 }: { accent?: string; light?: string; size?: number }) => (
+  <svg width={96 * size} height={96 * size} viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
+    {/* М — крупная, тонкая */}
+    <text x="4" y="78" fontFamily="Cormorant Garamond, serif" fontWeight="300" fontSize="88" fill="none" stroke={light} strokeWidth="1.5" opacity="0.9">М</text>
+    {/* Д — смещена вправо, полупрозрачная */}
+    <text x="28" y="78" fontFamily="Cormorant Garamond, serif" fontWeight="600" fontSize="72" fill="none" stroke={accent} strokeWidth="2" opacity="0.85">Д</text>
+    {/* К — поверх всех, жирная золотая */}
+    <text x="50" y="78" fontFamily="Cormorant Garamond, serif" fontWeight="700" fontSize="56" fill={accent} opacity="0.95">К</text>
+    {/* Декоративная линия снизу */}
+    <line x1="4" y1="84" x2="92" y2="84" stroke={accent} strokeWidth="1" opacity="0.4"/>
+  </svg>
+);
+
+// Монограмма 2 — буквы в круге, М+Д+К по диагонали
+const Monogram2 = ({ accent = "#C8A96E", light = "#F5EFE0", size = 1 }: { accent?: string; light?: string; size?: number }) => (
+  <svg width={96 * size} height={96 * size} viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="48" cy="48" r="44" stroke={accent} strokeWidth="1.5" fill="none" opacity="0.6"/>
+    <circle cx="48" cy="48" r="40" stroke={accent} strokeWidth="0.5" fill="none" opacity="0.25"/>
+    {/* М сзади */}
+    <text x="8" y="72" fontFamily="Cormorant Garamond, serif" fontWeight="300" fontSize="70" fill="none" stroke={light} strokeWidth="1" opacity="0.5">М</text>
+    {/* Д по центру */}
+    <text x="18" y="70" fontFamily="Cormorant Garamond, serif" fontWeight="500" fontSize="60" fill="none" stroke={accent} strokeWidth="1.8" opacity="0.8">Д</text>
+    {/* К спереди */}
+    <text x="44" y="68" fontFamily="Cormorant Garamond, serif" fontWeight="700" fontSize="50" fill={accent}>К</text>
+  </svg>
+);
+
+// Монограмма 3 — вертикальный стек, буквы одна под другой, перекрываются
+const Monogram3 = ({ accent = "#C8A96E", light = "#F5EFE0", size = 1 }: { accent?: string; light?: string; size?: number }) => (
+  <svg width={60 * size} height={96 * size} viewBox="0 0 60 96" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <text x="30" y="38" fontFamily="Cormorant Garamond, serif" fontWeight="300" fontSize="46" fill="none" stroke={light} strokeWidth="1" opacity="0.5" textAnchor="middle">М</text>
+    <text x="30" y="64" fontFamily="Cormorant Garamond, serif" fontWeight="500" fontSize="42" fill="none" stroke={accent} strokeWidth="1.5" opacity="0.75" textAnchor="middle">Д</text>
+    <text x="30" y="88" fontFamily="Cormorant Garamond, serif" fontWeight="700" fontSize="38" fill={accent} opacity="0.95" textAnchor="middle">К</text>
+    <line x1="15" y1="4" x2="15" y2="92" stroke={accent} strokeWidth="0.8" opacity="0.3"/>
+  </svg>
+);
+
+// Монограмма 4 — ромб/щит, МДК в одну строку крупно внутри геометрии
+const Monogram4 = ({ accent = "#C8A96E", light = "#F5EFE0", size = 1 }: { accent?: string; light?: string; size?: number }) => (
+  <svg width={96 * size} height={96 * size} viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
+    {/* Щит */}
+    <path d="M48 4 L88 20 L88 60 Q88 82 48 94 Q8 82 8 60 L8 20 Z" stroke={accent} strokeWidth="1.5" fill="none" opacity="0.5"/>
+    <path d="M48 10 L82 24 L82 58 Q82 77 48 88 Q14 77 14 58 L14 24 Z" stroke={accent} strokeWidth="0.5" fill="none" opacity="0.2"/>
+    {/* М сзади крупно */}
+    <text x="10" y="68" fontFamily="Cormorant Garamond, serif" fontWeight="300" fontSize="62" fill="none" stroke={light} strokeWidth="1" opacity="0.4">М</text>
+    {/* ДК поверх */}
+    <text x="34" y="66" fontFamily="Cormorant Garamond, serif" fontWeight="700" fontSize="46" fill={accent} opacity="0.9">ДК</text>
+  </svg>
+);
+
+const LogoMark = ({ dark = false, size = 1, variant = 1, accent, light }: { dark?: boolean; size?: number; variant?: number; accent?: string; light?: string }) => {
+  const a = accent ?? "#C8A96E";
+  const l = light ?? (dark ? "#0F0E0C" : "#F5EFE0");
+  if (variant === 2) return <Monogram2 accent={a} light={l} size={size} />;
+  if (variant === 3) return <Monogram3 accent={a} light={l} size={size} />;
+  if (variant === 4) return <Monogram4 accent={a} light={l} size={size} />;
+  return <Monogram1 accent={a} light={l} size={size} />;
 };
 
-const LogoFull = ({ variant = "dark", size = 1 }: { variant?: "dark" | "light" | "mono-dark" | "mono-light"; size?: number }) => {
+const LogoFull = ({ variant = "dark", size = 1, monogram = 1 }: { variant?: "dark" | "light" | "mono-dark" | "mono-light"; size?: number; monogram?: number }) => {
   const isDark = variant === "dark" || variant === "mono-dark";
   const bg = isDark ? "#0F0E0C" : "#F5EFE0";
   const textColor = isDark ? "#F5EFE0" : "#0F0E0C";
@@ -42,48 +86,13 @@ const LogoFull = ({ variant = "dark", size = 1 }: { variant?: "dark" | "light" |
   const subtitleColor = variant.startsWith("mono") ? textColor : "#8A8070";
 
   return (
-    <div
-      style={{
-        background: bg,
-        padding: `${32 * size}px ${40 * size}px`,
-        display: "inline-flex",
-        alignItems: "center",
-        gap: `${24 * size}px`,
-        borderRadius: `${4 * size}px`,
-      }}
-    >
-      <svg width={40 * size} height={48 * size} viewBox="0 0 80 96" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect x={4} y={2} width={72} height={92} rx={2} stroke={gold} strokeWidth={2} fill="none" />
-        <rect x={10} y={8} width={60} height={80} rx={1} stroke={gold} strokeWidth={1} strokeDasharray="4 2" fill="none" opacity={0.4} />
-        <circle cx={64} cy={48} r={4} fill={gold} />
-        <line x1={18} y1={48} x2={56} y2={48} stroke={gold} strokeWidth={1.5} />
-        <rect x={22} y={22} width={36} height={20} rx={1} stroke={textColor} strokeWidth={1} fill="none" opacity={0.3} />
-        <rect x={22} y={54} width={36} height={20} rx={1} stroke={textColor} strokeWidth={1} fill="none" opacity={0.3} />
-      </svg>
+    <div style={{ background: bg, padding: `${24 * size}px ${32 * size}px`, display: "inline-flex", alignItems: "center", gap: `${16 * size}px`, borderRadius: `${4 * size}px` }}>
+      <LogoMark dark={!isDark} size={size * 0.55} variant={monogram} />
       <div>
-        <div
-          style={{
-            fontFamily: '"Cormorant Garamond", serif',
-            fontWeight: 600,
-            fontSize: `${36 * size}px`,
-            color: textColor,
-            letterSpacing: `${6 * size}px`,
-            lineHeight: 1,
-          }}
-        >
+        <div style={{ fontFamily: '"Cormorant Garamond", serif', fontWeight: 600, fontSize: `${36 * size}px`, color: textColor, letterSpacing: `${6 * size}px`, lineHeight: 1 }}>
           {BRAND_NAME}
         </div>
-        <div
-          style={{
-            fontFamily: "Montserrat, sans-serif",
-            fontWeight: 300,
-            fontSize: `${9 * size}px`,
-            color: subtitleColor,
-            letterSpacing: `${3 * size}px`,
-            marginTop: `${4 * size}px`,
-            textTransform: "uppercase",
-          }}
-        >
+        <div style={{ fontFamily: "Montserrat, sans-serif", fontWeight: 300, fontSize: `${9 * size}px`, color: subtitleColor, letterSpacing: `${3 * size}px`, marginTop: `${4 * size}px`, textTransform: "uppercase" }}>
           {BRAND_TAGLINE}
         </div>
       </div>
@@ -384,80 +393,64 @@ export default function Index() {
         {/* VARIANTS */}
         {activeTab === "variants" && (
           <Section id="variants" label="01 · Варианты логотипа">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* Main dark */}
-              <div className="rounded-lg overflow-hidden border border-brand-gold border-opacity-20">
-                <div className="bg-brand-charcoal flex items-center justify-center p-10">
-                  <LogoFull variant="dark" size={1} />
-                </div>
-                <div className="px-5 py-3 border-t border-brand-gold border-opacity-10">
-                  <p className="text-xs text-brand-stone tracking-wider uppercase">Основной · Тёмный фон</p>
-                </div>
-              </div>
 
-              {/* Main light */}
-              <div className="rounded-lg overflow-hidden border border-brand-gold border-opacity-20">
-                <div className="bg-brand-cream flex items-center justify-center p-10">
-                  <LogoFull variant="light" size={1} />
-                </div>
-                <div className="px-5 py-3 border-t border-brand-gold border-opacity-10 bg-brand-charcoal">
-                  <p className="text-xs text-brand-stone tracking-wider uppercase">Основной · Светлый фон</p>
-                </div>
-              </div>
+            <p className="text-brand-stone text-sm mb-8">4 варианта монограммы — буквы МДК с наложением. Каждый показан в тёмной и светлой версии.</p>
 
-              {/* Mono dark */}
-              <div className="rounded-lg overflow-hidden border border-brand-gold border-opacity-20">
-                <div className="bg-brand-charcoal flex items-center justify-center p-10">
-                  <LogoFull variant="mono-dark" size={1} />
-                </div>
-                <div className="px-5 py-3 border-t border-brand-gold border-opacity-10">
-                  <p className="text-xs text-brand-stone tracking-wider uppercase">Монохром · Тёмный</p>
-                </div>
-              </div>
-
-              {/* Compact / icon only */}
-              <div className="rounded-lg overflow-hidden border border-brand-gold border-opacity-20">
-                <div className="bg-brand-dark flex items-center justify-center gap-8 p-10">
-                  <LogoMark size={1} />
-                  <div
-                    style={{ background: "#F5EFE0", padding: "16px 20px", borderRadius: 4 }}
-                  >
-                    <LogoMark dark size={0.7} />
+            {/* 4 монограммы */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-8">
+              {[
+                { num: 1, title: "Каскад", desc: "М — фоновая, Д — средний план, К — акцент. Глубина через наложение" },
+                { num: 2, title: "Медальон", desc: "Монограмма в круге. Буквы в перспективе, двойная окружность" },
+                { num: 3, title: "Вертикаль", desc: "Буквы в столбик с перекрытием. Минималистичный штиль" },
+                { num: 4, title: "Щит", desc: "МДК внутри геометрии щита. Надёжность и статус" },
+              ].map(({ num, title, desc }) => (
+                <div key={num} className="rounded-xl overflow-hidden border border-brand-gold border-opacity-20">
+                  <div className="px-4 py-2.5 flex items-center justify-between border-b border-brand-gold border-opacity-10 bg-brand-dark">
+                    <span className="text-xs text-brand-gold tracking-widest uppercase">Вариант {num} · {title}</span>
+                  </div>
+                  <div className="grid grid-cols-2">
+                    {/* Тёмный */}
+                    <div className="flex flex-col items-center justify-center py-10 gap-5" style={{ background: "#0F0E0C" }}>
+                      <LogoMark size={0.9} variant={num} />
+                      <div className="text-center px-4">
+                        <p style={{ fontFamily: '"Cormorant Garamond", serif', fontWeight: 600, fontSize: 22, color: "#F5EFE0", letterSpacing: 5, lineHeight: 1 }}>{BRAND_NAME}</p>
+                        <p style={{ fontFamily: "Montserrat", fontWeight: 300, fontSize: 7, color: "#8A8070", letterSpacing: 2.5, marginTop: 4, textTransform: "uppercase" }}>{BRAND_TAGLINE}</p>
+                      </div>
+                    </div>
+                    {/* Светлый */}
+                    <div className="flex flex-col items-center justify-center py-10 gap-5" style={{ background: "#F5EFE0" }}>
+                      <LogoMark size={0.9} variant={num} accent="#9A7040" light="#0F0E0C" />
+                      <div className="text-center px-4">
+                        <p style={{ fontFamily: '"Cormorant Garamond", serif', fontWeight: 600, fontSize: 22, color: "#0F0E0C", letterSpacing: 5, lineHeight: 1 }}>{BRAND_NAME}</p>
+                        <p style={{ fontFamily: "Montserrat", fontWeight: 300, fontSize: 7, color: "#8A8070", letterSpacing: 2.5, marginTop: 4, textTransform: "uppercase" }}>{BRAND_TAGLINE}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="px-5 py-3 bg-brand-charcoal border-t border-brand-gold border-opacity-10">
+                    <p className="text-xs text-brand-stone">{desc}</p>
                   </div>
                 </div>
-                <div className="px-5 py-3 border-t border-brand-gold border-opacity-10">
-                  <p className="text-xs text-brand-stone tracking-wider uppercase">Компактный · Иконка</p>
-                </div>
-              </div>
+              ))}
             </div>
 
-            {/* Typography showcase */}
-            <div className="mt-8 rounded-lg border border-brand-gold border-opacity-20 p-8 bg-brand-charcoal">
-              <p className="text-xs text-brand-stone tracking-widest uppercase mb-6">Типографика логотипа</p>
-              <div className="flex flex-col md:flex-row md:items-end gap-8">
-                <div>
-                  <p className="text-xs text-brand-stone mb-2">Основное название</p>
-                  <p className="font-display text-5xl text-brand-cream font-semibold tracking-[0.15em]">{BRAND_NAME}</p>
-                  <p className="text-xs text-brand-stone mt-1">Cormorant Garamond SemiBold · 600</p>
-                </div>
-                <div>
-                  <p className="text-xs text-brand-stone mb-2">Подпись</p>
-                  <p className="font-sans text-sm text-brand-stone-light tracking-[0.3em] uppercase">{BRAND_TAGLINE}</p>
-                  <p className="text-xs text-brand-stone mt-1">Montserrat Light · 300</p>
-                </div>
-                <div>
-                  <p className="text-xs text-brand-stone mb-2">Слоган</p>
-                  <p className="font-display text-xl text-brand-gold italic">{BRAND_SLOGAN}</p>
-                  <p className="text-xs text-brand-stone mt-1">Cormorant Garamond · Italic</p>
-                </div>
-              </div>
-              <div className="mt-6 pt-6 border-t border-brand-gold border-opacity-20">
-                <p className="text-xs text-brand-stone mb-2">Специализация</p>
-                <p className="font-sans text-xs text-brand-stone-light tracking-[0.15em] uppercase">{BRAND_PRODUCT}</p>
+            {/* Все монограммы рядом крупно для сравнения */}
+            <div className="rounded-xl border border-brand-gold border-opacity-20 p-8 bg-brand-charcoal mb-8">
+              <p className="text-xs text-brand-stone tracking-widest uppercase mb-8">Сравнение иконок — все варианты рядом</p>
+              <div className="flex items-end justify-around flex-wrap gap-8">
+                {[1, 2, 3, 4].map((n) => (
+                  <div key={n} className="flex flex-col items-center gap-3">
+                    <LogoMark size={1.1} variant={n} />
+                    <p className="text-xs text-brand-stone tracking-widest uppercase">
+                      {["Каскад","Медальон","Вертикаль","Щит"][n-1]}
+                    </p>
+                  </div>
+                ))}
               </div>
             </div>
           </Section>
         )}
+
+
 
         {/* PALETTE */}
         {activeTab === "palette" && (
