@@ -121,6 +121,7 @@ const tabs = [
 export default function Index() {
   const [activeTab, setActiveTab] = useState("variants");
   const [copied, setCopied] = useState<string | null>(null);
+  const [paletteMode, setPaletteMode] = useState<"gold" | "plum">("gold");
 
   const copyHex = (hex: string) => {
     navigator.clipboard.writeText(hex);
@@ -254,42 +255,135 @@ export default function Index() {
         {/* PALETTE */}
         {activeTab === "palette" && (
           <Section id="palette" label="02 · Цветовая палитра">
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-              {colors.map((c) => (
-                <button
-                  key={c.hex}
-                  onClick={() => copyHex(c.hex)}
-                  className="group rounded-lg overflow-hidden border border-brand-gold border-opacity-20 hover:border-opacity-60 transition-all duration-200"
-                >
-                  <div
-                    className="h-28 transition-transform duration-300 group-hover:scale-105"
-                    style={{ background: c.hex }}
-                  />
-                  <div className="p-4 bg-brand-charcoal text-left">
-                    <p className="text-brand-cream text-sm font-medium">{c.name}</p>
-                    <p className="text-brand-stone text-xs mt-0.5 uppercase tracking-wider">{c.label}</p>
-                    <div className="flex items-center justify-between mt-2">
-                      <p className="text-brand-gold text-xs font-mono">{c.hex}</p>
-                      <span className="text-xs text-brand-stone opacity-0 group-hover:opacity-100 transition-opacity">
-                        {copied === c.hex ? "Скопировано!" : "Скопировать"}
-                      </span>
+
+            {/* Переключатель палитр */}
+            {(() => {
+              const altColors = [
+                { name: "Баклажан", hex: "#3B1F2B", label: "Основной тёмный" },
+                { name: "Слива", hex: "#5C2D45", label: "Тёмный акцент" },
+                { name: "Пудра", hex: "#F0DFE5", label: "Светлый тон" },
+                { name: "Розовый туман", hex: "#E8C9D3", label: "Фон" },
+                { name: "Пепельная роза", hex: "#A07888", label: "Нейтральный" },
+                { name: "Кварц", hex: "#C9A0B0", label: "Акцент" },
+              ];
+
+              const activePalette = paletteMode === "gold" ? colors : altColors;
+              const activeBg = paletteMode === "gold" ? "#1A1915" : "#3B1F2B";
+              const activeGradient = paletteMode === "gold"
+                ? "linear-gradient(135deg, #0F0E0C 0%, #1A1915 30%, #9A7040 60%, #C8A96E 80%, #E8C98A 100%)"
+                : "linear-gradient(135deg, #3B1F2B 0%, #5C2D45 35%, #A07888 60%, #E8C9D3 80%, #F0DFE5 100%)";
+              const activeFrom = paletteMode === "gold" ? "Тёмный фон" : "Баклажан";
+              const activeTo = paletteMode === "gold" ? "Золотой акцент" : "Пудровый тон";
+
+              return (
+                <>
+                  {/* Переключатель */}
+                  <div className="flex gap-2 mb-8 p-1 rounded-lg bg-brand-charcoal border border-brand-gold border-opacity-20 w-fit">
+                    <button
+                      onClick={() => setPaletteMode("gold")}
+                      className={`px-5 py-2.5 rounded text-xs tracking-widest uppercase transition-all duration-200 ${
+                        paletteMode === "gold"
+                          ? "bg-brand-gold text-brand-dark font-semibold"
+                          : "text-brand-stone hover:text-brand-cream"
+                      }`}
+                    >
+                      Основная · Антрацит + Золото
+                    </button>
+                    <button
+                      onClick={() => setPaletteMode("plum")}
+                      className={`px-5 py-2.5 rounded text-xs tracking-widest uppercase transition-all duration-200 ${
+                        paletteMode === "plum"
+                          ? "text-white font-semibold"
+                          : "text-brand-stone hover:text-brand-cream"
+                      }`}
+                      style={paletteMode === "plum" ? { background: "#5C2D45" } : {}}
+                    >
+                      Альтернативная · Баклажан + Пудра
+                    </button>
+                  </div>
+
+                  {/* Карточки цветов */}
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                    {activePalette.map((c) => (
+                      <button
+                        key={c.hex}
+                        onClick={() => copyHex(c.hex)}
+                        className="group rounded-lg overflow-hidden border transition-all duration-200 hover:scale-[1.02]"
+                        style={{ borderColor: paletteMode === "gold" ? "rgba(200,169,110,0.2)" : "rgba(160,120,136,0.3)" }}
+                      >
+                        <div className="h-28 transition-transform duration-300 group-hover:scale-105" style={{ background: c.hex }} />
+                        <div className="p-4 text-left" style={{ background: activeBg }}>
+                          <p className="text-sm font-medium" style={{ color: paletteMode === "gold" ? "#F5EFE0" : "#F0DFE5" }}>{c.name}</p>
+                          <p className="text-xs mt-0.5 uppercase tracking-wider" style={{ color: paletteMode === "gold" ? "#8A8070" : "#A07888" }}>{c.label}</p>
+                          <div className="flex items-center justify-between mt-2">
+                            <p className="text-xs font-mono" style={{ color: paletteMode === "gold" ? "#C8A96E" : "#C9A0B0" }}>{c.hex}</p>
+                            <span className="text-xs opacity-0 group-hover:opacity-100 transition-opacity" style={{ color: paletteMode === "gold" ? "#8A8070" : "#A07888" }}>
+                              {copied === c.hex ? "Скопировано!" : "Скопировать"}
+                            </span>
+                          </div>
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+
+                  {/* Превью логотипа в альтернативной палитре */}
+                  {paletteMode === "plum" && (
+                    <div className="mt-8 rounded-xl overflow-hidden border" style={{ borderColor: "rgba(160,120,136,0.3)" }}>
+                      <div className="grid md:grid-cols-2">
+                        {/* Тёмная версия */}
+                        <div className="flex flex-col items-center justify-center p-10 gap-4" style={{ background: "#3B1F2B" }}>
+                          <div className="flex items-center gap-5">
+                            <svg width={36} height={44} viewBox="0 0 80 96" fill="none">
+                              <rect x={4} y={2} width={72} height={92} rx={2} stroke="#C9A0B0" strokeWidth={2} fill="none" />
+                              <rect x={10} y={8} width={60} height={80} rx={1} stroke="#C9A0B0" strokeWidth={1} strokeDasharray="4 2" fill="none" opacity={0.4} />
+                              <circle cx={64} cy={48} r={4} fill="#C9A0B0" />
+                              <line x1={18} y1={48} x2={56} y2={48} stroke="#C9A0B0" strokeWidth={1.5} />
+                              <rect x={22} y={22} width={36} height={20} rx={1} stroke="#F0DFE5" strokeWidth={1} fill="none" opacity={0.3} />
+                              <rect x={22} y={54} width={36} height={20} rx={1} stroke="#F0DFE5" strokeWidth={1} fill="none" opacity={0.3} />
+                            </svg>
+                            <div>
+                              <p style={{ fontFamily: '"Cormorant Garamond", serif', fontWeight: 600, fontSize: 32, color: "#F0DFE5", letterSpacing: 6, lineHeight: 1 }}>{BRAND_NAME}</p>
+                              <p style={{ fontFamily: "Montserrat, sans-serif", fontWeight: 300, fontSize: 8, color: "#A07888", letterSpacing: 3, marginTop: 4, textTransform: "uppercase" }}>{BRAND_TAGLINE}</p>
+                            </div>
+                          </div>
+                          <p style={{ fontFamily: '"Cormorant Garamond", serif', fontStyle: "italic", color: "#C9A0B0", fontSize: 14, letterSpacing: 1 }}>{BRAND_SLOGAN}</p>
+                          <p className="text-xs tracking-widest uppercase mt-1" style={{ color: "#A07888" }}>Тёмный вариант</p>
+                        </div>
+                        {/* Светлая версия */}
+                        <div className="flex flex-col items-center justify-center p-10 gap-4" style={{ background: "#F0DFE5" }}>
+                          <div className="flex items-center gap-5">
+                            <svg width={36} height={44} viewBox="0 0 80 96" fill="none">
+                              <rect x={4} y={2} width={72} height={92} rx={2} stroke="#5C2D45" strokeWidth={2} fill="none" />
+                              <rect x={10} y={8} width={60} height={80} rx={1} stroke="#5C2D45" strokeWidth={1} strokeDasharray="4 2" fill="none" opacity={0.4} />
+                              <circle cx={64} cy={48} r={4} fill="#5C2D45" />
+                              <line x1={18} y1={48} x2={56} y2={48} stroke="#5C2D45" strokeWidth={1.5} />
+                              <rect x={22} y={22} width={36} height={20} rx={1} stroke="#3B1F2B" strokeWidth={1} fill="none" opacity={0.3} />
+                              <rect x={22} y={54} width={36} height={20} rx={1} stroke="#3B1F2B" strokeWidth={1} fill="none" opacity={0.3} />
+                            </svg>
+                            <div>
+                              <p style={{ fontFamily: '"Cormorant Garamond", serif', fontWeight: 600, fontSize: 32, color: "#3B1F2B", letterSpacing: 6, lineHeight: 1 }}>{BRAND_NAME}</p>
+                              <p style={{ fontFamily: "Montserrat, sans-serif", fontWeight: 300, fontSize: 8, color: "#A07888", letterSpacing: 3, marginTop: 4, textTransform: "uppercase" }}>{BRAND_TAGLINE}</p>
+                            </div>
+                          </div>
+                          <p style={{ fontFamily: '"Cormorant Garamond", serif', fontStyle: "italic", color: "#5C2D45", fontSize: 14, letterSpacing: 1 }}>{BRAND_SLOGAN}</p>
+                          <p className="text-xs tracking-widest uppercase mt-1" style={{ color: "#A07888" }}>Светлый вариант</p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Градиент */}
+                  <div className="mt-6 rounded-lg border p-8" style={{ borderColor: paletteMode === "gold" ? "rgba(200,169,110,0.2)" : "rgba(160,120,136,0.3)", background: activeBg }}>
+                    <p className="text-xs tracking-widest uppercase mb-5" style={{ color: paletteMode === "gold" ? "#8A8070" : "#A07888" }}>Градиентная палитра</p>
+                    <div className="h-16 rounded-md" style={{ background: activeGradient }} />
+                    <div className="flex justify-between mt-2">
+                      <span className="text-xs" style={{ color: paletteMode === "gold" ? "#8A8070" : "#A07888" }}>{activeFrom}</span>
+                      <span className="text-xs" style={{ color: paletteMode === "gold" ? "#C8A96E" : "#C9A0B0" }}>{activeTo}</span>
                     </div>
                   </div>
-                </button>
-              ))}
-            </div>
-
-            <div className="mt-8 rounded-lg border border-brand-gold border-opacity-20 p-8 bg-brand-charcoal">
-              <p className="text-xs text-brand-stone tracking-widest uppercase mb-5">Градиентная палитра</p>
-              <div
-                className="h-16 rounded-md"
-                style={{ background: "linear-gradient(135deg, #0F0E0C 0%, #1A1915 30%, #9A7040 60%, #C8A96E 80%, #E8C98A 100%)" }}
-              />
-              <div className="flex justify-between mt-2">
-                <span className="text-xs text-brand-stone">Тёмный фон</span>
-                <span className="text-xs text-brand-gold">Золотой акцент</span>
-              </div>
-            </div>
+                </>
+              );
+            })()}
           </Section>
         )}
 
