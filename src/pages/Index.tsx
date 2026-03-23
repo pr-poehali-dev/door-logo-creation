@@ -1,7 +1,7 @@
 import { useState } from "react";
 
-const BRAND_NAME = "PORTA";
-const BRAND_TAGLINE = "Межкомнатные двери";
+const BRAND_NAME = "IDC";
+const BRAND_TAGLINE = "Международная дверная компания";
 
 const IMG_MOCKUP = "https://cdn.poehali.dev/projects/09f16a6e-be66-48d6-bebd-d73db1df54a7/files/b8a6700f-251f-4c2f-abc9-9a3ffdc52cf0.jpg";
 const IMG_SHOWROOM = "https://cdn.poehali.dev/projects/09f16a6e-be66-48d6-bebd-d73db1df54a7/files/faffcab9-610a41f8-be7a-adefe2227f7c.jpg";
@@ -442,7 +442,7 @@ export default function Index() {
                 </div>
               </div>
               <p className="text-xs text-brand-stone mt-8 text-center">
-                Минимальный отступ от края логотипа — высота буквы «P» в названии бренда
+                Минимальный отступ от края логотипа — высота буквы «I» в названии бренда
               </p>
             </div>
           </Section>
