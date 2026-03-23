@@ -1,4 +1,5 @@
 import { useState } from "react";
+import SeriesCatalog from "@/components/SeriesCatalog";
 
 const BRAND_NAME = "IDC";
 const BRAND_TAGLINE = "Международная дверная компания";
@@ -114,6 +115,7 @@ const tabs = [
   { id: "preview", label: "Превью" },
   { id: "usage", label: "Примеры применения" },
   { id: "catalog", label: "Продуктовые карточки" },
+  { id: "series", label: "Каталог серий" },
 ];
 
 export default function Index() {
@@ -600,6 +602,13 @@ export default function Index() {
                 ))}
               </div>
             </div>
+          </Section>
+        )}
+
+        {/* SERIES CATALOG */}
+        {activeTab === "series" && (
+          <Section id="series" label="06 · Каталог серий">
+            <SeriesCatalog />
           </Section>
         )}
       </div>
