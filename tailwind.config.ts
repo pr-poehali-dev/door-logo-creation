@@ -19,7 +19,20 @@ export default {
 			}
 		},
 		extend: {
+			fontFamily: {
+				display: ['"Cormorant Garamond"', 'serif'],
+				sans: ['Montserrat', 'sans-serif'],
+			},
 			colors: {
+				brand: {
+					dark: '#0F0E0C',
+					charcoal: '#1A1915',
+					gold: '#C8A96E',
+					'gold-light': '#E8C98A',
+					cream: '#F5EFE0',
+					stone: '#8A8070',
+					'stone-light': '#B5AA95',
+				},
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
 				ring: 'hsl(var(--ring))',
