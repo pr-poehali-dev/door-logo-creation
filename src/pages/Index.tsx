@@ -110,6 +110,7 @@ const products = [
 ];
 
 const tabs = [
+  { id: "compare", label: "Сравнение палитр" },
   { id: "variants", label: "Варианты логотипа" },
   { id: "palette", label: "Цветовая палитра" },
   { id: "preview", label: "Превью" },
@@ -119,7 +120,7 @@ const tabs = [
 ];
 
 export default function Index() {
-  const [activeTab, setActiveTab] = useState("variants");
+  const [activeTab, setActiveTab] = useState("compare");
   const [copied, setCopied] = useState<string | null>(null);
   const [paletteMode, setPaletteMode] = useState<"gold" | "plum">("gold");
 
@@ -173,6 +174,212 @@ export default function Index() {
 
       {/* Content */}
       <div className="max-w-5xl mx-auto px-8 py-16">
+
+        {/* COMPARE */}
+        {activeTab === "compare" && (
+          <Section id="compare" label="00 · Сравнение палитр">
+
+            {/* Заголовок */}
+            <div className="mb-10 flex flex-col gap-1">
+              <p className="text-brand-cream text-sm">Два варианта фирменного стиля — выберите тот, что ближе к характеру бренда.</p>
+            </div>
+
+            {/* Логотипы крупно — side by side */}
+            <div className="grid md:grid-cols-2 gap-4 mb-8">
+
+              {/* Вариант А — Антрацит + Золото */}
+              <div className="rounded-xl overflow-hidden border border-brand-gold border-opacity-30">
+                <div className="px-5 py-3 flex items-center justify-between" style={{ background: "#0F0E0C", borderBottom: "1px solid rgba(200,169,110,0.15)" }}>
+                  <span className="text-xs tracking-widest uppercase" style={{ color: "#C8A96E" }}>Вариант А</span>
+                  <span className="text-xs tracking-wider uppercase" style={{ color: "#8A8070" }}>Антрацит + Золото</span>
+                </div>
+                {/* Тёмный */}
+                <div className="flex flex-col items-center justify-center py-12 gap-3" style={{ background: "#0F0E0C" }}>
+                  <div className="flex items-center gap-5">
+                    <svg width={42} height={50} viewBox="0 0 80 96" fill="none">
+                      <rect x={4} y={2} width={72} height={92} rx={2} stroke="#C8A96E" strokeWidth={2} fill="none"/>
+                      <rect x={10} y={8} width={60} height={80} rx={1} stroke="#C8A96E" strokeWidth={1} strokeDasharray="4 2" fill="none" opacity={0.4}/>
+                      <circle cx={64} cy={48} r={4} fill="#C8A96E"/>
+                      <line x1={18} y1={48} x2={56} y2={48} stroke="#C8A96E" strokeWidth={1.5}/>
+                      <rect x={22} y={22} width={36} height={20} rx={1} stroke="#F5EFE0" strokeWidth={1} fill="none" opacity={0.3}/>
+                      <rect x={22} y={54} width={36} height={20} rx={1} stroke="#F5EFE0" strokeWidth={1} fill="none" opacity={0.3}/>
+                    </svg>
+                    <div>
+                      <p style={{ fontFamily: '"Cormorant Garamond", serif', fontWeight: 600, fontSize: 40, color: "#F5EFE0", letterSpacing: 7, lineHeight: 1 }}>{BRAND_NAME}</p>
+                      <p style={{ fontFamily: "Montserrat, sans-serif", fontWeight: 300, fontSize: 9, color: "#8A8070", letterSpacing: 3, marginTop: 5, textTransform: "uppercase" }}>{BRAND_TAGLINE}</p>
+                    </div>
+                  </div>
+                  <p style={{ fontFamily: '"Cormorant Garamond", serif', fontStyle: "italic", color: "#C8A96E", fontSize: 15, letterSpacing: 1, marginTop: 8 }}>{BRAND_SLOGAN}</p>
+                </div>
+                {/* Светлый */}
+                <div className="flex flex-col items-center justify-center py-10 gap-3" style={{ background: "#F5EFE0" }}>
+                  <div className="flex items-center gap-5">
+                    <svg width={34} height={40} viewBox="0 0 80 96" fill="none">
+                      <rect x={4} y={2} width={72} height={92} rx={2} stroke="#9A7040" strokeWidth={2} fill="none"/>
+                      <rect x={10} y={8} width={60} height={80} rx={1} stroke="#9A7040" strokeWidth={1} strokeDasharray="4 2" fill="none" opacity={0.4}/>
+                      <circle cx={64} cy={48} r={4} fill="#9A7040"/>
+                      <line x1={18} y1={48} x2={56} y2={48} stroke="#9A7040" strokeWidth={1.5}/>
+                      <rect x={22} y={22} width={36} height={20} rx={1} stroke="#0F0E0C" strokeWidth={1} fill="none" opacity={0.3}/>
+                      <rect x={22} y={54} width={36} height={20} rx={1} stroke="#0F0E0C" strokeWidth={1} fill="none" opacity={0.3}/>
+                    </svg>
+                    <div>
+                      <p style={{ fontFamily: '"Cormorant Garamond", serif', fontWeight: 600, fontSize: 32, color: "#0F0E0C", letterSpacing: 6, lineHeight: 1 }}>{BRAND_NAME}</p>
+                      <p style={{ fontFamily: "Montserrat, sans-serif", fontWeight: 300, fontSize: 8, color: "#8A8070", letterSpacing: 3, marginTop: 4, textTransform: "uppercase" }}>{BRAND_TAGLINE}</p>
+                    </div>
+                  </div>
+                  <p style={{ fontFamily: '"Cormorant Garamond", serif', fontStyle: "italic", color: "#9A7040", fontSize: 13, letterSpacing: 1, marginTop: 6 }}>{BRAND_SLOGAN}</p>
+                </div>
+                {/* Палитра-полоски */}
+                <div className="flex h-6">
+                  {["#0F0E0C","#1A1915","#9A7040","#C8A96E","#E8C98A","#F5EFE0"].map(h => (
+                    <div key={h} className="flex-1" style={{ background: h }} />
+                  ))}
+                </div>
+                <div className="px-5 py-4" style={{ background: "#0F0E0C" }}>
+                  <p className="text-xs mb-3" style={{ color: "#8A8070" }}>Характер: <span style={{ color: "#F5EFE0" }}>классика, элитность, надёжность</span></p>
+                  <div className="flex flex-wrap gap-2">
+                    {[["#0F0E0C","Антрацит"],["#C8A96E","Золото"],["#F5EFE0","Кремовый"]].map(([hex, name]) => (
+                      <div key={hex} className="flex items-center gap-1.5">
+                        <div className="w-3 h-3 rounded-full border border-white border-opacity-10" style={{ background: hex }} />
+                        <span className="text-xs" style={{ color: "#8A8070" }}>{name}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Вариант Б — Баклажан + Пудра */}
+              <div className="rounded-xl overflow-hidden" style={{ border: "1px solid rgba(160,120,136,0.35)" }}>
+                <div className="px-5 py-3 flex items-center justify-between" style={{ background: "#3B1F2B", borderBottom: "1px solid rgba(160,120,136,0.2)" }}>
+                  <span className="text-xs tracking-widest uppercase" style={{ color: "#C9A0B0" }}>Вариант Б</span>
+                  <span className="text-xs tracking-wider uppercase" style={{ color: "#A07888" }}>Баклажан + Пудра</span>
+                </div>
+                {/* Тёмный */}
+                <div className="flex flex-col items-center justify-center py-12 gap-3" style={{ background: "#3B1F2B" }}>
+                  <div className="flex items-center gap-5">
+                    <svg width={42} height={50} viewBox="0 0 80 96" fill="none">
+                      <rect x={4} y={2} width={72} height={92} rx={2} stroke="#C9A0B0" strokeWidth={2} fill="none"/>
+                      <rect x={10} y={8} width={60} height={80} rx={1} stroke="#C9A0B0" strokeWidth={1} strokeDasharray="4 2" fill="none" opacity={0.4}/>
+                      <circle cx={64} cy={48} r={4} fill="#C9A0B0"/>
+                      <line x1={18} y1={48} x2={56} y2={48} stroke="#C9A0B0" strokeWidth={1.5}/>
+                      <rect x={22} y={22} width={36} height={20} rx={1} stroke="#F0DFE5" strokeWidth={1} fill="none" opacity={0.3}/>
+                      <rect x={22} y={54} width={36} height={20} rx={1} stroke="#F0DFE5" strokeWidth={1} fill="none" opacity={0.3}/>
+                    </svg>
+                    <div>
+                      <p style={{ fontFamily: '"Cormorant Garamond", serif', fontWeight: 600, fontSize: 40, color: "#F0DFE5", letterSpacing: 7, lineHeight: 1 }}>{BRAND_NAME}</p>
+                      <p style={{ fontFamily: "Montserrat, sans-serif", fontWeight: 300, fontSize: 9, color: "#A07888", letterSpacing: 3, marginTop: 5, textTransform: "uppercase" }}>{BRAND_TAGLINE}</p>
+                    </div>
+                  </div>
+                  <p style={{ fontFamily: '"Cormorant Garamond", serif', fontStyle: "italic", color: "#C9A0B0", fontSize: 15, letterSpacing: 1, marginTop: 8 }}>{BRAND_SLOGAN}</p>
+                </div>
+                {/* Светлый */}
+                <div className="flex flex-col items-center justify-center py-10 gap-3" style={{ background: "#F0DFE5" }}>
+                  <div className="flex items-center gap-5">
+                    <svg width={34} height={40} viewBox="0 0 80 96" fill="none">
+                      <rect x={4} y={2} width={72} height={92} rx={2} stroke="#5C2D45" strokeWidth={2} fill="none"/>
+                      <rect x={10} y={8} width={60} height={80} rx={1} stroke="#5C2D45" strokeWidth={1} strokeDasharray="4 2" fill="none" opacity={0.4}/>
+                      <circle cx={64} cy={48} r={4} fill="#5C2D45"/>
+                      <line x1={18} y1={48} x2={56} y2={48} stroke="#5C2D45" strokeWidth={1.5}/>
+                      <rect x={22} y={22} width={36} height={20} rx={1} stroke="#3B1F2B" strokeWidth={1} fill="none" opacity={0.3}/>
+                      <rect x={22} y={54} width={36} height={20} rx={1} stroke="#3B1F2B" strokeWidth={1} fill="none" opacity={0.3}/>
+                    </svg>
+                    <div>
+                      <p style={{ fontFamily: '"Cormorant Garamond", serif', fontWeight: 600, fontSize: 32, color: "#3B1F2B", letterSpacing: 6, lineHeight: 1 }}>{BRAND_NAME}</p>
+                      <p style={{ fontFamily: "Montserrat, sans-serif", fontWeight: 300, fontSize: 8, color: "#A07888", letterSpacing: 3, marginTop: 4, textTransform: "uppercase" }}>{BRAND_TAGLINE}</p>
+                    </div>
+                  </div>
+                  <p style={{ fontFamily: '"Cormorant Garamond", serif', fontStyle: "italic", color: "#5C2D45", fontSize: 13, letterSpacing: 1, marginTop: 6 }}>{BRAND_SLOGAN}</p>
+                </div>
+                {/* Палитра-полоски */}
+                <div className="flex h-6">
+                  {["#3B1F2B","#5C2D45","#A07888","#C9A0B0","#E8C9D3","#F0DFE5"].map(h => (
+                    <div key={h} className="flex-1" style={{ background: h }} />
+                  ))}
+                </div>
+                <div className="px-5 py-4" style={{ background: "#3B1F2B" }}>
+                  <p className="text-xs mb-3" style={{ color: "#A07888" }}>Характер: <span style={{ color: "#F0DFE5" }}>изысканность, женственность, современность</span></p>
+                  <div className="flex flex-wrap gap-2">
+                    {[["#3B1F2B","Баклажан"],["#C9A0B0","Кварц"],["#F0DFE5","Пудра"]].map(([hex, name]) => (
+                      <div key={hex} className="flex items-center gap-1.5">
+                        <div className="w-3 h-3 rounded-full border border-white border-opacity-10" style={{ background: hex }} />
+                        <span className="text-xs" style={{ color: "#A07888" }}>{name}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Сравнение на одном слогане */}
+            <div className="rounded-xl overflow-hidden border border-brand-gold border-opacity-10 mb-6">
+              <div className="grid grid-cols-2 divide-x" style={{ divideColor: "rgba(200,169,110,0.15)" }}>
+                <div className="flex items-center justify-center py-8 flex-col gap-3" style={{ background: "#111010" }}>
+                  <p style={{ fontFamily: '"Cormorant Garamond", serif', fontWeight: 700, fontSize: 52, color: "#F5EFE0", letterSpacing: 8 }}>{BRAND_NAME}</p>
+                  <div className="h-px w-20 opacity-40" style={{ background: "#C8A96E" }} />
+                  <p style={{ fontFamily: '"Cormorant Garamond", serif', fontStyle: "italic", color: "#C8A96E", fontSize: 13 }}>{BRAND_SLOGAN}</p>
+                </div>
+                <div className="flex items-center justify-center py-8 flex-col gap-3" style={{ background: "#2E1622" }}>
+                  <p style={{ fontFamily: '"Cormorant Garamond", serif', fontWeight: 700, fontSize: 52, color: "#F0DFE5", letterSpacing: 8 }}>{BRAND_NAME}</p>
+                  <div className="h-px w-20 opacity-40" style={{ background: "#C9A0B0" }} />
+                  <p style={{ fontFamily: '"Cormorant Garamond", serif', fontStyle: "italic", color: "#C9A0B0", fontSize: 13 }}>{BRAND_SLOGAN}</p>
+                </div>
+              </div>
+              <div className="grid grid-cols-2 divide-x" style={{ divideColor: "rgba(200,169,110,0.1)" }}>
+                <p className="text-center py-3 text-xs tracking-widest uppercase" style={{ background: "#0A0A0A", color: "#8A8070" }}>А · Антрацит + Золото</p>
+                <p className="text-center py-3 text-xs tracking-widest uppercase" style={{ background: "#2B151F", color: "#A07888" }}>Б · Баклажан + Пудра</p>
+              </div>
+            </div>
+
+            {/* Применение на визитке */}
+            <div className="grid md:grid-cols-2 gap-4">
+              {/* Визитка А */}
+              <div className="rounded-lg overflow-hidden border border-brand-gold border-opacity-20 p-6 flex items-center justify-center" style={{ background: "#181614" }}>
+                <div className="w-72 h-40 rounded-md relative overflow-hidden shadow-2xl flex flex-col justify-between p-5" style={{ background: "#0F0E0C", border: "1px solid rgba(200,169,110,0.25)" }}>
+                  <div className="flex items-center gap-3">
+                    <svg width={20} height={24} viewBox="0 0 80 96" fill="none">
+                      <rect x={4} y={2} width={72} height={92} rx={2} stroke="#C8A96E" strokeWidth={2} fill="none"/>
+                      <circle cx={64} cy={48} r={4} fill="#C8A96E"/>
+                      <line x1={18} y1={48} x2={56} y2={48} stroke="#C8A96E" strokeWidth={2}/>
+                    </svg>
+                    <div>
+                      <p style={{ fontFamily: '"Cormorant Garamond", serif', fontWeight: 600, fontSize: 18, color: "#F5EFE0", letterSpacing: 4 }}>{BRAND_NAME}</p>
+                      <p style={{ fontFamily: "Montserrat", fontWeight: 300, fontSize: 6, color: "#8A8070", letterSpacing: 2, textTransform: "uppercase" }}>{BRAND_TAGLINE}</p>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <p style={{ color: "#C8A96E", fontSize: 10, fontFamily: "Montserrat" }}>+7 (800) 000-00-00</p>
+                    <p style={{ color: "#8A8070", fontSize: 9, fontFamily: "Montserrat", marginTop: 2 }}>mdk-doors.ru</p>
+                  </div>
+                </div>
+              </div>
+              {/* Визитка Б */}
+              <div className="rounded-lg overflow-hidden p-6 flex items-center justify-center" style={{ background: "#2B1520", border: "1px solid rgba(160,120,136,0.25)" }}>
+                <div className="w-72 h-40 rounded-md relative overflow-hidden shadow-2xl flex flex-col justify-between p-5" style={{ background: "#3B1F2B", border: "1px solid rgba(201,160,176,0.25)" }}>
+                  <div className="flex items-center gap-3">
+                    <svg width={20} height={24} viewBox="0 0 80 96" fill="none">
+                      <rect x={4} y={2} width={72} height={92} rx={2} stroke="#C9A0B0" strokeWidth={2} fill="none"/>
+                      <circle cx={64} cy={48} r={4} fill="#C9A0B0"/>
+                      <line x1={18} y1={48} x2={56} y2={48} stroke="#C9A0B0" strokeWidth={2}/>
+                    </svg>
+                    <div>
+                      <p style={{ fontFamily: '"Cormorant Garamond", serif', fontWeight: 600, fontSize: 18, color: "#F0DFE5", letterSpacing: 4 }}>{BRAND_NAME}</p>
+                      <p style={{ fontFamily: "Montserrat", fontWeight: 300, fontSize: 6, color: "#A07888", letterSpacing: 2, textTransform: "uppercase" }}>{BRAND_TAGLINE}</p>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <p style={{ color: "#C9A0B0", fontSize: 10, fontFamily: "Montserrat" }}>+7 (800) 000-00-00</p>
+                    <p style={{ color: "#A07888", fontSize: 9, fontFamily: "Montserrat", marginTop: 2 }}>mdk-doors.ru</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="grid grid-cols-2 gap-4 mt-1">
+              <p className="text-center text-xs tracking-widest uppercase" style={{ color: "#8A8070" }}>А · Визитка</p>
+              <p className="text-center text-xs tracking-widest uppercase" style={{ color: "#A07888" }}>Б · Визитка</p>
+            </div>
+
+          </Section>
+        )}
 
         {/* VARIANTS */}
         {activeTab === "variants" && (
