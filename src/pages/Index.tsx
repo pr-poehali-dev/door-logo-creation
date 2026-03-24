@@ -18,64 +18,88 @@ const colors = [
   { name: "Тёмное золото", hex: "#9A7040", label: "Тёмный акцент" },
 ];
 
-// Монограмма 1 — М крупно, ДК наложены поверх справа, тонкий штрих
-const Monogram1 = ({ accent = "#C8A96E", light = "#F5EFE0", size = 1 }: { accent?: string; light?: string; size?: number }) => (
-  <svg width={96 * size} height={96 * size} viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
-    {/* М — крупная, тонкая */}
-    <text x="4" y="78" fontFamily="Cormorant Garamond, serif" fontWeight="300" fontSize="88" fill="none" stroke={light} strokeWidth="1.5" opacity="0.9">М</text>
-    {/* Д — смещена вправо, полупрозрачная */}
-    <text x="28" y="78" fontFamily="Cormorant Garamond, serif" fontWeight="600" fontSize="72" fill="none" stroke={accent} strokeWidth="2" opacity="0.85">Д</text>
-    {/* К — поверх всех, жирная золотая */}
-    <text x="50" y="78" fontFamily="Cormorant Garamond, serif" fontWeight="700" fontSize="56" fill={accent} opacity="0.95">К</text>
-    {/* Декоративная линия снизу */}
-    <line x1="4" y1="84" x2="92" y2="84" stroke={accent} strokeWidth="1" opacity="0.4"/>
+// Символ 1 — Арка с багетом: дверной проём с двойной рамкой и тонким акцентом сверху
+const Symbol1 = ({ accent = "#C8A96E", light = "#F5EFE0", size = 1 }: { accent?: string; light?: string; size?: number }) => (
+  <svg width={72 * size} height={96 * size} viewBox="0 0 72 96" fill="none" xmlns="http://www.w3.org/2000/svg">
+    {/* Внешняя рамка — прямоугольник */}
+    <rect x="6" y="10" width="60" height="82" rx="1" stroke={light} strokeWidth="1.5" fill="none" opacity="0.9"/>
+    {/* Внутренняя рамка — багет */}
+    <rect x="12" y="16" width="48" height="70" rx="0.5" stroke={accent} strokeWidth="1" fill="none" opacity="0.7"/>
+    {/* Арка внутри */}
+    <path d="M18 86 L18 46 Q18 22 36 22 Q54 22 54 46 L54 86" stroke={accent} strokeWidth="1.5" fill="none" opacity="0.9"/>
+    {/* Тонкая линия у основания — порог */}
+    <line x1="6" y1="92" x2="66" y2="92" stroke={accent} strokeWidth="2" opacity="0.6"/>
+    {/* Акцент наверху */}
+    <line x1="20" y1="10" x2="52" y2="10" stroke={accent} strokeWidth="2.5" opacity="0.8"/>
   </svg>
 );
 
-// Монограмма 2 — буквы в круге, М+Д+К по диагонали
-const Monogram2 = ({ accent = "#C8A96E", light = "#F5EFE0", size = 1 }: { accent?: string; light?: string; size?: number }) => (
-  <svg width={96 * size} height={96 * size} viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="48" cy="48" r="44" stroke={accent} strokeWidth="1.5" fill="none" opacity="0.6"/>
-    <circle cx="48" cy="48" r="40" stroke={accent} strokeWidth="0.5" fill="none" opacity="0.25"/>
-    {/* М сзади */}
-    <text x="8" y="72" fontFamily="Cormorant Garamond, serif" fontWeight="300" fontSize="70" fill="none" stroke={light} strokeWidth="1" opacity="0.5">М</text>
-    {/* Д по центру */}
-    <text x="18" y="70" fontFamily="Cormorant Garamond, serif" fontWeight="500" fontSize="60" fill="none" stroke={accent} strokeWidth="1.8" opacity="0.8">Д</text>
-    {/* К спереди */}
-    <text x="44" y="68" fontFamily="Cormorant Garamond, serif" fontWeight="700" fontSize="50" fill={accent}>К</text>
+// Символ 2 — Дверной проём минимал: два вертикала + перекладина сверху, двойная линия
+const Symbol2 = ({ accent = "#C8A96E", light = "#F5EFE0", size = 1 }: { accent?: string; light?: string; size?: number }) => (
+  <svg width={72 * size} height={96 * size} viewBox="0 0 72 96" fill="none" xmlns="http://www.w3.org/2000/svg">
+    {/* Внешний контур проёма */}
+    <path d="M8 88 L8 14 L64 14 L64 88" stroke={light} strokeWidth="2" fill="none" strokeLinecap="square" opacity="0.85"/>
+    {/* Внутренний контур — багет (смещён на 7px) */}
+    <path d="M15 88 L15 21 L57 21 L57 88" stroke={accent} strokeWidth="1.2" fill="none" strokeLinecap="square" opacity="0.75"/>
+    {/* Верхний акцент — горизонтальная полоска */}
+    <line x1="8" y1="14" x2="64" y2="14" stroke={light} strokeWidth="2" opacity="0.85"/>
+    <line x1="15" y1="21" x2="57" y2="21" stroke={accent} strokeWidth="1.2" opacity="0.75"/>
+    {/* Золотая точка-ручка */}
+    <circle cx="50" cy="56" r="2.5" fill={accent} opacity="0.9"/>
+    <circle cx="50" cy="56" r="4.5" stroke={accent} strokeWidth="0.8" fill="none" opacity="0.4"/>
+    {/* Порог */}
+    <line x1="4" y1="90" x2="68" y2="90" stroke={accent} strokeWidth="1.5" opacity="0.5"/>
   </svg>
 );
 
-// Монограмма 3 — вертикальный стек, буквы одна под другой, перекрываются
-const Monogram3 = ({ accent = "#C8A96E", light = "#F5EFE0", size = 1 }: { accent?: string; light?: string; size?: number }) => (
-  <svg width={60 * size} height={96 * size} viewBox="0 0 60 96" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <text x="30" y="38" fontFamily="Cormorant Garamond, serif" fontWeight="300" fontSize="46" fill="none" stroke={light} strokeWidth="1" opacity="0.5" textAnchor="middle">М</text>
-    <text x="30" y="64" fontFamily="Cormorant Garamond, serif" fontWeight="500" fontSize="42" fill="none" stroke={accent} strokeWidth="1.5" opacity="0.75" textAnchor="middle">Д</text>
-    <text x="30" y="88" fontFamily="Cormorant Garamond, serif" fontWeight="700" fontSize="38" fill={accent} opacity="0.95" textAnchor="middle">К</text>
-    <line x1="15" y1="4" x2="15" y2="92" stroke={accent} strokeWidth="0.8" opacity="0.3"/>
+// Символ 3 — Геометрический ключ: вертикаль с горизонтальными засечками как профиль багета
+const Symbol3 = ({ accent = "#C8A96E", light = "#F5EFE0", size = 1 }: { accent?: string; light?: string; size?: number }) => (
+  <svg width={72 * size} height={96 * size} viewBox="0 0 72 96" fill="none" xmlns="http://www.w3.org/2000/svg">
+    {/* Центральная вертикаль */}
+    <line x1="36" y1="8" x2="36" y2="88" stroke={light} strokeWidth="2" opacity="0.9"/>
+    {/* Левая вертикаль */}
+    <line x1="20" y1="18" x2="20" y2="88" stroke={light} strokeWidth="1.2" opacity="0.5"/>
+    {/* Правая вертикаль */}
+    <line x1="52" y1="18" x2="52" y2="88" stroke={light} strokeWidth="1.2" opacity="0.5"/>
+    {/* Верхняя перекладина — широкая */}
+    <line x1="10" y1="18" x2="62" y2="18" stroke={accent} strokeWidth="2.5" opacity="0.9"/>
+    {/* Средняя перекладина */}
+    <line x1="20" y1="52" x2="52" y2="52" stroke={accent} strokeWidth="1.5" opacity="0.6"/>
+    {/* Нижняя перекладина */}
+    <line x1="10" y1="88" x2="62" y2="88" stroke={light} strokeWidth="1.5" opacity="0.7"/>
+    {/* Акцентная точка — узловое соединение */}
+    <rect x="32" y="14" width="8" height="8" fill={accent} opacity="0.9"/>
   </svg>
 );
 
-// Монограмма 4 — ромб/щит, МДК в одну строку крупно внутри геометрии
-const Monogram4 = ({ accent = "#C8A96E", light = "#F5EFE0", size = 1 }: { accent?: string; light?: string; size?: number }) => (
+// Символ 4 — Вид сверху на дверь: полуоткрытое полотно + дуга поворота
+const Symbol4 = ({ accent = "#C8A96E", light = "#F5EFE0", size = 1 }: { accent?: string; light?: string; size?: number }) => (
   <svg width={96 * size} height={96 * size} viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
-    {/* Щит */}
-    <path d="M48 4 L88 20 L88 60 Q88 82 48 94 Q8 82 8 60 L8 20 Z" stroke={accent} strokeWidth="1.5" fill="none" opacity="0.5"/>
-    <path d="M48 10 L82 24 L82 58 Q82 77 48 88 Q14 77 14 58 L14 24 Z" stroke={accent} strokeWidth="0.5" fill="none" opacity="0.2"/>
-    {/* М сзади крупно */}
-    <text x="10" y="68" fontFamily="Cormorant Garamond, serif" fontWeight="300" fontSize="62" fill="none" stroke={light} strokeWidth="1" opacity="0.4">М</text>
-    {/* ДК поверх */}
-    <text x="34" y="66" fontFamily="Cormorant Garamond, serif" fontWeight="700" fontSize="46" fill={accent} opacity="0.9">ДК</text>
+    {/* Стена — горизонтальная линия */}
+    <line x1="8" y1="72" x2="88" y2="72" stroke={light} strokeWidth="2" opacity="0.7"/>
+    {/* Рама дверного проёма */}
+    <line x1="28" y1="72" x2="28" y2="60" stroke={light} strokeWidth="1.5" opacity="0.5"/>
+    <line x1="68" y1="72" x2="68" y2="60" stroke={light} strokeWidth="1.5" opacity="0.5"/>
+    {/* Полотно двери — под углом ~45° */}
+    <line x1="28" y1="72" x2="56" y2="44" stroke={light} strokeWidth="2.5" opacity="0.9"/>
+    {/* Ширина полотна (второй край) */}
+    <line x1="33" y1="72" x2="61" y2="44" stroke={accent} strokeWidth="1" opacity="0.5"/>
+    {/* Дуга поворота */}
+    <path d="M28 72 Q28 32 68 72" stroke={accent} strokeWidth="1.5" fill="none" strokeDasharray="3 3" opacity="0.7"/>
+    {/* Ручка */}
+    <circle cx="51" cy="51" r="2" fill={accent} opacity="0.95"/>
+    {/* Декоративная линия */}
+    <line x1="8" y1="80" x2="88" y2="80" stroke={accent} strokeWidth="0.8" opacity="0.3"/>
   </svg>
 );
 
 const LogoMark = ({ dark = false, size = 1, variant = 1, accent, light }: { dark?: boolean; size?: number; variant?: number; accent?: string; light?: string }) => {
   const a = accent ?? "#C8A96E";
   const l = light ?? (dark ? "#0F0E0C" : "#F5EFE0");
-  if (variant === 2) return <Monogram2 accent={a} light={l} size={size} />;
-  if (variant === 3) return <Monogram3 accent={a} light={l} size={size} />;
-  if (variant === 4) return <Monogram4 accent={a} light={l} size={size} />;
-  return <Monogram1 accent={a} light={l} size={size} />;
+  if (variant === 2) return <Symbol2 accent={a} light={l} size={size} />;
+  if (variant === 3) return <Symbol3 accent={a} light={l} size={size} />;
+  if (variant === 4) return <Symbol4 accent={a} light={l} size={size} />;
+  return <Symbol1 accent={a} light={l} size={size} />;
 };
 
 const LogoFull = ({ variant = "dark", size = 1, monogram = 1 }: { variant?: "dark" | "light" | "mono-dark" | "mono-light"; size?: number; monogram?: number }) => {
@@ -394,15 +418,15 @@ export default function Index() {
         {activeTab === "variants" && (
           <Section id="variants" label="01 · Варианты логотипа">
 
-            <p className="text-brand-stone text-sm mb-8">4 варианта монограммы — буквы МДК с наложением. Каждый показан в тёмной и светлой версии.</p>
+            <p className="text-brand-stone text-sm mb-8">4 варианта геометрического символа — без букв, чистая форма с отсылкой к дверям и багету. Каждый в тёмной и светлой версии.</p>
 
-            {/* 4 монограммы */}
+            {/* 4 символа */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-8">
               {[
-                { num: 1, title: "Каскад", desc: "М — фоновая, Д — средний план, К — акцент. Глубина через наложение" },
-                { num: 2, title: "Медальон", desc: "Монограмма в круге. Буквы в перспективе, двойная окружность" },
-                { num: 3, title: "Вертикаль", desc: "Буквы в столбик с перекрытием. Минималистичный штиль" },
-                { num: 4, title: "Щит", desc: "МДК внутри геометрии щита. Надёжность и статус" },
+                { num: 1, title: "Арка", desc: "Дверной проём с двойной рамкой-багетом и аркой. Классика, сразу читается как дверь" },
+                { num: 2, title: "Проём", desc: "Минималистичный П-образный контур с внутренней рамкой и ручкой. Лаконично и современно" },
+                { num: 3, title: "Профиль", desc: "Три вертикали и перекладины — сечение багетной рамы. Абстрактно, но узнаваемо в деталях" },
+                { num: 4, title: "Поворот", desc: "Вид сверху: полуоткрытое полотно с дугой поворота. Движение, пространство, открытие" },
               ].map(({ num, title, desc }) => (
                 <div key={num} className="rounded-xl overflow-hidden border border-brand-gold border-opacity-20">
                   <div className="px-4 py-2.5 flex items-center justify-between border-b border-brand-gold border-opacity-10 bg-brand-dark">
@@ -435,13 +459,13 @@ export default function Index() {
 
             {/* Все монограммы рядом крупно для сравнения */}
             <div className="rounded-xl border border-brand-gold border-opacity-20 p-8 bg-brand-charcoal mb-8">
-              <p className="text-xs text-brand-stone tracking-widest uppercase mb-8">Сравнение иконок — все варианты рядом</p>
+              <p className="text-xs text-brand-stone tracking-widest uppercase mb-8">Сравнение символов — все варианты рядом</p>
               <div className="flex items-end justify-around flex-wrap gap-8">
                 {[1, 2, 3, 4].map((n) => (
                   <div key={n} className="flex flex-col items-center gap-3">
                     <LogoMark size={1.1} variant={n} />
                     <p className="text-xs text-brand-stone tracking-widest uppercase">
-                      {["Каскад","Медальон","Вертикаль","Щит"][n-1]}
+                      {["Арка","Проём","Профиль","Поворот"][n-1]}
                     </p>
                   </div>
                 ))}
