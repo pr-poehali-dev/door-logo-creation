@@ -20,28 +20,9 @@ const colors = [
 
 const LOGO_IMG = "https://cdn.poehali.dev/projects/09f16a6e-be66-48d6-bebd-d73db1df54a7/bucket/cda9d4dd-4e94-41c1-bb91-7862111aed04.png";
 
-// col: "cream" (default, #F5EFE0), "gold" (#C8A96E), "dark" (#0F0E0C)
-// mix-blend-mode: screen убирает чёрный фон — остаются только белые буквы.
-// filter перекрашивает белые буквы в нужный цвет палитры.
-const MDKLogo = ({ size = 1, col = "cream" }: { col?: "cream" | "gold" | "dark"; size?: number }) => {
-  const filterMap = {
-    cream:  "brightness(0) invert(1) sepia(1) saturate(0.1) brightness(0.97)",   // #F5EFE0 — тёплый белый
-    gold:   "brightness(0) invert(1) sepia(1) saturate(3) hue-rotate(5deg) brightness(0.82)", // #C8A96E — золото
-    dark:   "brightness(0)",  // #0F0E0C — антрацит
-  };
-  return (
-    <img
-      src={LOGO_IMG}
-      alt="МДК"
-      style={{
-        width: 300 * size,
-        height: "auto",
-        display: "block",
-        filter: filterMap[col],
-      }}
-    />
-  );
-};
+const MDKLogo = ({ size = 1, col }: { col?: string; size?: number }) => (
+  <img src={LOGO_IMG} alt="МДК" style={{ width: 300 * size, height: "auto", display: "block" }} />
+);
 
 // Три варианта отображения одного знака: тёмный, светлый, золото
 const LogoMark = ({ size = 1, variant = 1, dark }: { size?: number; variant?: number; col?: string; accent?: string; dark?: boolean; light?: string; bg?: string }) => {
