@@ -93,10 +93,99 @@ const MDKLogo = ({ col = "#F5EFE0", size = 1 }: { col?: string; size?: number })
 const LogoMark = ({ size = 1, variant = 1, col, accent }: { size?: number; variant?: number; col?: string; accent?: string; dark?: boolean; light?: string; bg?: string }) => {
   const c = col ?? "#F5EFE0";
   const a = accent ?? "#C8A96E";
-  // variant 1 = основной цвет col, variant 2 = золото accent
   if (variant === 2) return <MDKLogo col={a} size={size} />;
   return <MDKLogo col={c} size={size} />;
 };
+
+// ─── КОНЦЕПТУАЛЬНЫЕ СИМВОЛЫ (без букв) ───────────────────────────────────────
+
+// Символ 1 · ПРОФИЛЬ БАГЕТА
+// Вид сечения рамки в разрезе: внешний прямоугольник + скошенный внутренний контур.
+// Простая форма, прямая отсылка к продукту.
+const SymbolBaguette = ({ col = "#F5EFE0", size = 1 }: { col?: string; size?: number }) => (
+  <svg width={80 * size} height={80 * size} viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+    {/* Внешний контур — прямоугольник */}
+    <rect x="4" y="4" width="72" height="72" stroke={col} strokeWidth="3" fill="none"/>
+    {/* Скошенный внутренний контур — багет в сечении */}
+    <polygon
+      points="16,16 64,16 64,64 16,64"
+      stroke={col} strokeWidth="1.5" fill="none" opacity="0.5"
+    />
+    {/* Диагонали — четыре угла соединяют внешний и внутренний контур */}
+    <line x1="4" y1="4"   x2="16" y2="16" stroke={col} strokeWidth="1.5" opacity="0.5"/>
+    <line x1="76" y1="4"  x2="64" y2="16" stroke={col} strokeWidth="1.5" opacity="0.5"/>
+    <line x1="76" y1="76" x2="64" y2="64" stroke={col} strokeWidth="1.5" opacity="0.5"/>
+    <line x1="4"  y1="76" x2="16" y2="64" stroke={col} strokeWidth="1.5" opacity="0.5"/>
+  </svg>
+);
+
+// Символ 2 · ДВЕРНОЙ ПРОЁМ — арка
+// П-образный проём с полукруглым верхом. Узнаваем мгновенно, без лишних деталей.
+// Единая толщина линии, квадратный формат.
+const SymbolArch = ({ col = "#F5EFE0", size = 1 }: { col?: string; size?: number }) => (
+  <svg width={72 * size} height={88 * size} viewBox="0 0 72 88" fill="none" xmlns="http://www.w3.org/2000/svg">
+    {/* Проём: две стойки + полукруглая арка наверху */}
+    <path
+      d="M 10 88 L 10 38 A 26 26 0 0 1 62 38 L 62 88"
+      stroke={col} strokeWidth="4" fill="none" strokeLinecap="square"
+    />
+    {/* Тонкий внутренний контур — намёк на багетную рамку */}
+    <path
+      d="M 18 88 L 18 40 A 18 18 0 0 1 54 40 L 54 88"
+      stroke={col} strokeWidth="1.5" fill="none" strokeLinecap="square" opacity="0.4"
+    />
+    {/* Горизонталь-порог снизу */}
+    <line x1="4" y1="84" x2="68" y2="84" stroke={col} strokeWidth="2.5"/>
+  </svg>
+);
+
+// Символ 3 · ЗАМОЧНАЯ СКВАЖИНА
+// Круг + вертикальный треугольник снизу. Дверь, вход, открытие.
+// Залитая форма — максимальная лаконичность.
+const SymbolKeyhole = ({ col = "#F5EFE0", size = 1 }: { col?: string; size?: number }) => (
+  <svg width={56 * size} height={88 * size} viewBox="0 0 56 88" fill={col} xmlns="http://www.w3.org/2000/svg">
+    {/* Круг */}
+    <circle cx="28" cy="28" r="22"/>
+    {/* Треугольник скважины — вырез (evenodd) */}
+    <path
+      fillRule="evenodd"
+      d="
+        M 28 28
+        M 0 0 L 56 0 L 56 88 L 0 88 Z
+        M 28 6 A 22 22 0 1 0 28 50 A 22 22 0 0 0 28 6 Z
+        M 20 44 L 28 80 L 36 44 Z
+      "
+      fill="transparent"
+    />
+    {/* Треугольник — позитивная форма */}
+    <polygon points="20,44 28,80 36,44"/>
+    {/* Вырез внутри круга */}
+    <circle cx="28" cy="28" r="10" fill="currentColor"/>
+  </svg>
+);
+
+// Символ 4 · ДВЕРНАЯ ПЕТЛЯ
+// Три горизонтальные полосы с прямоугольными «ушами» — стилизованная петля.
+// Абстрактно, но профессионально: знает только тот, кто связан с дверями.
+const SymbolHinge = ({ col = "#F5EFE0", size = 1 }: { col?: string; size?: number }) => (
+  <svg width={64 * size} height={80 * size} viewBox="0 0 64 80" fill={col} xmlns="http://www.w3.org/2000/svg">
+    {/* Центральная ось — вертикальная полоса */}
+    <rect x="28" y="4" width="8" height="72" opacity="0.3"/>
+    {/* Верхняя пластина петли */}
+    <rect x="8"  y="6"  width="48" height="14" rx="1"/>
+    {/* Средняя пластина */}
+    <rect x="8"  y="33" width="48" height="14" rx="1"/>
+    {/* Нижняя пластина */}
+    <rect x="8"  y="60" width="48" height="14" rx="1"/>
+    {/* Отверстия под винты — негативный вырез (белые кружки) */}
+    <circle cx="20" cy="13"  r="3" fill="currentColor"/>
+    <circle cx="44" cy="13"  r="3" fill="currentColor"/>
+    <circle cx="20" cy="40"  r="3" fill="currentColor"/>
+    <circle cx="44" cy="40"  r="3" fill="currentColor"/>
+    <circle cx="20" cy="67"  r="3" fill="currentColor"/>
+    <circle cx="44" cy="67"  r="3" fill="currentColor"/>
+  </svg>
+);
 
 const LogoFull = ({ variant = "dark", size = 1, monogram = 1 }: { variant?: "dark" | "light" | "mono-dark" | "mono-light"; size?: number; monogram?: number }) => {
   const isDark = variant === "dark" || variant === "mono-dark";
@@ -140,8 +229,9 @@ const products = [
 ];
 
 const tabs = [
+  { id: "concepts", label: "Символы без букв" },
+  { id: "variants", label: "Знак МДК" },
   { id: "compare", label: "Сравнение палитр" },
-  { id: "variants", label: "Варианты логотипа" },
   { id: "palette", label: "Цветовая палитра" },
   { id: "preview", label: "Превью" },
   { id: "usage", label: "Примеры применения" },
@@ -150,7 +240,7 @@ const tabs = [
 ];
 
 export default function Index() {
-  const [activeTab, setActiveTab] = useState("compare");
+  const [activeTab, setActiveTab] = useState("concepts");
   const [copied, setCopied] = useState<string | null>(null);
   const [paletteMode, setPaletteMode] = useState<"gold" | "plum">("gold");
 
@@ -204,6 +294,88 @@ export default function Index() {
 
       {/* Content */}
       <div className="max-w-5xl mx-auto px-8 py-16">
+
+        {/* CONCEPTS */}
+        {activeTab === "concepts" && (
+          <Section id="concepts" label="Символы · Без букв">
+            <p className="text-brand-stone text-sm mb-10">4 концепции символа — без текста и аббревиатур. Каждый считывается через форму и ассоциацию с дверью.</p>
+
+            {/* Четыре символа крупно на тёмном */}
+            <div className="grid grid-cols-2 gap-4 mb-4">
+              {[
+                {
+                  Symbol: SymbolBaguette,
+                  title: "Профиль багета",
+                  sub: "Сечение рамки сверху",
+                  desc: "Внешний прямоугольник с внутренним скошенным контуром — ровно так выглядит багетная рамка в разрезе. Узнаваемо для профессионала, красиво для всех остальных.",
+                  w: 80, note: "Геометрия · Абстракция"
+                },
+                {
+                  Symbol: SymbolArch,
+                  title: "Дверная арка",
+                  sub: "Дверной проём с полукруглым верхом",
+                  desc: "Классический архитектурный проём — арка. Мгновенно читается как дверь, даже без подписи. Двойной контур даёт намёк на багет.",
+                  w: 72, note: "Архитектура · Классика"
+                },
+                {
+                  Symbol: SymbolKeyhole,
+                  title: "Замочная скважина",
+                  sub: "Круг + треугольник = вход",
+                  desc: "Круг и вертикальный клин снизу — силуэт скважины. Говорит о двери косвенно: через ключ, доступ, приватность. Лаконично до предела.",
+                  w: 56, note: "Символика · Современно"
+                },
+                {
+                  Symbol: SymbolHinge,
+                  title: "Дверная петля",
+                  sub: "Три пластины — деталь, известная каждому",
+                  desc: "Стилизованная петля из трёх пластин с отверстиями. Профессиональный символ, который выделяет среди конкурентов — никто так не делал.",
+                  w: 64, note: "Деталь · Оригинально"
+                },
+              ].map(({ Symbol, title, sub, desc, note }, i) => (
+                <div key={i} className="rounded-2xl overflow-hidden border border-brand-gold border-opacity-15 flex flex-col">
+                  {/* Тёмная витрина */}
+                  <div className="flex flex-col items-center justify-center py-16 gap-8 flex-1" style={{ background: "#0D0C0A" }}>
+                    <Symbol col="#F5EFE0" size={1.15} />
+                    <div className="text-center px-6">
+                      <p style={{ fontFamily: '"Cormorant Garamond", serif', fontWeight: 400, fontSize: 13, color: "#F5EFE0", letterSpacing: 6 }}>МДК</p>
+                      <p style={{ fontFamily: "Montserrat", fontWeight: 300, fontSize: 5.5, color: "#4A4840", letterSpacing: 2.5, marginTop: 6, textTransform: "uppercase" }}>Международная дверная компания</p>
+                    </div>
+                  </div>
+                  {/* Светлая витрина */}
+                  <div className="flex items-center justify-center py-10" style={{ background: "#FAF7F2" }}>
+                    <Symbol col="#1A1814" size={0.7} />
+                  </div>
+                  {/* Описание */}
+                  <div className="px-5 py-4 bg-brand-charcoal">
+                    <div className="flex items-start justify-between gap-3 mb-2">
+                      <div>
+                        <p className="text-brand-cream text-sm font-medium">{title}</p>
+                        <p className="text-xs text-brand-stone mt-0.5">{sub}</p>
+                      </div>
+                      <span className="text-xs text-brand-gold tracking-wider whitespace-nowrap opacity-70">{note}</span>
+                    </div>
+                    <p className="text-xs text-brand-stone leading-relaxed">{desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Золотая версия всех 4 — компактно */}
+            <div className="rounded-xl border border-brand-gold border-opacity-20 p-8" style={{ background: "#0D0C0A" }}>
+              <p className="text-xs text-brand-stone tracking-widest uppercase mb-8">Все символы · золото на антраците</p>
+              <div className="flex items-end justify-around flex-wrap gap-8">
+                {[SymbolBaguette, SymbolArch, SymbolKeyhole, SymbolHinge].map((Symbol, i) => (
+                  <div key={i} className="flex flex-col items-center gap-4">
+                    <Symbol col="#C8A96E" size={0.72} />
+                    <p className="text-xs tracking-widest uppercase" style={{ color: "#5A4E38" }}>
+                      {["Багет","Арка","Скважина","Петля"][i]}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </Section>
+        )}
 
         {/* COMPARE */}
         {activeTab === "compare" && (
