@@ -18,119 +18,137 @@ const colors = [
   { name: "Тёмное золото", hex: "#9A7040", label: "Тёмный акцент" },
 ];
 
-// Два вертикальных полотна двери с багетной рамкой — базовый символ МДК
-// Вариант A: Классик — чистые прямоугольники, минимальная рамка
-const SymbolA = ({ accent = "#C8A96E", light = "#F5EFE0", bg = "transparent", size = 1 }: { accent?: string; light?: string; bg?: string; size?: number }) => (
-  <svg width={72 * size} height={88 * size} viewBox="0 0 72 88" fill="none" xmlns="http://www.w3.org/2000/svg">
-    {/* Левое полотно — внешний контур */}
-    <rect x="4" y="4" width="28" height="80" rx="1" stroke={light} strokeWidth="1.8" fill={bg} opacity="0.9"/>
-    {/* Левое полотно — внутренний багет */}
-    <rect x="9" y="9" width="18" height="70" rx="0.5" stroke={accent} strokeWidth="1" fill="none" opacity="0.6"/>
-    {/* Правое полотно — внешний контур */}
-    <rect x="40" y="4" width="28" height="80" rx="1" stroke={light} strokeWidth="1.8" fill={bg} opacity="0.9"/>
-    {/* Правое полотно — внутренний багет */}
-    <rect x="45" y="9" width="18" height="70" rx="0.5" stroke={accent} strokeWidth="1" fill="none" opacity="0.6"/>
-    {/* Золотая линия-порог снизу */}
-    <line x1="4" y1="85" x2="68" y2="85" stroke={accent} strokeWidth="1.5" opacity="0.5"/>
+// ─── ЛИГАТУРА МДК ───────────────────────────────────────────────────────────
+// Все буквы нарисованы вручную путями. Общая вертикаль — общий штрих.
+
+// Вариант 1 · ОБЩАЯ ВЕРТИКАЛЬ
+// М и Д делят одну правую стойку; правая стойка Д = левая стойка К
+const Ligature1 = ({ col = "#F5EFE0", accent = "#C8A96E", size = 1 }: { col?: string; accent?: string; size?: number }) => (
+  <svg width={108 * size} height={80 * size} viewBox="0 0 108 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+    {/* М: левая стойка */}
+    <line x1="6" y1="12" x2="6" y2="68" stroke={col} strokeWidth="3.5" strokeLinecap="round"/>
+    {/* М: правая стойка — она же левая стойка Д */}
+    <line x1="34" y1="12" x2="34" y2="68" stroke={col} strokeWidth="3.5" strokeLinecap="round"/>
+    {/* М: диагонали */}
+    <polyline points="6,12 20,42 34,12" stroke={col} strokeWidth="3.5" strokeLinejoin="round" strokeLinecap="round" fill="none"/>
+    {/* Д: горизонталь верх */}
+    <line x1="34" y1="12" x2="66" y2="12" stroke={col} strokeWidth="3.5" strokeLinecap="round"/>
+    {/* Д: правая стойка — она же левая стойка К */}
+    <line x1="66" y1="12" x2="66" y2="68" stroke={col} strokeWidth="3.5" strokeLinecap="round"/>
+    {/* Д: горизонталь низ + "ножки" */}
+    <line x1="30" y1="68" x2="70" y2="68" stroke={col} strokeWidth="3.5" strokeLinecap="round"/>
+    <line x1="34" y1="68" x2="34" y2="74" stroke={col} strokeWidth="3" strokeLinecap="round"/>
+    <line x1="66" y1="68" x2="66" y2="74" stroke={col} strokeWidth="3" strokeLinecap="round"/>
+    {/* К: верхний луч — из общей стойки */}
+    <line x1="66" y1="40" x2="102" y2="12" stroke={col} strokeWidth="3.5" strokeLinecap="round"/>
+    {/* К: нижний луч */}
+    <line x1="66" y1="40" x2="102" y2="68" stroke={col} strokeWidth="3.5" strokeLinecap="round"/>
+    {/* К: акцентная точка пересечения */}
+    <circle cx="66" cy="40" r="3" fill={accent}/>
   </svg>
 );
 
-// Вариант Б: Акцент — золотые рамки, более рельефный багет, ручки
-const SymbolB = ({ accent = "#C8A96E", light = "#F5EFE0", bg = "transparent", size = 1 }: { accent?: string; light?: string; bg?: string; size?: number }) => (
-  <svg width={72 * size} height={88 * size} viewBox="0 0 72 88" fill="none" xmlns="http://www.w3.org/2000/svg">
-    {/* Левое полотно */}
-    <rect x="4" y="4" width="28" height="80" rx="1" stroke={light} strokeWidth="2" fill={bg} opacity="0.85"/>
-    <rect x="8" y="8" width="20" height="72" rx="0.5" stroke={accent} strokeWidth="1.2" fill="none" opacity="0.8"/>
-    {/* Ручка левая */}
-    <line x1="16" y1="42" x2="16" y2="52" stroke={accent} strokeWidth="2" strokeLinecap="round" opacity="0.9"/>
-    {/* Правое полотно */}
-    <rect x="40" y="4" width="28" height="80" rx="1" stroke={light} strokeWidth="2" fill={bg} opacity="0.85"/>
-    <rect x="44" y="8" width="20" height="72" rx="0.5" stroke={accent} strokeWidth="1.2" fill="none" opacity="0.8"/>
-    {/* Ручка правая */}
-    <line x1="56" y1="42" x2="56" y2="52" stroke={accent} strokeWidth="2" strokeLinecap="round" opacity="0.9"/>
-    {/* Тонкая золотая линия между полотнами — зазор */}
-    <line x1="36" y1="4" x2="36" y2="84" stroke={accent} strokeWidth="0.8" opacity="0.35"/>
-    {/* Порог */}
-    <line x1="4" y1="85" x2="68" y2="85" stroke={accent} strokeWidth="1.5" opacity="0.45"/>
+// Вариант 2 · ГОРИЗОНТАЛЬНАЯ СВЯЗЬ
+// Буквы соединены единой базовой линией снизу; М плавно переходит в Д через общий штрих
+const Ligature2 = ({ col = "#F5EFE0", accent = "#C8A96E", size = 1 }: { col?: string; accent?: string; size?: number }) => (
+  <svg width={108 * size} height={80 * size} viewBox="0 0 108 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+    {/* Базовая линия через весь логотип */}
+    <line x1="4" y1="66" x2="104" y2="66" stroke={accent} strokeWidth="1.5" opacity="0.5"/>
+    {/* М */}
+    <line x1="6" y1="66" x2="6" y2="14" stroke={col} strokeWidth="3" strokeLinecap="round"/>
+    <polyline points="6,14 20,44 34,14" stroke={col} strokeWidth="3" strokeLinejoin="round" strokeLinecap="round" fill="none"/>
+    <line x1="34" y1="14" x2="34" y2="66" stroke={col} strokeWidth="3" strokeLinecap="round"/>
+    {/* Связующий штрих М→Д — плавная дуга поверх базовой линии */}
+    <path d="M34 66 Q42 58 50 66" stroke={accent} strokeWidth="2.5" fill="none" strokeLinecap="round"/>
+    {/* Д */}
+    <line x1="50" y1="14" x2="50" y2="66" stroke={col} strokeWidth="3" strokeLinecap="round"/>
+    <line x1="50" y1="14" x2="72" y2="14" stroke={col} strokeWidth="3" strokeLinecap="round"/>
+    <line x1="72" y1="14" x2="72" y2="66" stroke={col} strokeWidth="3" strokeLinecap="round"/>
+    <line x1="46" y1="66" x2="76" y2="66" stroke={col} strokeWidth="3" strokeLinecap="round"/>
+    <line x1="50" y1="66" x2="50" y2="73" stroke={col} strokeWidth="2.5" strokeLinecap="round"/>
+    <line x1="72" y1="66" x2="72" y2="73" stroke={col} strokeWidth="2.5" strokeLinecap="round"/>
+    {/* Связующий штрих Д→К */}
+    <path d="M72 66 Q80 58 88 66" stroke={accent} strokeWidth="2.5" fill="none" strokeLinecap="round"/>
+    {/* К */}
+    <line x1="88" y1="14" x2="88" y2="66" stroke={col} strokeWidth="3" strokeLinecap="round"/>
+    <line x1="88" y1="40" x2="104" y2="14" stroke={col} strokeWidth="3" strokeLinecap="round"/>
+    <line x1="88" y1="40" x2="104" y2="66" stroke={col} strokeWidth="3" strokeLinecap="round"/>
   </svg>
 );
 
-// Вариант В: Объём — тени и глубина, имитация 3D-эффекта как на референсе
-const SymbolC = ({ accent = "#C8A96E", light = "#F5EFE0", bg = "transparent", size = 1 }: { accent?: string; light?: string; bg?: string; size?: number }) => (
-  <svg width={72 * size} height={88 * size} viewBox="0 0 72 88" fill="none" xmlns="http://www.w3.org/2000/svg">
-    {/* Тень левого полотна */}
-    <rect x="7" y="7" width="28" height="80" rx="1" fill={accent} opacity="0.12"/>
-    {/* Левое полотно */}
-    <rect x="4" y="4" width="28" height="80" rx="1" stroke={light} strokeWidth="1.8" fill={bg} opacity="0.9"/>
-    {/* Внутренний багет — двойной */}
-    <rect x="8" y="8" width="20" height="72" rx="0.5" stroke={light} strokeWidth="0.8" fill="none" opacity="0.3"/>
-    <rect x="10" y="10" width="16" height="68" rx="0.5" stroke={accent} strokeWidth="0.8" fill="none" opacity="0.5"/>
-    {/* Подсветка левого края */}
-    <line x1="5" y1="6" x2="5" y2="82" stroke={light} strokeWidth="1" opacity="0.5"/>
-    {/* Тень правого полотна */}
-    <rect x="43" y="7" width="28" height="80" rx="1" fill={accent} opacity="0.12"/>
-    {/* Правое полотно */}
-    <rect x="40" y="4" width="28" height="80" rx="1" stroke={light} strokeWidth="1.8" fill={bg} opacity="0.9"/>
-    {/* Внутренний багет — двойной */}
-    <rect x="44" y="8" width="20" height="72" rx="0.5" stroke={light} strokeWidth="0.8" fill="none" opacity="0.3"/>
-    <rect x="46" y="10" width="16" height="68" rx="0.5" stroke={accent} strokeWidth="0.8" fill="none" opacity="0.5"/>
-    {/* Подсветка правого края */}
-    <line x1="41" y1="6" x2="41" y2="82" stroke={light} strokeWidth="1" opacity="0.5"/>
-    {/* Золотой зазор */}
-    <line x1="36" y1="4" x2="36" y2="84" stroke={accent} strokeWidth="1" opacity="0.4"/>
-    {/* Порог */}
-    <rect x="4" y="84" width="64" height="2" rx="1" fill={accent} opacity="0.4"/>
+// Вариант 3 · ВЕРТИКАЛЬ-АКЦЕНТ (минималистичная лигатура)
+// Все три буквы на одной опорной вертикали; стойки вырастают из неё
+const Ligature3 = ({ col = "#F5EFE0", accent = "#C8A96E", size = 1 }: { col?: string; accent?: string; size?: number }) => (
+  <svg width={108 * size} height={80 * size} viewBox="0 0 108 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+    {/* Главная вертикаль — позвоночник всей лигатуры */}
+    <line x1="54" y1="8" x2="54" y2="72" stroke={accent} strokeWidth="2" opacity="0.7"/>
+    {/* М: левая стойка */}
+    <line x1="8" y1="14" x2="8" y2="66" stroke={col} strokeWidth="3" strokeLinecap="round"/>
+    {/* М: диагонали к позвоночнику */}
+    <line x1="8" y1="14" x2="54" y2="40" stroke={col} strokeWidth="3" strokeLinecap="round"/>
+    <line x1="8" y1="66" x2="54" y2="40" stroke={col} strokeWidth="3" strokeLinecap="round"/>
+    {/* Д: верхняя горизонталь от позвоночника */}
+    <line x1="54" y1="14" x2="78" y2="14" stroke={col} strokeWidth="3" strokeLinecap="round"/>
+    {/* Д: правая стойка */}
+    <line x1="78" y1="14" x2="78" y2="66" stroke={col} strokeWidth="3" strokeLinecap="round"/>
+    {/* Д: нижняя горизонталь */}
+    <line x1="50" y1="66" x2="82" y2="66" stroke={col} strokeWidth="3" strokeLinecap="round"/>
+    {/* Д: ножка */}
+    <line x1="78" y1="66" x2="78" y2="73" stroke={col} strokeWidth="2.5" strokeLinecap="round"/>
+    <line x1="54" y1="66" x2="54" y2="73" stroke={col} strokeWidth="2.5" strokeLinecap="round"/>
+    {/* К: лучи от позвоночника вправо — верхний */}
+    <line x1="54" y1="40" x2="100" y2="14" stroke={col} strokeWidth="3" strokeLinecap="round"/>
+    {/* К: нижний луч */}
+    <line x1="54" y1="40" x2="100" y2="66" stroke={col} strokeWidth="3" strokeLinecap="round"/>
+    {/* К: тонкий акцент — дополнительная короткая горизонталь */}
+    <line x1="54" y1="40" x2="68" y2="40" stroke={accent} strokeWidth="2" strokeLinecap="round"/>
   </svg>
 );
 
-// Вариант Г: Монолит — заливка золотом + светлый фон, максимальный контраст
-const SymbolD = ({ accent = "#C8A96E", light = "#F5EFE0", bg = "transparent", size = 1 }: { accent?: string; light?: string; bg?: string; size?: number }) => (
-  <svg width={72 * size} height={88 * size} viewBox="0 0 72 88" fill="none" xmlns="http://www.w3.org/2000/svg">
-    {/* Левое полотно — залитое */}
-    <rect x="4" y="4" width="28" height="80" rx="1" fill={accent} opacity="0.15"/>
-    <rect x="4" y="4" width="28" height="80" rx="1" stroke={accent} strokeWidth="1.5" fill="none" opacity="0.7"/>
-    {/* Левый багет — внутренняя рамка светлая */}
-    <rect x="9" y="9" width="18" height="70" rx="0.5" stroke={light} strokeWidth="1" fill="none" opacity="0.5"/>
-    {/* Горизонтальные деления — как фрезеровка */}
-    <line x1="9" y1="33" x2="27" y2="33" stroke={light} strokeWidth="0.7" opacity="0.35"/>
-    <line x1="9" y1="61" x2="27" y2="61" stroke={light} strokeWidth="0.7" opacity="0.35"/>
-    {/* Правое полотно — залитое */}
-    <rect x="40" y="4" width="28" height="80" rx="1" fill={accent} opacity="0.15"/>
-    <rect x="40" y="4" width="28" height="80" rx="1" stroke={accent} strokeWidth="1.5" fill="none" opacity="0.7"/>
-    {/* Правый багет — внутренняя рамка */}
-    <rect x="45" y="9" width="18" height="70" rx="0.5" stroke={light} strokeWidth="1" fill="none" opacity="0.5"/>
-    <line x1="45" y1="33" x2="63" y2="33" stroke={light} strokeWidth="0.7" opacity="0.35"/>
-    <line x1="45" y1="61" x2="63" y2="61" stroke={light} strokeWidth="0.7" opacity="0.35"/>
-    {/* Зазор */}
-    <line x1="36" y1="4" x2="36" y2="84" stroke={accent} strokeWidth="1.2" opacity="0.5"/>
-    {/* Порог — акцентная полоса */}
-    <rect x="4" y="84" width="64" height="2.5" rx="1" fill={accent} opacity="0.6"/>
+// Вариант 4 · МОНОГРАММА-НАСЛОЕНИЕ
+// М крупная, Д наложена со смещением, К вырастает из правой стойки Д
+// Всё нарисовано тонкими геометрическими линиями — современный стиль
+const Ligature4 = ({ col = "#F5EFE0", accent = "#C8A96E", size = 1 }: { col?: string; accent?: string; size?: number }) => (
+  <svg width={96 * size} height={96 * size} viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
+    {/* М — широкая, занимает весь квадрат */}
+    <line x1="6" y1="18" x2="6" y2="78" stroke={col} strokeWidth="2.5" strokeLinecap="round" opacity="0.55"/>
+    <polyline points="6,18 48,54 90,18" stroke={col} strokeWidth="2.5" strokeLinejoin="round" strokeLinecap="round" fill="none" opacity="0.55"/>
+    <line x1="90" y1="18" x2="90" y2="78" stroke={col} strokeWidth="2.5" strokeLinecap="round" opacity="0.55"/>
+    {/* Д — смещена вниз и центрирована, золотые штрихи */}
+    <line x1="24" y1="36" x2="24" y2="78" stroke={accent} strokeWidth="2" strokeLinecap="round"/>
+    <line x1="24" y1="36" x2="72" y2="36" stroke={accent} strokeWidth="2" strokeLinecap="round"/>
+    <line x1="72" y1="36" x2="72" y2="78" stroke={accent} strokeWidth="2" strokeLinecap="round"/>
+    <line x1="20" y1="78" x2="76" y2="78" stroke={accent} strokeWidth="2" strokeLinecap="round"/>
+    <line x1="24" y1="78" x2="24" y2="84" stroke={accent} strokeWidth="1.8" strokeLinecap="round"/>
+    <line x1="72" y1="78" x2="72" y2="84" stroke={accent} strokeWidth="1.8" strokeLinecap="round"/>
+    {/* К — из правой стойки Д */}
+    <line x1="72" y1="57" x2="90" y2="36" stroke={col} strokeWidth="2.5" strokeLinecap="round"/>
+    <line x1="72" y1="57" x2="90" y2="78" stroke={col} strokeWidth="2.5" strokeLinecap="round"/>
+    {/* Акцентная точка — узел К */}
+    <circle cx="72" cy="57" r="2.5" fill={accent}/>
   </svg>
 );
 
-const LogoMark = ({ dark = false, size = 1, variant = 1, accent, light, bg }: { dark?: boolean; size?: number; variant?: number; accent?: string; light?: string; bg?: string }) => {
+const LogoMark = ({ size = 1, variant = 1, col, accent }: { size?: number; variant?: number; col?: string; accent?: string; dark?: boolean; light?: string; bg?: string }) => {
+  const c = col ?? "#F5EFE0";
   const a = accent ?? "#C8A96E";
-  const l = light ?? (dark ? "#0F0E0C" : "#F5EFE0");
-  const b = bg ?? "transparent";
-  if (variant === 2) return <SymbolB accent={a} light={l} bg={b} size={size} />;
-  if (variant === 3) return <SymbolC accent={a} light={l} bg={b} size={size} />;
-  if (variant === 4) return <SymbolD accent={a} light={l} bg={b} size={size} />;
-  return <SymbolA accent={a} light={l} bg={b} size={size} />;
+  if (variant === 2) return <Ligature2 col={c} accent={a} size={size} />;
+  if (variant === 3) return <Ligature3 col={c} accent={a} size={size} />;
+  if (variant === 4) return <Ligature4 col={c} accent={a} size={size} />;
+  return <Ligature1 col={c} accent={a} size={size} />;
 };
 
 const LogoFull = ({ variant = "dark", size = 1, monogram = 1 }: { variant?: "dark" | "light" | "mono-dark" | "mono-light"; size?: number; monogram?: number }) => {
   const isDark = variant === "dark" || variant === "mono-dark";
   const bg = isDark ? "#0F0E0C" : "#F5EFE0";
   const textColor = isDark ? "#F5EFE0" : "#0F0E0C";
-  const gold = variant.startsWith("mono") ? textColor : "#C8A96E";
   const subtitleColor = variant.startsWith("mono") ? textColor : "#8A8070";
-
-  const accentCol = variant.startsWith("mono") ? textColor : "#C8A96E";
-  const lightCol = isDark ? "#F5EFE0" : "#1A1814";
+  const colVal = isDark ? "#F5EFE0" : "#0F0E0C";
+  const accentVal = variant.startsWith("mono") ? textColor : "#C8A96E";
 
   return (
     <div style={{ background: bg, padding: `${20 * size}px ${28 * size}px`, display: "inline-flex", alignItems: "center", gap: `${20 * size}px`, borderRadius: `${4 * size}px` }}>
-      <LogoMark dark={!isDark} size={size * 0.6} variant={monogram} accent={accentCol} light={lightCol} />
+      <LogoMark size={size * 0.55} variant={monogram} col={colVal} accent={accentVal} />
       <div style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
         <div style={{ fontFamily: '"Cormorant Garamond", serif', fontWeight: 600, fontSize: `${34 * size}px`, color: textColor, letterSpacing: `${7 * size}px`, lineHeight: 1 }}>
           {BRAND_NAME}
@@ -437,52 +455,35 @@ export default function Index() {
         {activeTab === "variants" && (
           <Section id="variants" label="01 · Варианты логотипа">
 
-            {/* Референс */}
-            <div className="rounded-xl overflow-hidden border border-brand-gold border-opacity-20 mb-8">
-              <div className="px-4 py-2.5 border-b border-brand-gold border-opacity-10 bg-brand-dark">
-                <span className="text-xs text-brand-gold tracking-widest uppercase">Референс · Концепция «два полотна»</span>
-              </div>
-              <div className="grid grid-cols-2">
-                <div className="flex items-center justify-center p-6" style={{ background: "#6B6B72" }}>
-                  <img src="https://cdn.poehali.dev/projects/09f16a6e-be66-48d6-bebd-d73db1df54a7/bucket/72ea0c81-3472-4954-83f1-40a11f0ac5b1.png" alt="Референс" className="w-full max-w-[240px] rounded" />
-                </div>
-                <div className="flex flex-col justify-center p-6 gap-3" style={{ background: "#1A1916" }}>
-                  <p className="text-xs text-brand-gold tracking-widest uppercase">Идея символа</p>
-                  <p className="text-sm text-brand-cream" style={{ lineHeight: 1.7 }}>Два вертикальных прямоугольника — два полотна двустворчатой двери с накладным багетом. Простая геометрия, которую невозможно перепутать с чем-то другим.</p>
-                  <p className="text-xs text-brand-stone mt-1">Ниже — 4 варианта адаптации для МДК в фирменной палитре антрацит + золото</p>
-                </div>
-              </div>
-            </div>
+            <p className="text-brand-stone text-sm mb-8">4 лигатуры МДК — буквы соединены общими штрихами в единый знак. Каждый вариант в тёмной и светлой версии.</p>
 
-            <p className="text-brand-stone text-sm mb-6">4 интерпретации символа двух полотен — от минимализма до объёма. Каждый в тёмной и светлой версии.</p>
-
-            {/* 4 варианта */}
+            {/* 4 лигатуры */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-8">
               {[
-                { num: 1, title: "Классик", desc: "Чистые прямоугольники с тонкой внутренней рамкой-багетом. Максимальный минимализм" },
-                { num: 2, title: "Акцент", desc: "Золотая рамка, ручки на каждом полотне, вертикальный зазор между створками" },
-                { num: 3, title: "Объём", desc: "Тени, двойной багет, подсветка краёв — имитация глубины и рельефа эмалевого покрытия" },
-                { num: 4, title: "Монолит", desc: "Золотая заливка + горизонтальные деления как фрезеровка на полотне. Фактурно и солидно" },
+                { num: 1, title: "Общая вертикаль", desc: "Правая стойка М = левая стойка Д = левая стойка К. Три буквы на одном каркасе" },
+                { num: 2, title: "Связующая дуга", desc: "Буквы соединены золотыми дугами-мостами над общей базовой линией" },
+                { num: 3, title: "Позвоночник", desc: "Центральная вертикаль — общий стержень. М раскрывается влево, Д и К — вправо" },
+                { num: 4, title: "Наслоение", desc: "М — тонкий фон, Д — золотая поверх, К вырастает из правой стойки Д. Глубина через прозрачность" },
               ].map(({ num, title, desc }) => (
                 <div key={num} className="rounded-xl overflow-hidden border border-brand-gold border-opacity-20">
-                  <div className="px-4 py-2.5 flex items-center justify-between border-b border-brand-gold border-opacity-10 bg-brand-dark">
+                  <div className="px-4 py-2.5 flex items-center border-b border-brand-gold border-opacity-10 bg-brand-dark">
                     <span className="text-xs text-brand-gold tracking-widest uppercase">Вариант {num} · {title}</span>
                   </div>
                   <div className="grid grid-cols-2">
                     {/* Тёмный */}
-                    <div className="flex flex-col items-center justify-center py-10 gap-5" style={{ background: "#0F0E0C" }}>
-                      <LogoMark size={1.05} variant={num} />
+                    <div className="flex flex-col items-center justify-center py-10 gap-6" style={{ background: "#0F0E0C" }}>
+                      <LogoMark size={0.85} variant={num} col="#F5EFE0" accent="#C8A96E" />
                       <div className="text-center px-4">
-                        <p style={{ fontFamily: '"Cormorant Garamond", serif', fontWeight: 600, fontSize: 26, color: "#F5EFE0", letterSpacing: 7, lineHeight: 1 }}>{BRAND_NAME}</p>
-                        <p style={{ fontFamily: "Montserrat", fontWeight: 300, fontSize: 6.5, color: "#8A8070", letterSpacing: 2.5, marginTop: 5, textTransform: "uppercase" }}>{BRAND_TAGLINE}</p>
+                        <p style={{ fontFamily: '"Cormorant Garamond", serif', fontWeight: 600, fontSize: 26, color: "#F5EFE0", letterSpacing: 8, lineHeight: 1 }}>{BRAND_NAME}</p>
+                        <p style={{ fontFamily: "Montserrat", fontWeight: 300, fontSize: 6, color: "#8A8070", letterSpacing: 2.5, marginTop: 6, textTransform: "uppercase" }}>{BRAND_TAGLINE}</p>
                       </div>
                     </div>
                     {/* Светлый */}
-                    <div className="flex flex-col items-center justify-center py-10 gap-5" style={{ background: "#F5EFE0" }}>
-                      <LogoMark size={1.05} variant={num} accent="#9A7040" light="#1A1814" />
+                    <div className="flex flex-col items-center justify-center py-10 gap-6" style={{ background: "#F5EFE0" }}>
+                      <LogoMark size={0.85} variant={num} col="#0F0E0C" accent="#9A7040" />
                       <div className="text-center px-4">
-                        <p style={{ fontFamily: '"Cormorant Garamond", serif', fontWeight: 600, fontSize: 26, color: "#0F0E0C", letterSpacing: 7, lineHeight: 1 }}>{BRAND_NAME}</p>
-                        <p style={{ fontFamily: "Montserrat", fontWeight: 300, fontSize: 6.5, color: "#8A8070", letterSpacing: 2.5, marginTop: 5, textTransform: "uppercase" }}>{BRAND_TAGLINE}</p>
+                        <p style={{ fontFamily: '"Cormorant Garamond", serif', fontWeight: 600, fontSize: 26, color: "#0F0E0C", letterSpacing: 8, lineHeight: 1 }}>{BRAND_NAME}</p>
+                        <p style={{ fontFamily: "Montserrat", fontWeight: 300, fontSize: 6, color: "#8A8070", letterSpacing: 2.5, marginTop: 6, textTransform: "uppercase" }}>{BRAND_TAGLINE}</p>
                       </div>
                     </div>
                   </div>
@@ -493,17 +494,14 @@ export default function Index() {
               ))}
             </div>
 
-            {/* Все варианты рядом крупно */}
+            {/* Все варианты рядом */}
             <div className="rounded-xl border border-brand-gold border-opacity-20 p-8 bg-brand-charcoal mb-8">
-              <p className="text-xs text-brand-stone tracking-widest uppercase mb-8">Сравнение — все варианты рядом, тёмный фон</p>
-              <div className="flex items-end justify-around flex-wrap gap-10">
+              <p className="text-xs text-brand-stone tracking-widest uppercase mb-10">Сравнение — все лигатуры рядом</p>
+              <div className="flex items-center justify-around flex-wrap gap-10">
                 {[1, 2, 3, 4].map((n) => (
-                  <div key={n} className="flex flex-col items-center gap-4">
-                    <LogoMark size={1.3} variant={n} />
-                    <div className="text-center">
-                      <p style={{ fontFamily: '"Cormorant Garamond", serif', fontWeight: 600, fontSize: 20, color: "#F5EFE0", letterSpacing: 5 }}>{BRAND_NAME}</p>
-                      <p className="text-xs text-brand-stone tracking-widest uppercase mt-1">{["Классик","Акцент","Объём","Монолит"][n-1]}</p>
-                    </div>
+                  <div key={n} className="flex flex-col items-center gap-5">
+                    <LogoMark size={1.1} variant={n} col="#F5EFE0" accent="#C8A96E" />
+                    <p className="text-xs text-brand-stone tracking-widest uppercase">{["Вертикаль","Дуга","Позвоночник","Наслоение"][n-1]}</p>
                   </div>
                 ))}
               </div>
