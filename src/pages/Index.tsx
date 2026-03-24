@@ -21,97 +21,93 @@ const colors = [
 // ─── ЛИГАТУРА МДК ───────────────────────────────────────────────────────────
 // Все буквы нарисованы вручную путями. Общая вертикаль — общий штрих.
 
-// Вариант 1 · ЕДИНЫЙ ШТРИХ — лигатура одним непрерывным контуром
-// М плавно переходит в Д через общую стойку; Д перетекает в К.
-// Засечки-серифы на концах, скруглённые диагонали М, элегантные пропорции.
+// Вариант 1 · НЕГАТИВНОЕ ПРОСТРАНСТВО
+// М — крупная залитая форма. Внутри через негативный вырез читается Д.
+// К — выходит из правого края М теми же пропорциями. Один цвет, заливка.
 const Ligature1 = ({ col = "#F5EFE0", size = 1 }: { col?: string; accent?: string; size?: number }) => (
-  <svg width={120 * size} height={84 * size} viewBox="0 0 120 84" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <g stroke={col} fill="none" strokeLinecap="round" strokeLinejoin="round">
-      {/* ── М ── */}
-      {/* Левая стойка М */}
-      <line x1="8" y1="70" x2="8" y2="14" strokeWidth="2.8"/>
-      {/* Засечка верх-лево */}
-      <line x1="4.5" y1="14" x2="11.5" y2="14" strokeWidth="1.8"/>
-      {/* Засечка низ-лево */}
-      <line x1="4.5" y1="70" x2="11.5" y2="70" strokeWidth="1.8"/>
-      {/* Диагональ М — левая, плавная кривая */}
-      <path d="M8 14 C8 14 16 34 22 42" strokeWidth="2.4"/>
-      {/* Диагональ М — правая, зеркально */}
-      <path d="M36 14 C36 14 28 34 22 42" strokeWidth="2.4"/>
-      {/* Правая стойка М — она же левая стойка Д */}
-      <line x1="36" y1="14" x2="36" y2="70" strokeWidth="2.8"/>
-      {/* Засечка верх-право М / верх-лево Д — общая */}
-      <line x1="32.5" y1="14" x2="39.5" y2="14" strokeWidth="1.8"/>
+  <svg width={116 * size} height={96 * size} viewBox="0 0 116 96" fill={col} xmlns="http://www.w3.org/2000/svg">
+    {/*
+      М — залитая форма с вырезом-пространством внутри.
+      evenodd: внешний контур залит, внутренний (форма Д) — прозрачный вырез.
+    */}
+    <path
+      fillRule="evenodd"
+      d="
+        M 4 6
+        L 4 90
+        L 18 90
+        L 18 6
+        L 30 6
+        L 48 38
+        L 66 6
+        L 78 6
+        L 78 90
+        L 64 90
+        L 64 6
+        Z
 
-      {/* ── Д ── */}
-      {/* Горизонталь верх Д */}
-      <line x1="36" y1="14" x2="68" y2="14" strokeWidth="2.4"/>
-      {/* Правая стойка Д — она же левая стойка К */}
-      <line x1="68" y1="14" x2="68" y2="70" strokeWidth="2.8"/>
-      {/* Горизонталь низ Д — с выступами */}
-      <line x1="30" y1="70" x2="74" y2="70" strokeWidth="2.4"/>
-      {/* Ножки Д */}
-      <line x1="36" y1="70" x2="36" y2="77" strokeWidth="2"/>
-      <line x1="68" y1="70" x2="68" y2="77" strokeWidth="2"/>
-      {/* Засечки ножек */}
-      <line x1="32.5" y1="77" x2="39.5" y2="77" strokeWidth="1.6"/>
-      <line x1="64.5" y1="77" x2="71.5" y2="77" strokeWidth="1.6"/>
-
-      {/* ── К ── */}
-      {/* Засечка верх-право Д / верх-лево К — общая */}
-      <line x1="64.5" y1="14" x2="71.5" y2="14" strokeWidth="1.8"/>
-      {/* Верхний луч К — плавная кривая от середины стойки */}
-      <path d="M68 42 C68 42 76 30 112 14" strokeWidth="2.4"/>
-      {/* Нижний луч К — симметрично */}
-      <path d="M68 42 C68 42 76 54 112 70" strokeWidth="2.4"/>
-      {/* Засечки концов К */}
-      <line x1="108.5" y1="14" x2="115.5" y2="14" strokeWidth="1.8"/>
-      <line x1="108.5" y1="70" x2="115.5" y2="70" strokeWidth="1.8"/>
-      {/* Засечка низ-право стойки К */}
-      <line x1="64.5" y1="70" x2="71.5" y2="70" strokeWidth="1.8"/>
-    </g>
+        M 20 24
+        L 20 72
+        L 30 72
+        L 48 46
+        L 62 72
+        L 62 24
+        L 50 24
+        L 48 28
+        L 46 24
+        Z
+      "
+    />
+    {/* К — выходит из правой стойки М, те же пропорции */}
+    <path d="M 78 6 L 78 44 L 108 6 L 116 6 L 84 46 L 116 90 L 107 90 L 78 50 L 78 90 L 64 90 L 64 50 L 78 50 Z" />
   </svg>
 );
 
-// Вариант 2 · ПЛАВНАЯ ЛИГАТУРА — буквы перетекают друг в друга
-// Единый цвет, утончённые пропорции. М соединяется с Д через скруглённый переход,
-// Д перетекает в К через общую стойку. Акцент — тонкая горизонталь-«порог» снизу.
+// Вариант 2 · РАЗМЕРНАЯ ЛИГАТУРА (по образцу EMS/второе фото)
+// М — крупная, занимает всю высоту. Д — среднего размера, смещена вправо и вниз,
+// делит стойку с М. К — того же размера что Д, выходит из стойки Д.
+// Все буквы — контурные, один цвет, серифный стиль, чистая геометрия.
 const Ligature2 = ({ col = "#F5EFE0", size = 1 }: { col?: string; accent?: string; size?: number }) => (
-  <svg width={120 * size} height={88 * size} viewBox="0 0 120 88" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <g stroke={col} fill="none" strokeLinecap="round" strokeLinejoin="round">
-      {/* ── М ── */}
-      <line x1="8" y1="68" x2="8" y2="14" strokeWidth="2.6"/>
-      {/* Диагонали М — скруглённый «горный пик» */}
-      <path d="M8 14 Q22 46 36 14" strokeWidth="2.3" strokeLinejoin="round"/>
-      {/* Правая стойка М плавно переходит в левую стойку Д — непрерывная линия */}
-      <line x1="36" y1="14" x2="36" y2="68" strokeWidth="2.6"/>
+  <svg width={130 * size} height={96 * size} viewBox="0 0 130 96" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <g fill={col}>
+      {/* ── М крупная (высота 80, от y=8 до y=88) ── */}
+      {/* Левая стойка М */}
+      <rect x="4" y="8" width="7" height="80"/>
+      {/* Левая диагональ М */}
+      <polygon points="4,8 11,8 34,44 27,44"/>
+      {/* Правая диагональ М */}
+      <polygon points="57,8 50,8 27,44 34,44"/>
+      {/* Правая стойка М — она же левая стойка Д (общая) */}
+      <rect x="50" y="8" width="7" height="80"/>
+      {/* Засечки М */}
+      <rect x="1" y="8" width="13" height="2.5"/>
+      <rect x="1" y="85.5" width="13" height="2.5"/>
+      <rect x="47" y="8" width="13" height="2.5"/>
 
-      {/* ── Переход М→Д: скруглённый «мост» снизу ── */}
-      <path d="M8 68 Q22 56 36 68" strokeWidth="1.6" strokeDasharray="0"/>
+      {/* ── Д (высота 58, от y=30 до y=88, сдвинута вниз) ── */}
+      {/* Верхняя перекладина Д */}
+      <rect x="50" y="30" width="38" height="5"/>
+      {/* Правая стойка Д — она же левая стойка К */}
+      <rect x="83" y="30" width="6" height="58"/>
+      {/* Нижняя перекладина Д — с выступами */}
+      <rect x="46" y="83.5" width="47" height="4.5"/>
+      {/* Ножки Д */}
+      <rect x="50" y="83.5" width="5" height="8"/>
+      <rect x="83" y="83.5" width="6" height="8"/>
+      {/* Засечки ножек */}
+      <rect x="47" y="91" width="11" height="2"/>
+      <rect x="80" y="91" width="12" height="2"/>
+      {/* Засечка верх-право Д */}
+      <rect x="80" y="30" width="13" height="2.5"/>
 
-      {/* ── Д ── */}
-      {/* Верх Д — плавно скруглён в углах */}
-      <path d="M36 14 Q52 14 68 14" strokeWidth="2.3"/>
-      <line x1="68" y1="14" x2="68" y2="68" strokeWidth="2.6"/>
-      {/* Низ Д с ножками */}
-      <line x1="30" y1="68" x2="74" y2="68" strokeWidth="2.3"/>
-      {/* Ножки — плавный скос */}
-      <path d="M36 68 Q36 74 33 77" strokeWidth="1.8"/>
-      <path d="M68 68 Q68 74 71 77" strokeWidth="1.8"/>
-
-      {/* ── Переход Д→К: тонкий мост ── */}
-      <path d="M36 68 Q52 56 68 68" strokeWidth="1.6"/>
-
-      {/* ── К ── */}
-      {/* Верхний луч — плавно выходит из центра стойки */}
-      <path d="M68 41 Q84 28 112 13" strokeWidth="2.3"/>
-      {/* Нижний луч */}
-      <path d="M68 41 Q84 54 112 69" strokeWidth="2.3"/>
-      {/* Маленькое скругление в точке схода лучей К */}
-      <circle cx="68" cy="41" r="2" fill={col} stroke="none"/>
-
-      {/* ── Элегантная горизонталь-«порог» снизу — объединяет всю лигатуру ── */}
-      <line x1="4" y1="81" x2="116" y2="81" strokeWidth="1" opacity="0.45"/>
+      {/* ── К (высота 58, от y=30 до y=88, выходит из стойки Д) ── */}
+      {/* Верхний луч К — от середины стойки */}
+      <polygon points="83,57 89,57 126,30 120,30"/>
+      {/* Нижний луч К */}
+      <polygon points="83,59 89,59 126,88 120,88"/>
+      {/* Засечки концов К */}
+      <rect x="118" y="30" width="10" height="2.5"/>
+      <rect x="118" y="85.5" width="10" height="2.5"/>
     </g>
   </svg>
 );
@@ -495,15 +491,15 @@ export default function Index() {
         {activeTab === "variants" && (
           <Section id="variants" label="01 · Варианты логотипа">
 
-            <p className="text-brand-stone text-sm mb-8">4 лигатуры МДК — буквы соединены общими штрихами в единый знак. Каждый вариант в тёмной и светлой версии.</p>
+            <p className="text-brand-stone text-sm mb-8">Буквы МДК объединены в единый знак — один цвет, простота и изысканность.</p>
 
             {/* 4 лигатуры */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-8">
               {[
-                { num: 1, title: "Засечки", desc: "Единый штрих с классическими серифами на концах. Общие стойки М–Д–К. Солидно, как гравюра" },
-                { num: 2, title: "Плавный переход", desc: "Буквы перетекают через скруглённые мосты. Горный пик М, дуги переходов, точка схода К" },
+                { num: 1, title: "Негативное пространство", desc: "М — крупная залитая форма, внутри через вырез читается Д. К выходит справа. Как на первом референсе" },
+                { num: 2, title: "Разный масштаб", desc: "М крупная на всю высоту, Д и К — меньше, смещены вниз-вправо, делят общие стойки. Как на втором референсе" },
                 { num: 3, title: "Позвоночник", desc: "Центральная вертикаль — общий стержень. М раскрывается влево, Д и К — вправо" },
-                { num: 4, title: "Наслоение", desc: "М — тонкий фон, Д — золотая поверх, К вырастает из правой стойки Д" },
+                { num: 4, title: "Наслоение", desc: "М — тонкий фон, Д — поверх, К вырастает из правой стойки Д. Глубина через прозрачность" },
               ].map(({ num, title, desc }) => (
                 <div key={num} className="rounded-xl overflow-hidden border border-brand-gold border-opacity-20">
                   <div className="px-4 py-2.5 flex items-center border-b border-brand-gold border-opacity-10 bg-brand-dark">
@@ -511,19 +507,19 @@ export default function Index() {
                   </div>
                   <div className="grid grid-cols-2">
                     {/* Тёмный */}
-                    <div className="flex flex-col items-center justify-center py-12 gap-8" style={{ background: "#0F0E0C" }}>
-                      <LogoMark size={0.82} variant={num} col="#F5EFE0" accent="#C8A96E" />
+                    <div className="flex flex-col items-center justify-center py-14 gap-8" style={{ background: "#0F0E0C" }}>
+                      <LogoMark size={0.78} variant={num} col="#F5EFE0" accent="#C8A96E" />
                       <div className="text-center px-4">
-                        <p style={{ fontFamily: '"Cormorant Garamond", serif', fontWeight: 500, fontSize: 13, color: "#F5EFE0", letterSpacing: 6, lineHeight: 1 }}>{BRAND_NAME}</p>
-                        <p style={{ fontFamily: "Montserrat", fontWeight: 300, fontSize: 5.5, color: "#5A5448", letterSpacing: 2.5, marginTop: 7, textTransform: "uppercase" }}>{BRAND_TAGLINE}</p>
+                        <p style={{ fontFamily: '"Cormorant Garamond", serif', fontWeight: 400, fontSize: 11, color: "#F5EFE0", letterSpacing: 5, lineHeight: 1 }}>{BRAND_NAME}</p>
+                        <p style={{ fontFamily: "Montserrat", fontWeight: 300, fontSize: 5, color: "#5A5448", letterSpacing: 2.5, marginTop: 7, textTransform: "uppercase" }}>{BRAND_TAGLINE}</p>
                       </div>
                     </div>
                     {/* Светлый */}
-                    <div className="flex flex-col items-center justify-center py-12 gap-8" style={{ background: "#FAF7F2" }}>
-                      <LogoMark size={0.82} variant={num} col="#0F0E0C" accent="#9A7040" />
+                    <div className="flex flex-col items-center justify-center py-14 gap-8" style={{ background: "#FAF7F2" }}>
+                      <LogoMark size={0.78} variant={num} col="#1A1814" accent="#9A7040" />
                       <div className="text-center px-4">
-                        <p style={{ fontFamily: '"Cormorant Garamond", serif', fontWeight: 500, fontSize: 13, color: "#0F0E0C", letterSpacing: 6, lineHeight: 1 }}>{BRAND_NAME}</p>
-                        <p style={{ fontFamily: "Montserrat", fontWeight: 300, fontSize: 5.5, color: "#8A8070", letterSpacing: 2.5, marginTop: 7, textTransform: "uppercase" }}>{BRAND_TAGLINE}</p>
+                        <p style={{ fontFamily: '"Cormorant Garamond", serif', fontWeight: 400, fontSize: 11, color: "#1A1814", letterSpacing: 5, lineHeight: 1 }}>{BRAND_NAME}</p>
+                        <p style={{ fontFamily: "Montserrat", fontWeight: 300, fontSize: 5, color: "#8A8070", letterSpacing: 2.5, marginTop: 7, textTransform: "uppercase" }}>{BRAND_TAGLINE}</p>
                       </div>
                     </div>
                   </div>
@@ -534,14 +530,31 @@ export default function Index() {
               ))}
             </div>
 
-            {/* Все варианты рядом */}
-            <div className="rounded-xl border border-brand-gold border-opacity-20 p-8 bg-brand-charcoal mb-8">
-              <p className="text-xs text-brand-stone tracking-widest uppercase mb-10">Сравнение — все лигатуры рядом</p>
-              <div className="flex items-center justify-around flex-wrap gap-10">
+            {/* Варианты 1 и 2 крупно — главные */}
+            <div className="rounded-xl border border-brand-gold border-opacity-20 p-10 bg-brand-charcoal mb-6">
+              <p className="text-xs text-brand-stone tracking-widest uppercase mb-10">Варианты 1 и 2 · увеличено для детального сравнения</p>
+              <div className="flex items-center justify-around flex-wrap gap-12">
+                {[1, 2].map((n) => (
+                  <div key={n} className="flex flex-col items-center gap-6">
+                    <LogoMark size={1.2} variant={n} col="#F5EFE0" accent="#C8A96E" />
+                    <div className="text-center">
+                      <p style={{ fontFamily: '"Cormorant Garamond", serif', fontWeight: 400, fontSize: 14, color: "#F5EFE0", letterSpacing: 6 }}>{BRAND_NAME}</p>
+                      <p style={{ fontFamily: "Montserrat", fontWeight: 300, fontSize: 6, color: "#5A5448", letterSpacing: 2.5, marginTop: 6, textTransform: "uppercase" }}>{BRAND_TAGLINE}</p>
+                    </div>
+                    <p className="text-xs text-brand-stone tracking-widest uppercase">{["Негатив","Масштаб"][n-1]}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Все 4 рядом мелко */}
+            <div className="rounded-xl border border-brand-gold border-opacity-10 p-6 mb-8">
+              <p className="text-xs text-brand-stone tracking-widest uppercase mb-8">Все варианты рядом</p>
+              <div className="flex items-center justify-around flex-wrap gap-8">
                 {[1, 2, 3, 4].map((n) => (
-                  <div key={n} className="flex flex-col items-center gap-5">
-                    <LogoMark size={1.1} variant={n} col="#F5EFE0" accent="#C8A96E" />
-                    <p className="text-xs text-brand-stone tracking-widest uppercase">{["Вертикаль","Дуга","Позвоночник","Наслоение"][n-1]}</p>
+                  <div key={n} className="flex flex-col items-center gap-4">
+                    <LogoMark size={0.75} variant={n} col="#F5EFE0" accent="#C8A96E" />
+                    <p className="text-xs text-brand-stone tracking-widest uppercase">{["Негатив","Масштаб","Позвоночник","Наслоение"][n-1]}</p>
                   </div>
                 ))}
               </div>
