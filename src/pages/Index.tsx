@@ -18,76 +18,68 @@ const colors = [
   { name: "Тёмное золото", hex: "#9A7040", label: "Тёмный акцент" },
 ];
 
-// ─── ЛОГОТИП МДК — авторский знак ───────────────────────────────────────────
+// ─── ЛОГОТИП МДК — геометрический блок-стиль ────────────────────────────────
 //
-// Идея: три буквы на единой горизонтальной оси.
-// М и Д делят общую правую/левую стойку.
-// Правая стойка Д = левая стойка К.
-// Буквы построены как геометрические filled-фигуры — единый цвет, чёткая форма.
-// Засечки (серифы) добавляют изящество. Пропорции выверены вручную.
+// Стиль: жирные блочные буквы вплотную. Д вписана между М и К.
+// Общие стойки срезаны под углом — диагональный стык.
+// Без засечек, без просветов. Единый цвет. Современно и мощно.
+//
+// Сетка 200×80. М: x0–72. Д: x72–128. К: x128–200.
+// Толщина стоек: 18px. Диагональный срез стыка: 12px по горизонтали.
 
-// Знак А — основной горизонтальный логотип
-// Пропорции: М шириной 52, Д шириной 40, К шириной 42. Высота 80.
-const MDKLogo = ({ col = "#F5EFE0", size = 1 }: { col?: string; size?: number }) => {
-  const s = 3.2;   // толщина стоек
-  const t = 2.0;   // толщина засечек
-  const sh = 7;    // полуширина засечки
+const MDKLogo = ({ col = "#F5EFE0", size = 1 }: { col?: string; size?: number }) => (
+  <svg width={200 * size} height={80 * size} viewBox="0 0 200 80" fill={col} xmlns="http://www.w3.org/2000/svg">
 
-  return (
-    <svg width={144 * size} height={88 * size} viewBox="0 0 144 88" fill={col} xmlns="http://www.w3.org/2000/svg">
+    {/* ══ М ══
+        Левая стойка: x0–18, y0–80
+        Правая стойка: x54–72, y0–80  (но правый край срезан вместе с Д)
+        Левая диагональ: от (18,0) к (36,40) к (54,0)
+        Правая диагональ: от (18,80) к (36,40) к (54,80) — нет, М классическая
+    */}
+    {/* Левая стойка М */}
+    <polygon points="0,0 18,0 18,80 0,80"/>
+    {/* Левый скат М (к центру сверху) */}
+    <polygon points="18,0 36,0 36,6 27,40 18,40"/>
+    {/* Правый скат М (от центра сверху) — вершина горы */}
+    <polygon points="36,0 54,0 63,0 54,40 45,40 36,6"/>
+    {/* Правая стойка М — правый край скошен (стык с Д) */}
+    <polygon points="54,0 72,0 72,80 54,80 54,40 63,0"/>
 
-      {/* ══ М ══ */}
-      {/* Левая стойка */}
-      <rect x="4" y="8" width={s} height="68"/>
-      {/* Засечка верх-лево */}
-      <rect x={4 - sh + s/2} y="8" width={sh * 2} height={t}/>
-      {/* Засечка низ-лево */}
-      <rect x={4 - sh + s/2} y={76 - t} width={sh * 2} height={t}/>
+    {/* ══ Д ══
+        Левый край срезан (стык с М): x72 сверху, x60 снизу
+        Правый край срезан (стык с К): x128 сверху, x140 снизу
+        Верхняя полка: y0–16
+        Нижняя полка: y64–80 с ножками
+        Левая стойка: x72–90 (со срезом)
+        Правая стойка: x110–128 (со срезом)
+    */}
+    {/* Верхняя полка Д — от левого среза до правого */}
+    <polygon points="72,0 128,0 128,16 72,16"/>
+    {/* Левая стойка Д (со срезом снизу слева) */}
+    <polygon points="72,16 90,16 90,64 72,64 60,80 72,80"/>
+    {/* Правая стойка Д (со срезом снизу справа) */}
+    <polygon points="110,16 128,16 128,80 140,80 128,64 110,64"/>
+    {/* Нижняя полка Д */}
+    <polygon points="60,64 140,64 140,80 60,80"/>
 
-      {/* Левая диагональ М — трапеция от левой стойки к центру */}
-      <polygon points={`4,8 ${4+s},8 ${28+s/2},46 ${28-s/2},46`}/>
-      {/* Правая диагональ М — трапеция от центра к правой стойке */}
-      <polygon points={`${52-s},8 52,8 ${28+s/2},46 ${28-s/2},46`}/>
+    {/* ══ К ══
+        Левый край срезан (стык с Д): x128 сверху, x140 снизу
+        Левая стойка: x128–146
+        Верхний луч: от середины стойки к правому верхнему углу
+        Нижний луч: от середины стойки к правому нижнему углу
+    */}
+    {/* Левая стойка К (со срезом слева) */}
+    <polygon points="128,0 146,0 146,80 128,80 140,64 140,16"/>
+    {/* Верхний луч К */}
+    <polygon points="146,34 146,46 200,0 200,0 186,0"/>
+    {/* Нижний луч К */}
+    <polygon points="146,46 146,34 186,80 200,80"/>
+    {/* Закрываем пробел между лучами у стойки */}
+    <polygon points="146,34 160,26 160,34"/>
+    <polygon points="146,46 160,54 160,46"/>
 
-      {/* Правая стойка М = левая стойка Д (общая) */}
-      <rect x={52 - s} y="8" width={s} height="68"/>
-      {/* Засечка верх-право М = верх-лево Д */}
-      <rect x={52 - s - sh + s/2} y="8" width={sh * 2} height={t}/>
-      {/* Засечка низ — только у М (нижняя правая) */}
-      <rect x={52 - s - sh + s/2} y={76 - t} width={sh * 2} height={t}/>
-
-      {/* ══ Д ══ */}
-      {/* Верхняя полка Д */}
-      <rect x={52 - s} y="8" width={40 + s} height={t + 1}/>
-      {/* Правая стойка Д = левая стойка К */}
-      <rect x={92 - s} y="8" width={s} height="68"/>
-      {/* Засечка верх-право Д = верх-лево К */}
-      <rect x={92 - s - sh + s/2} y="8" width={sh * 2} height={t}/>
-
-      {/* Нижняя полка Д (шире стоек — выступает) */}
-      <rect x={46} y={76 - t} width={50} height={t + 1}/>
-      {/* Ножки Д */}
-      <rect x={52 - s} y={76} width={s} height="8"/>
-      <rect x={92 - s} y={76} width={s} height="8"/>
-      {/* Засечки ножек */}
-      <rect x={52 - s - sh + s/2} y="84" width={sh * 2} height={t}/>
-      <rect x={92 - s - sh + s/2} y="84" width={sh * 2} height={t}/>
-
-      {/* ══ К ══ */}
-      {/* Засечка низ-право Д = низ-лево К */}
-      <rect x={92 - s - sh + s/2} y={76 - t} width={sh * 2} height={t}/>
-
-      {/* Верхний луч К — трапеция от центра стойки к верхнему правому краю */}
-      <polygon points={`${92-s},42 ${92},42 140,8 ${140-s},8`}/>
-      {/* Нижний луч К */}
-      <polygon points={`${92-s},44 ${92},44 140,76 ${140-s},76`}/>
-
-      {/* Засечки концов К */}
-      <rect x={140 - sh} y="8" width={sh * 2} height={t}/>
-      <rect x={140 - sh} y={76 - t} width={sh * 2} height={t}/>
-    </svg>
-  );
-};
+  </svg>
+);
 
 // Три варианта отображения одного знака: тёмный, светлый, золото
 const LogoMark = ({ size = 1, variant = 1, col, accent }: { size?: number; variant?: number; col?: string; accent?: string; dark?: boolean; light?: string; bg?: string }) => {
@@ -587,52 +579,60 @@ export default function Index() {
         {activeTab === "variants" && (
           <Section id="variants" label="01 · Знак МДК">
 
-            <p className="text-brand-stone text-sm mb-10">Три буквы — одна общая стойка. Засечки, чёткие пропорции, единый цвет.</p>
+            <p className="text-brand-stone text-sm mb-10">
+              Буквы М, Д, К состыкованы вплотную — диагональные срезы на стыках создают единый монолитный блок.
+            </p>
 
-            {/* Тёмный фон — главная версия */}
-            <div className="rounded-2xl mb-5 flex flex-col items-center justify-center py-20 gap-10" style={{ background: "#0F0E0C" }}>
-              <MDKLogo col="#F5EFE0" size={1.1} />
+            {/* Главная — белый на чёрном, максимальный размер */}
+            <div className="rounded-2xl mb-4 flex flex-col items-center justify-center gap-10 overflow-hidden" style={{ background: "#000000", padding: "64px 40px" }}>
+              <MDKLogo col="#FFFFFF" size={1.0} />
               <div className="text-center">
-                <p style={{ fontFamily: '"Cormorant Garamond", serif', fontWeight: 400, fontSize: 13, color: "#F5EFE0", letterSpacing: 8, lineHeight: 1 }}>
-                  {BRAND_NAME}
-                </p>
-                <p style={{ fontFamily: "Montserrat", fontWeight: 300, fontSize: 6, color: "#5A5448", letterSpacing: 3, marginTop: 8, textTransform: "uppercase" }}>
+                <p style={{ fontFamily: "Montserrat", fontWeight: 300, fontSize: 11, color: "#FFFFFF", letterSpacing: 8, textTransform: "uppercase" }}>
                   {BRAND_TAGLINE}
                 </p>
               </div>
-              <p className="text-xs tracking-widest uppercase" style={{ color: "#3A3830" }}>Основная версия · Кремовый на антраците</p>
             </div>
 
-            {/* Две версии рядом */}
-            <div className="grid grid-cols-2 gap-4 mb-5">
-              {/* Светлый фон */}
-              <div className="rounded-2xl flex flex-col items-center justify-center py-16 gap-8" style={{ background: "#FAF7F2" }}>
-                <MDKLogo col="#1A1814" size={0.85} />
-                <div className="text-center">
-                  <p style={{ fontFamily: '"Cormorant Garamond", serif', fontWeight: 400, fontSize: 11, color: "#1A1814", letterSpacing: 7, lineHeight: 1 }}>{BRAND_NAME}</p>
-                  <p style={{ fontFamily: "Montserrat", fontWeight: 300, fontSize: 5.5, color: "#8A8070", letterSpacing: 2.5, marginTop: 7, textTransform: "uppercase" }}>{BRAND_TAGLINE}</p>
-                </div>
-                <p className="text-xs tracking-widest uppercase" style={{ color: "#C0BAB0" }}>Антрацит на кремовом</p>
+            {/* Три цвета рядом */}
+            <div className="grid grid-cols-3 gap-3 mb-4">
+              {/* Кремовый на антраците */}
+              <div className="rounded-xl flex flex-col items-center justify-center gap-6 py-12 px-4" style={{ background: "#0F0E0C" }}>
+                <MDKLogo col="#F5EFE0" size={0.55} />
+                <p style={{ fontFamily: "Montserrat", fontWeight: 300, fontSize: 5, color: "#F5EFE0", letterSpacing: 3, textTransform: "uppercase", textAlign: "center" }}>{BRAND_TAGLINE}</p>
+                <p className="text-xs tracking-widest uppercase" style={{ color: "#2E2C28" }}>Кремовый</p>
               </div>
-              {/* Золото на тёмном */}
-              <div className="rounded-2xl flex flex-col items-center justify-center py-16 gap-8" style={{ background: "#0F0E0C" }}>
-                <MDKLogo col="#C8A96E" size={0.85} />
-                <div className="text-center">
-                  <p style={{ fontFamily: '"Cormorant Garamond", serif', fontWeight: 400, fontSize: 11, color: "#C8A96E", letterSpacing: 7, lineHeight: 1 }}>{BRAND_NAME}</p>
-                  <p style={{ fontFamily: "Montserrat", fontWeight: 300, fontSize: 5.5, color: "#5A5040", letterSpacing: 2.5, marginTop: 7, textTransform: "uppercase" }}>{BRAND_TAGLINE}</p>
-                </div>
-                <p className="text-xs tracking-widest uppercase" style={{ color: "#3A3830" }}>Золото на антраците</p>
+              {/* Золото на антраците */}
+              <div className="rounded-xl flex flex-col items-center justify-center gap-6 py-12 px-4" style={{ background: "#0F0E0C" }}>
+                <MDKLogo col="#C8A96E" size={0.55} />
+                <p style={{ fontFamily: "Montserrat", fontWeight: 300, fontSize: 5, color: "#C8A96E", letterSpacing: 3, textTransform: "uppercase", textAlign: "center" }}>{BRAND_TAGLINE}</p>
+                <p className="text-xs tracking-widest uppercase" style={{ color: "#2E2C28" }}>Золото</p>
+              </div>
+              {/* Антрацит на кремовом */}
+              <div className="rounded-xl flex flex-col items-center justify-center gap-6 py-12 px-4" style={{ background: "#F5EFE0" }}>
+                <MDKLogo col="#0F0E0C" size={0.55} />
+                <p style={{ fontFamily: "Montserrat", fontWeight: 300, fontSize: 5, color: "#0F0E0C", letterSpacing: 3, textTransform: "uppercase", textAlign: "center" }}>{BRAND_TAGLINE}</p>
+                <p className="text-xs tracking-widest uppercase" style={{ color: "#C0BAB0" }}>Инверсия</p>
               </div>
             </div>
 
-            {/* Мелко — только знак, без текста */}
-            <div className="rounded-xl border border-brand-gold border-opacity-15 p-8 flex items-center justify-around gap-8 flex-wrap">
-              <p className="w-full text-xs text-brand-stone tracking-widest uppercase mb-2">Знак · все цвета без подписи</p>
-              {[["#F5EFE0","#0F0E0C"],["#1A1814","#FAF7F2"],["#C8A96E","#0F0E0C"],["#9A7040","#FAF7F2"]].map(([c, bg], i) => (
-                <div key={i} className="rounded-xl flex items-center justify-center p-5" style={{ background: bg }}>
-                  <MDKLogo col={c} size={0.55} />
-                </div>
-              ))}
+            {/* Горизонтальный логотип — знак + текст рядом */}
+            <div className="rounded-2xl mb-4 flex items-center justify-center gap-10 overflow-hidden px-12 py-14" style={{ background: "#0A0906" }}>
+              <MDKLogo col="#F5EFE0" size={0.6} />
+              <div style={{ width: 1, height: 48, background: "rgba(200,169,110,0.3)" }} />
+              <div>
+                <p style={{ fontFamily: '"Cormorant Garamond", serif', fontWeight: 400, fontSize: 32, color: "#F5EFE0", letterSpacing: 10, lineHeight: 1 }}>{BRAND_NAME}</p>
+                <p style={{ fontFamily: "Montserrat", fontWeight: 300, fontSize: 7, color: "#5A5448", letterSpacing: 3, marginTop: 8, textTransform: "uppercase" }}>{BRAND_TAGLINE}</p>
+              </div>
+            </div>
+
+            {/* Золотой горизонтальный */}
+            <div className="rounded-2xl flex items-center justify-center gap-10 overflow-hidden px-12 py-14" style={{ background: "#0A0906" }}>
+              <MDKLogo col="#C8A96E" size={0.6} />
+              <div style={{ width: 1, height: 48, background: "rgba(200,169,110,0.3)" }} />
+              <div>
+                <p style={{ fontFamily: '"Cormorant Garamond", serif', fontWeight: 400, fontSize: 32, color: "#C8A96E", letterSpacing: 10, lineHeight: 1 }}>{BRAND_NAME}</p>
+                <p style={{ fontFamily: "Montserrat", fontWeight: 300, fontSize: 7, color: "#4A4030", letterSpacing: 3, marginTop: 8, textTransform: "uppercase" }}>{BRAND_TAGLINE}</p>
+              </div>
             </div>
 
           </Section>
