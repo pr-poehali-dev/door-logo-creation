@@ -20,16 +20,33 @@ const colors = [
 
 const LOGO_IMG = "https://cdn.poehali.dev/projects/09f16a6e-be66-48d6-bebd-d73db1df54a7/bucket/cda9d4dd-4e94-41c1-bb91-7862111aed04.png";
 
-const MDKLogo = ({ size = 1 }: { col?: string; size?: number }) => (
-  <img src={LOGO_IMG} alt="МДК" style={{ width: 300 * size, height: "auto", display: "block" }} />
-);
+// col: "cream" (default, #F5EFE0), "gold" (#C8A96E), "dark" (#0F0E0C)
+// mix-blend-mode: screen убирает чёрный фон — остаются только белые буквы.
+// filter перекрашивает белые буквы в нужный цвет палитры.
+const MDKLogo = ({ size = 1, col = "cream" }: { col?: "cream" | "gold" | "dark"; size?: number }) => {
+  const filterMap = {
+    cream:  "brightness(0) invert(1) sepia(1) saturate(0.1) brightness(0.97)",   // #F5EFE0 — тёплый белый
+    gold:   "brightness(0) invert(1) sepia(1) saturate(3) hue-rotate(5deg) brightness(0.82)", // #C8A96E — золото
+    dark:   "brightness(0)",  // #0F0E0C — антрацит
+  };
+  return (
+    <img
+      src={LOGO_IMG}
+      alt="МДК"
+      style={{
+        width: 300 * size,
+        height: "auto",
+        display: "block",
+        filter: filterMap[col],
+      }}
+    />
+  );
+};
 
 // Три варианта отображения одного знака: тёмный, светлый, золото
-const LogoMark = ({ size = 1, variant = 1, col, accent }: { size?: number; variant?: number; col?: string; accent?: string; dark?: boolean; light?: string; bg?: string }) => {
-  const c = col ?? "#F5EFE0";
-  const a = accent ?? "#C8A96E";
-  if (variant === 2) return <MDKLogo col={a} size={size} />;
-  return <MDKLogo col={c} size={size} />;
+const LogoMark = ({ size = 1, variant = 1, dark }: { size?: number; variant?: number; col?: string; accent?: string; dark?: boolean; light?: string; bg?: string }) => {
+  if (variant === 2) return <MDKLogo col="gold" size={size} />;
+  return <MDKLogo col={dark ? "dark" : "cream"} size={size} />;
 };
 
 // ─── КОНЦЕПТУАЛЬНЫЕ СИМВОЛЫ (без букв) ───────────────────────────────────────
@@ -132,7 +149,7 @@ const LogoFull = ({ variant = "dark", size = 1, monogram = 1 }: { variant?: "dar
 
   return (
     <div style={{ background: bg, padding: `${20 * size}px ${28 * size}px`, display: "inline-flex", alignItems: "center", gap: `${20 * size}px`, borderRadius: `${4 * size}px` }}>
-      <MDKLogo col={colVal} size={size * 0.42} />
+      <MDKLogo col={isDark ? "cream" : "dark"} size={size * 0.42} />
       <div style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
         <div style={{ fontFamily: '"Cormorant Garamond", serif', fontWeight: 600, fontSize: `${34 * size}px`, color: textColor, letterSpacing: `${7 * size}px`, lineHeight: 1 }}>
           {BRAND_NAME}
@@ -272,7 +289,7 @@ export default function Index() {
                   <div className="flex flex-col items-center justify-center py-16 gap-8 flex-1" style={{ background: "#0D0C0A" }}>
                     <Symbol col="#F5EFE0" size={1.15} />
                     <div className="text-center px-6">
-                      <MDKLogo size={0.38} />
+                      <MDKLogo col="cream" size={0.38} />
                       <p style={{ fontFamily: "Montserrat", fontWeight: 300, fontSize: 5.5, color: "#4A4840", letterSpacing: 2.5, marginTop: 6, textTransform: "uppercase" }}>Международная дверная компания</p>
                     </div>
                   </div>
@@ -342,7 +359,7 @@ export default function Index() {
                       <rect x={22} y={54} width={36} height={20} rx={1} stroke="#F5EFE0" strokeWidth={1} fill="none" opacity={0.3}/>
                     </svg>
                     <div>
-                      <MDKLogo size={0.42} />
+                      <MDKLogo col="cream" size={0.42} />
                       <p style={{ fontFamily: "Montserrat, sans-serif", fontWeight: 300, fontSize: 9, color: "#8A8070", letterSpacing: 3, marginTop: 5, textTransform: "uppercase" }}>{BRAND_TAGLINE}</p>
                     </div>
                   </div>
@@ -360,7 +377,7 @@ export default function Index() {
                       <rect x={22} y={54} width={36} height={20} rx={1} stroke="#0F0E0C" strokeWidth={1} fill="none" opacity={0.3}/>
                     </svg>
                     <div>
-                      <MDKLogo size={0.33} />
+                      <MDKLogo col="dark" size={0.33} />
                       <p style={{ fontFamily: "Montserrat, sans-serif", fontWeight: 300, fontSize: 8, color: "#8A8070", letterSpacing: 3, marginTop: 4, textTransform: "uppercase" }}>{BRAND_TAGLINE}</p>
                     </div>
                   </div>
@@ -403,7 +420,7 @@ export default function Index() {
                       <rect x={22} y={54} width={36} height={20} rx={1} stroke="#F0DFE5" strokeWidth={1} fill="none" opacity={0.3}/>
                     </svg>
                     <div>
-                      <MDKLogo size={0.42} />
+                      <MDKLogo col="cream" size={0.42} />
                       <p style={{ fontFamily: "Montserrat, sans-serif", fontWeight: 300, fontSize: 9, color: "#A07888", letterSpacing: 3, marginTop: 5, textTransform: "uppercase" }}>{BRAND_TAGLINE}</p>
                     </div>
                   </div>
@@ -421,7 +438,7 @@ export default function Index() {
                       <rect x={22} y={54} width={36} height={20} rx={1} stroke="#3B1F2B" strokeWidth={1} fill="none" opacity={0.3}/>
                     </svg>
                     <div>
-                      <MDKLogo size={0.33} />
+                      <MDKLogo col="dark" size={0.33} />
                       <p style={{ fontFamily: "Montserrat, sans-serif", fontWeight: 300, fontSize: 8, color: "#A07888", letterSpacing: 3, marginTop: 4, textTransform: "uppercase" }}>{BRAND_TAGLINE}</p>
                     </div>
                   </div>
@@ -528,7 +545,7 @@ export default function Index() {
 
             {/* Главная — белый на чёрном, максимальный размер */}
             <div className="rounded-2xl mb-4 flex flex-col items-center justify-center gap-10 overflow-hidden" style={{ background: "#000000", padding: "64px 40px" }}>
-              <MDKLogo col="#FFFFFF" size={1.0} />
+              <MDKLogo col="cream" size={1.0} />
               <div className="text-center">
                 <p style={{ fontFamily: "Montserrat", fontWeight: 300, fontSize: 11, color: "#FFFFFF", letterSpacing: 8, textTransform: "uppercase" }}>
                   {BRAND_TAGLINE}
@@ -540,19 +557,19 @@ export default function Index() {
             <div className="grid grid-cols-3 gap-3 mb-4">
               {/* Кремовый на антраците */}
               <div className="rounded-xl flex flex-col items-center justify-center gap-6 py-12 px-4" style={{ background: "#0F0E0C" }}>
-                <MDKLogo col="#F5EFE0" size={0.55} />
+                <MDKLogo col="cream" size={0.55} />
                 <p style={{ fontFamily: "Montserrat", fontWeight: 300, fontSize: 5, color: "#F5EFE0", letterSpacing: 3, textTransform: "uppercase", textAlign: "center" }}>{BRAND_TAGLINE}</p>
                 <p className="text-xs tracking-widest uppercase" style={{ color: "#2E2C28" }}>Кремовый</p>
               </div>
               {/* Золото на антраците */}
               <div className="rounded-xl flex flex-col items-center justify-center gap-6 py-12 px-4" style={{ background: "#0F0E0C" }}>
-                <MDKLogo col="#C8A96E" size={0.55} />
+                <MDKLogo col="gold" size={0.55} />
                 <p style={{ fontFamily: "Montserrat", fontWeight: 300, fontSize: 5, color: "#C8A96E", letterSpacing: 3, textTransform: "uppercase", textAlign: "center" }}>{BRAND_TAGLINE}</p>
                 <p className="text-xs tracking-widest uppercase" style={{ color: "#2E2C28" }}>Золото</p>
               </div>
               {/* Антрацит на кремовом */}
               <div className="rounded-xl flex flex-col items-center justify-center gap-6 py-12 px-4" style={{ background: "#F5EFE0" }}>
-                <MDKLogo col="#0F0E0C" size={0.55} />
+                <MDKLogo col="dark" size={0.55} />
                 <p style={{ fontFamily: "Montserrat", fontWeight: 300, fontSize: 5, color: "#0F0E0C", letterSpacing: 3, textTransform: "uppercase", textAlign: "center" }}>{BRAND_TAGLINE}</p>
                 <p className="text-xs tracking-widest uppercase" style={{ color: "#C0BAB0" }}>Инверсия</p>
               </div>
@@ -560,7 +577,7 @@ export default function Index() {
 
             {/* Горизонтальный логотип — знак + текст рядом */}
             <div className="rounded-2xl mb-4 flex items-center justify-center gap-10 overflow-hidden px-12 py-14" style={{ background: "#0A0906" }}>
-              <MDKLogo col="#F5EFE0" size={0.6} />
+              <MDKLogo col="cream" size={0.6} />
               <div style={{ width: 1, height: 48, background: "rgba(200,169,110,0.3)" }} />
               <div>
                 <p style={{ fontFamily: '"Cormorant Garamond", serif', fontWeight: 400, fontSize: 32, color: "#F5EFE0", letterSpacing: 10, lineHeight: 1 }}>{BRAND_NAME}</p>
@@ -570,7 +587,7 @@ export default function Index() {
 
             {/* Золотой горизонтальный */}
             <div className="rounded-2xl flex items-center justify-center gap-10 overflow-hidden px-12 py-14" style={{ background: "#0A0906" }}>
-              <MDKLogo col="#C8A96E" size={0.6} />
+              <MDKLogo col="gold" size={0.6} />
               <div style={{ width: 1, height: 48, background: "rgba(200,169,110,0.3)" }} />
               <div>
                 <p style={{ fontFamily: '"Cormorant Garamond", serif', fontWeight: 400, fontSize: 32, color: "#C8A96E", letterSpacing: 10, lineHeight: 1 }}>{BRAND_NAME}</p>
@@ -826,7 +843,7 @@ export default function Index() {
                   >
                     <LogoMark size={0.8} />
                     <div className="mt-3 text-center">
-                      <MDKLogo size={0.35} />
+                      <MDKLogo col="cream" size={0.35} />
                       <p className="font-sans text-xs text-brand-stone tracking-[0.2em] uppercase mt-1">{BRAND_TAGLINE}</p>
                     </div>
                   </div>
@@ -844,7 +861,7 @@ export default function Index() {
                     style={{ border: "2px solid #0F0E0C" }}
                   >
                     <LogoMark dark size={0.5} />
-                    <MDKLogo size={0.22} />
+                    <MDKLogo col="dark" size={0.22} />
                   </div>
                 </div>
                 <div className="px-5 py-3 border-t border-brand-gold border-opacity-10">
@@ -916,7 +933,7 @@ export default function Index() {
                 <div className="bg-brand-charcoal p-8 flex flex-col justify-between">
                   <div>
                     <div className="flex items-center gap-3 mb-6">
-                      <MDKLogo size={0.28} />
+                      <MDKLogo col="cream" size={0.28} />
                       <div>
                         <p className="font-sans text-xs text-brand-stone tracking-widest uppercase" style={{ fontSize: 8 }}>{BRAND_TAGLINE}</p>
                       </div>
@@ -1038,7 +1055,7 @@ export default function Index() {
           <p className="font-sans text-xs text-brand-stone tracking-widest uppercase">
             МДК · Международная Дверная Компания © 2024
           </p>
-          <MDKLogo size={0.28} />
+          <MDKLogo col="cream" size={0.28} />
         </div>
       </div>
     </div>
