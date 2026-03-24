@@ -10,12 +10,12 @@ const IMG_MOCKUP = "https://cdn.poehali.dev/projects/09f16a6e-be66-48d6-bebd-d73
 const IMG_SHOWROOM = "https://cdn.poehali.dev/projects/09f16a6e-be66-48d6-bebd-d73db1df54a7/files/faffcab9-610a41f8-be7a-adefe2227f7c.jpg";
 
 const colors = [
-  { name: "Антрацит", hex: "#0F0E0C", label: "Основной" },
-  { name: "Золото", hex: "#C8A96E", label: "Акцент" },
-  { name: "Кремовый", hex: "#F5EFE0", label: "Фон" },
-  { name: "Камень", hex: "#8A8070", label: "Нейтральный" },
-  { name: "Тёплый белый", hex: "#FAF7F2", label: "Светлый" },
-  { name: "Тёмное золото", hex: "#9A7040", label: "Тёмный акцент" },
+  { name: "Баклажан", hex: "#3B1F2B", label: "Основной тёмный" },
+  { name: "Кварц", hex: "#C9A0B0", label: "Акцент" },
+  { name: "Пудра", hex: "#F0DFE5", label: "Светлый тон" },
+  { name: "Пепельная роза", hex: "#A07888", label: "Нейтральный" },
+  { name: "Розовый туман", hex: "#E8C9D3", label: "Фон" },
+  { name: "Слива", hex: "#5C2D45", label: "Тёмный акцент" },
 ];
 
 const LOGO_IMG = "https://cdn.poehali.dev/projects/09f16a6e-be66-48d6-bebd-d73db1df54a7/bucket/cda9d4dd-4e94-41c1-bb91-7862111aed04.png";
@@ -35,7 +35,7 @@ const LogoMark = ({ size = 1, variant = 1, dark }: { size?: number; variant?: nu
 // Символ 1 · ПРОФИЛЬ БАГЕТА
 // Вид сечения рамки в разрезе: внешний прямоугольник + скошенный внутренний контур.
 // Простая форма, прямая отсылка к продукту.
-const SymbolBaguette = ({ col = "#F5EFE0", size = 1 }: { col?: string; size?: number }) => (
+const SymbolBaguette = ({ col = "#F0DFE5", size = 1 }: { col?: string; size?: number }) => (
   <svg width={80 * size} height={80 * size} viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
     {/* Внешний контур — прямоугольник */}
     <rect x="4" y="4" width="72" height="72" stroke={col} strokeWidth="3" fill="none"/>
@@ -55,7 +55,7 @@ const SymbolBaguette = ({ col = "#F5EFE0", size = 1 }: { col?: string; size?: nu
 // Символ 2 · ДВЕРНОЙ ПРОЁМ — арка
 // П-образный проём с полукруглым верхом. Узнаваем мгновенно, без лишних деталей.
 // Единая толщина линии, квадратный формат.
-const SymbolArch = ({ col = "#F5EFE0", size = 1 }: { col?: string; size?: number }) => (
+const SymbolArch = ({ col = "#F0DFE5", size = 1 }: { col?: string; size?: number }) => (
   <svg width={72 * size} height={88 * size} viewBox="0 0 72 88" fill="none" xmlns="http://www.w3.org/2000/svg">
     {/* Проём: две стойки + полукруглая арка наверху */}
     <path
@@ -75,7 +75,7 @@ const SymbolArch = ({ col = "#F5EFE0", size = 1 }: { col?: string; size?: number
 // Символ 3 · ЗАМОЧНАЯ СКВАЖИНА
 // Круг + вертикальный треугольник снизу. Дверь, вход, открытие.
 // Залитая форма — максимальная лаконичность.
-const SymbolKeyhole = ({ col = "#F5EFE0", size = 1 }: { col?: string; size?: number }) => (
+const SymbolKeyhole = ({ col = "#F0DFE5", size = 1 }: { col?: string; size?: number }) => (
   <svg width={56 * size} height={88 * size} viewBox="0 0 56 88" fill={col} xmlns="http://www.w3.org/2000/svg">
     {/* Круг */}
     <circle cx="28" cy="28" r="22"/>
@@ -100,7 +100,7 @@ const SymbolKeyhole = ({ col = "#F5EFE0", size = 1 }: { col?: string; size?: num
 // Символ 4 · ДВЕРНАЯ ПЕТЛЯ
 // Три горизонтальные полосы с прямоугольными «ушами» — стилизованная петля.
 // Абстрактно, но профессионально: знает только тот, кто связан с дверями.
-const SymbolHinge = ({ col = "#F5EFE0", size = 1 }: { col?: string; size?: number }) => (
+const SymbolHinge = ({ col = "#F0DFE5", size = 1 }: { col?: string; size?: number }) => (
   <svg width={64 * size} height={80 * size} viewBox="0 0 64 80" fill={col} xmlns="http://www.w3.org/2000/svg">
     {/* Центральная ось — вертикальная полоса */}
     <rect x="28" y="4" width="8" height="72" opacity="0.3"/>
@@ -122,11 +122,11 @@ const SymbolHinge = ({ col = "#F5EFE0", size = 1 }: { col?: string; size?: numbe
 
 const LogoFull = ({ variant = "dark", size = 1, monogram = 1 }: { variant?: "dark" | "light" | "mono-dark" | "mono-light"; size?: number; monogram?: number }) => {
   const isDark = variant === "dark" || variant === "mono-dark";
-  const bg = isDark ? "#0F0E0C" : "#F5EFE0";
-  const textColor = isDark ? "#F5EFE0" : "#0F0E0C";
-  const subtitleColor = variant.startsWith("mono") ? textColor : "#8A8070";
-  const colVal = isDark ? "#F5EFE0" : "#0F0E0C";
-  const accentVal = variant.startsWith("mono") ? textColor : "#C8A96E";
+  const bg = isDark ? "#3B1F2B" : "#F0DFE5";
+  const textColor = isDark ? "#F0DFE5" : "#3B1F2B";
+  const subtitleColor = variant.startsWith("mono") ? textColor : "#A07888";
+  const colVal = isDark ? "#F0DFE5" : "#3B1F2B";
+  const accentVal = variant.startsWith("mono") ? textColor : "#C9A0B0";
 
   return (
     <div style={{ background: bg, padding: `${20 * size}px ${28 * size}px`, display: "inline-flex", alignItems: "center", gap: `${20 * size}px`, borderRadius: `${4 * size}px` }}>
@@ -175,7 +175,7 @@ const tabs = [
 export default function Index() {
   const [activeTab, setActiveTab] = useState("concepts");
   const [copied, setCopied] = useState<string | null>(null);
-  const [paletteMode, setPaletteMode] = useState<"gold" | "plum">("gold");
+  const [paletteMode, setPaletteMode] = useState<"gold" | "plum">("plum");
 
   const copyHex = (hex: string) => {
     navigator.clipboard.writeText(hex);
@@ -190,7 +190,7 @@ export default function Index() {
         <div
           className="absolute inset-0 opacity-5"
           style={{
-            backgroundImage: `repeating-linear-gradient(0deg, transparent, transparent 40px, #C8A96E 40px, #C8A96E 41px), repeating-linear-gradient(90deg, transparent, transparent 40px, #C8A96E 40px, #C8A96E 41px)`,
+            backgroundImage: `repeating-linear-gradient(0deg, transparent, transparent 40px, #C9A0B0 40px, #C9A0B0 41px), repeating-linear-gradient(90deg, transparent, transparent 40px, #C9A0B0 40px, #C9A0B0 41px)`,
           }}
         />
         <div className="relative max-w-5xl mx-auto px-8 py-20">
@@ -199,7 +199,7 @@ export default function Index() {
             {BRAND_NAME}
           </h1>
           <p className="font-sans text-sm tracking-[0.2em] text-brand-stone uppercase">
-            {BRAND_TAGLINE} · Логотип-гайдбук
+            {BRAND_TAGLINE} · Брендбук · Палитра Б
           </p>
         </div>
       </div>
@@ -267,16 +267,16 @@ export default function Index() {
               ].map(({ Symbol, title, sub, desc, note }, i) => (
                 <div key={i} className="rounded-2xl overflow-hidden border border-brand-gold border-opacity-15 flex flex-col">
                   {/* Тёмная витрина */}
-                  <div className="flex flex-col items-center justify-center py-16 gap-8 flex-1" style={{ background: "#0D0C0A" }}>
-                    <Symbol col="#F5EFE0" size={1.15} />
+                  <div className="flex flex-col items-center justify-center py-16 gap-8 flex-1" style={{ background: "#200D17" }}>
+                    <Symbol col="#F0DFE5" size={1.15} />
                     <div className="text-center px-6">
                       <MDKLogo col="cream" size={0.38} />
-                      <p style={{ fontFamily: "Montserrat", fontWeight: 300, fontSize: 5.5, color: "#4A4840", letterSpacing: 2.5, marginTop: 6, textTransform: "uppercase" }}>Международная дверная компания</p>
+                      <p style={{ fontFamily: "Montserrat", fontWeight: 300, fontSize: 5.5, color: "#6A3A4E", letterSpacing: 2.5, marginTop: 6, textTransform: "uppercase" }}>Международная дверная компания</p>
                     </div>
                   </div>
                   {/* Светлая витрина */}
-                  <div className="flex items-center justify-center py-10" style={{ background: "#FAF7F2" }}>
-                    <Symbol col="#1A1814" size={0.7} />
+                  <div className="flex items-center justify-center py-10" style={{ background: "#F0DFE5" }}>
+                    <Symbol col="#3B1F2B" size={0.7} />
                   </div>
                   {/* Описание */}
                   <div className="px-5 py-4 bg-brand-charcoal">
@@ -294,13 +294,13 @@ export default function Index() {
             </div>
 
             {/* Золотая версия всех 4 — компактно */}
-            <div className="rounded-xl border border-brand-gold border-opacity-20 p-8" style={{ background: "#0D0C0A" }}>
-              <p className="text-xs text-brand-stone tracking-widest uppercase mb-8">Все символы · золото на антраците</p>
+            <div className="rounded-xl border border-brand-gold border-opacity-20 p-8" style={{ background: "#200D17" }}>
+              <p className="text-xs text-brand-stone tracking-widest uppercase mb-8">Все символы · кварц на баклажане</p>
               <div className="flex items-end justify-around flex-wrap gap-8">
                 {[SymbolBaguette, SymbolArch, SymbolKeyhole, SymbolHinge].map((Symbol, i) => (
                   <div key={i} className="flex flex-col items-center gap-4">
-                    <Symbol col="#C8A96E" size={0.72} />
-                    <p className="text-xs tracking-widest uppercase" style={{ color: "#5A4E38" }}>
+                    <Symbol col="#C9A0B0" size={0.72} />
+                    <p className="text-xs tracking-widest uppercase" style={{ color: "#6A3A4E" }}>
                       {["Багет","Арка","Скважина","Петля"][i]}
                     </p>
                   </div>
@@ -316,14 +316,14 @@ export default function Index() {
 
             {/* Заголовок */}
             <div className="mb-10 flex flex-col gap-1">
-              <p className="text-brand-cream text-sm">Два варианта фирменного стиля — выберите тот, что ближе к характеру бренда.</p>
+              <p className="text-brand-cream text-sm">Выбран <strong style={{ color: "#C9A0B0" }}>Вариант Б — Баклажан + Пудра</strong>. Ниже показано сравнение с отклонённым вариантом А для справки.</p>
             </div>
 
             {/* Логотипы крупно — side by side */}
             <div className="grid md:grid-cols-2 gap-4 mb-8">
 
-              {/* Вариант А — Антрацит + Золото */}
-              <div className="rounded-xl overflow-hidden border border-brand-gold border-opacity-30">
+              {/* Вариант А — Антрацит + Золото (отклонён, приглушён) */}
+              <div className="rounded-xl overflow-hidden border border-brand-gold border-opacity-30 opacity-50">
                 <div className="px-5 py-3 flex items-center justify-between" style={{ background: "#0F0E0C", borderBottom: "1px solid rgba(200,169,110,0.15)" }}>
                   <span className="text-xs tracking-widest uppercase" style={{ color: "#C8A96E" }}>Вариант А</span>
                   <span className="text-xs tracking-wider uppercase" style={{ color: "#8A8070" }}>Антрацит + Золото</span>
@@ -460,15 +460,15 @@ export default function Index() {
                 </div>
               </div>
               <div className="grid grid-cols-2 divide-x" style={{ divideColor: "rgba(200,169,110,0.1)" }}>
-                <p className="text-center py-3 text-xs tracking-widest uppercase" style={{ background: "#0A0A0A", color: "#8A8070" }}>А · Антрацит + Золото</p>
-                <p className="text-center py-3 text-xs tracking-widest uppercase" style={{ background: "#2B151F", color: "#A07888" }}>Б · Баклажан + Пудра</p>
+                <p className="text-center py-3 text-xs tracking-widest uppercase" style={{ background: "#0A0A0A", color: "#4A3A30", textDecoration: "line-through" }}>А · Антрацит + Золото</p>
+                <p className="text-center py-3 text-xs tracking-widest uppercase font-semibold" style={{ background: "#2B151F", color: "#C9A0B0" }}>✓ Б · Баклажан + Пудра</p>
               </div>
             </div>
 
             {/* Применение на визитке */}
             <div className="grid md:grid-cols-2 gap-4">
-              {/* Визитка А */}
-              <div className="rounded-lg overflow-hidden border border-brand-gold border-opacity-20 p-6 flex items-center justify-center" style={{ background: "#181614" }}>
+              {/* Визитка А — архив */}
+              <div className="rounded-lg overflow-hidden border border-brand-gold border-opacity-20 p-6 flex items-center justify-center opacity-50" style={{ background: "#181614" }}>
                 <div className="w-72 h-40 rounded-md relative overflow-hidden shadow-2xl flex flex-col justify-between p-5" style={{ background: "#0F0E0C", border: "1px solid rgba(200,169,110,0.25)" }}>
                   <div className="flex items-center gap-3">
                     <svg width={20} height={24} viewBox="0 0 80 96" fill="none">
@@ -509,8 +509,8 @@ export default function Index() {
               </div>
             </div>
             <div className="grid grid-cols-2 gap-4 mt-1">
-              <p className="text-center text-xs tracking-widest uppercase" style={{ color: "#8A8070" }}>А · Визитка</p>
-              <p className="text-center text-xs tracking-widest uppercase" style={{ color: "#A07888" }}>Б · Визитка</p>
+              <p className="text-center text-xs tracking-widest uppercase line-through" style={{ color: "#4A3A30" }}>А · Визитка</p>
+              <p className="text-center text-xs tracking-widest uppercase font-semibold" style={{ color: "#C9A0B0" }}>✓ Б · Визитка</p>
             </div>
 
           </Section>
@@ -524,11 +524,11 @@ export default function Index() {
               Буквы М, Д, К состыкованы вплотную — диагональные срезы на стыках создают единый монолитный блок.
             </p>
 
-            {/* Главная — белый на чёрном, максимальный размер */}
-            <div className="rounded-2xl mb-4 flex flex-col items-center justify-center gap-10 overflow-hidden" style={{ background: "#000000", padding: "64px 40px" }}>
+            {/* Главная — логотип на баклажане, максимальный размер */}
+            <div className="rounded-2xl mb-4 flex flex-col items-center justify-center gap-10 overflow-hidden" style={{ background: "#200D17", padding: "64px 40px" }}>
               <MDKLogo col="cream" size={1.0} />
               <div className="text-center">
-                <p style={{ fontFamily: "Montserrat", fontWeight: 300, fontSize: 11, color: "#FFFFFF", letterSpacing: 8, textTransform: "uppercase" }}>
+                <p style={{ fontFamily: "Montserrat", fontWeight: 300, fontSize: 11, color: "#F0DFE5", letterSpacing: 8, textTransform: "uppercase" }}>
                   {BRAND_TAGLINE}
                 </p>
               </div>
@@ -536,43 +536,43 @@ export default function Index() {
 
             {/* Три цвета рядом */}
             <div className="grid grid-cols-3 gap-3 mb-4">
-              {/* Кремовый на антраците */}
-              <div className="rounded-xl flex flex-col items-center justify-center gap-6 py-12 px-4" style={{ background: "#0F0E0C" }}>
+              {/* Пудровый на баклажане */}
+              <div className="rounded-xl flex flex-col items-center justify-center gap-6 py-12 px-4" style={{ background: "#3B1F2B" }}>
                 <MDKLogo col="cream" size={0.55} />
-                <p style={{ fontFamily: "Montserrat", fontWeight: 300, fontSize: 5, color: "#F5EFE0", letterSpacing: 3, textTransform: "uppercase", textAlign: "center" }}>{BRAND_TAGLINE}</p>
-                <p className="text-xs tracking-widest uppercase" style={{ color: "#2E2C28" }}>Кремовый</p>
+                <p style={{ fontFamily: "Montserrat", fontWeight: 300, fontSize: 5, color: "#F0DFE5", letterSpacing: 3, textTransform: "uppercase", textAlign: "center" }}>{BRAND_TAGLINE}</p>
+                <p className="text-xs tracking-widest uppercase" style={{ color: "#6A3A4E" }}>Пудра</p>
               </div>
-              {/* Золото на антраците */}
-              <div className="rounded-xl flex flex-col items-center justify-center gap-6 py-12 px-4" style={{ background: "#0F0E0C" }}>
+              {/* Кварц на баклажане */}
+              <div className="rounded-xl flex flex-col items-center justify-center gap-6 py-12 px-4" style={{ background: "#3B1F2B" }}>
                 <MDKLogo col="gold" size={0.55} />
-                <p style={{ fontFamily: "Montserrat", fontWeight: 300, fontSize: 5, color: "#C8A96E", letterSpacing: 3, textTransform: "uppercase", textAlign: "center" }}>{BRAND_TAGLINE}</p>
-                <p className="text-xs tracking-widest uppercase" style={{ color: "#2E2C28" }}>Золото</p>
+                <p style={{ fontFamily: "Montserrat", fontWeight: 300, fontSize: 5, color: "#C9A0B0", letterSpacing: 3, textTransform: "uppercase", textAlign: "center" }}>{BRAND_TAGLINE}</p>
+                <p className="text-xs tracking-widest uppercase" style={{ color: "#6A3A4E" }}>Кварц</p>
               </div>
-              {/* Антрацит на кремовом */}
-              <div className="rounded-xl flex flex-col items-center justify-center gap-6 py-12 px-4" style={{ background: "#F5EFE0" }}>
+              {/* Баклажан на пудре */}
+              <div className="rounded-xl flex flex-col items-center justify-center gap-6 py-12 px-4" style={{ background: "#F0DFE5" }}>
                 <MDKLogo col="dark" size={0.55} />
-                <p style={{ fontFamily: "Montserrat", fontWeight: 300, fontSize: 5, color: "#0F0E0C", letterSpacing: 3, textTransform: "uppercase", textAlign: "center" }}>{BRAND_TAGLINE}</p>
-                <p className="text-xs tracking-widest uppercase" style={{ color: "#C0BAB0" }}>Инверсия</p>
+                <p style={{ fontFamily: "Montserrat", fontWeight: 300, fontSize: 5, color: "#3B1F2B", letterSpacing: 3, textTransform: "uppercase", textAlign: "center" }}>{BRAND_TAGLINE}</p>
+                <p className="text-xs tracking-widest uppercase" style={{ color: "#C9A0B0" }}>Инверсия</p>
               </div>
             </div>
 
             {/* Горизонтальный логотип — знак + текст рядом */}
-            <div className="rounded-2xl mb-4 flex items-center justify-center gap-10 overflow-hidden px-12 py-14" style={{ background: "#0A0906" }}>
+            <div className="rounded-2xl mb-4 flex items-center justify-center gap-10 overflow-hidden px-12 py-14" style={{ background: "#200D17" }}>
               <MDKLogo col="cream" size={0.6} />
-              <div style={{ width: 1, height: 48, background: "rgba(200,169,110,0.3)" }} />
+              <div style={{ width: 1, height: 48, background: "rgba(201,160,176,0.3)" }} />
               <div>
-                <p style={{ fontFamily: '"Cormorant Garamond", serif', fontWeight: 400, fontSize: 32, color: "#F5EFE0", letterSpacing: 10, lineHeight: 1 }}>{BRAND_NAME}</p>
-                <p style={{ fontFamily: "Montserrat", fontWeight: 300, fontSize: 7, color: "#5A5448", letterSpacing: 3, marginTop: 8, textTransform: "uppercase" }}>{BRAND_TAGLINE}</p>
+                <p style={{ fontFamily: '"Cormorant Garamond", serif', fontWeight: 400, fontSize: 32, color: "#F0DFE5", letterSpacing: 10, lineHeight: 1 }}>{BRAND_NAME}</p>
+                <p style={{ fontFamily: "Montserrat", fontWeight: 300, fontSize: 7, color: "#6A3A4E", letterSpacing: 3, marginTop: 8, textTransform: "uppercase" }}>{BRAND_TAGLINE}</p>
               </div>
             </div>
 
-            {/* Золотой горизонтальный */}
-            <div className="rounded-2xl flex items-center justify-center gap-10 overflow-hidden px-12 py-14" style={{ background: "#0A0906" }}>
+            {/* Кварцевый горизонтальный */}
+            <div className="rounded-2xl flex items-center justify-center gap-10 overflow-hidden px-12 py-14" style={{ background: "#200D17" }}>
               <MDKLogo col="gold" size={0.6} />
-              <div style={{ width: 1, height: 48, background: "rgba(200,169,110,0.3)" }} />
+              <div style={{ width: 1, height: 48, background: "rgba(201,160,176,0.3)" }} />
               <div>
-                <p style={{ fontFamily: '"Cormorant Garamond", serif', fontWeight: 400, fontSize: 32, color: "#C8A96E", letterSpacing: 10, lineHeight: 1 }}>{BRAND_NAME}</p>
-                <p style={{ fontFamily: "Montserrat", fontWeight: 300, fontSize: 7, color: "#4A4030", letterSpacing: 3, marginTop: 8, textTransform: "uppercase" }}>{BRAND_TAGLINE}</p>
+                <p style={{ fontFamily: '"Cormorant Garamond", serif', fontWeight: 400, fontSize: 32, color: "#C9A0B0", letterSpacing: 10, lineHeight: 1 }}>{BRAND_NAME}</p>
+                <p style={{ fontFamily: "Montserrat", fontWeight: 300, fontSize: 7, color: "#6A3A4E", letterSpacing: 3, marginTop: 8, textTransform: "uppercase" }}>{BRAND_TAGLINE}</p>
               </div>
             </div>
 
@@ -725,18 +725,18 @@ export default function Index() {
                 <div
                   className="h-72 flex items-center justify-center relative"
                   style={{
-                    background: "linear-gradient(135deg, #0F0E0C 0%, #1A1915 50%, #0F0E0C 100%)",
+                    background: "linear-gradient(135deg, #200D17 0%, #3B1F2B 50%, #200D17 100%)",
                   }}
                 >
                   <div
                     className="absolute inset-0 opacity-10"
                     style={{
-                      backgroundImage: `radial-gradient(circle at 70% 50%, #C8A96E 0%, transparent 60%)`,
+                      backgroundImage: `radial-gradient(circle at 70% 50%, #C9A0B0 0%, transparent 60%)`,
                     }}
                   />
                   <div className="relative z-10 text-center">
                     <LogoFull variant="dark" size={1.4} />
-                    <p className="font-display text-lg text-brand-gold italic mt-5 tracking-wide">
+                    <p className="font-display text-lg italic mt-5 tracking-wide" style={{ color: "#C9A0B0" }}>
                       {BRAND_SLOGAN}
                     </p>
                     <p className="font-sans text-xs text-brand-stone tracking-[0.2em] uppercase mt-2">
@@ -753,13 +753,13 @@ export default function Index() {
               <div className="rounded-xl overflow-hidden border border-brand-gold border-opacity-20">
                 <div
                   className="h-64 flex items-center justify-center"
-                  style={{ background: "#F5EFE0" }}
+                  style={{ background: "#F0DFE5" }}
                 >
                   <div className="text-center">
                     <LogoFull variant="light" size={1.2} />
                     <p
                       className="font-display text-base italic mt-5 tracking-wide"
-                      style={{ color: "#9A7040" }}
+                      style={{ color: "#5C2D45" }}
                     >
                       {BRAND_SLOGAN}
                     </p>
@@ -795,18 +795,18 @@ export default function Index() {
                 <div className="bg-brand-charcoal p-8 flex items-center justify-center">
                   <div
                     className="w-72 h-40 rounded-md relative overflow-hidden shadow-2xl"
-                    style={{ background: "#0F0E0C", border: "1px solid rgba(200,169,110,0.3)" }}
+                    style={{ background: "#3B1F2B", border: "1px solid rgba(201,160,176,0.3)" }}
                   >
                     <div
                       className="absolute inset-0 opacity-10"
-                      style={{ backgroundImage: "radial-gradient(circle at 80% 20%, #C8A96E, transparent 50%)" }}
+                      style={{ backgroundImage: "radial-gradient(circle at 80% 20%, #C9A0B0, transparent 50%)" }}
                     />
                     <div className="absolute top-5 left-5">
                       <LogoFull variant="dark" size={0.5} />
                     </div>
                     <div className="absolute bottom-4 right-5 text-right">
                       <p className="text-brand-gold text-xs font-mono">+7 (800) 000-00-00</p>
-                      <p className="text-brand-stone text-xs mt-0.5">info@porta.ru</p>
+                      <p className="text-brand-stone text-xs mt-0.5">mdk-doors.ru</p>
                     </div>
                   </div>
                 </div>
@@ -820,7 +820,7 @@ export default function Index() {
                 <div className="bg-brand-dark p-8 flex items-center justify-center">
                   <div
                     className="rounded-sm flex flex-col items-center justify-center px-12 py-6"
-                    style={{ background: "#1A1915", border: "2px solid rgba(200,169,110,0.5)", minWidth: 200 }}
+                    style={{ background: "#3B1F2B", border: "2px solid rgba(201,160,176,0.5)", minWidth: 200 }}
                   >
                     <LogoMark size={0.8} />
                     <div className="mt-3 text-center">
@@ -836,10 +836,10 @@ export default function Index() {
 
               {/* Stamp */}
               <div className="rounded-lg overflow-hidden border border-brand-gold border-opacity-20">
-                <div className="bg-brand-cream p-8 flex items-center justify-center">
+                <div className="p-8 flex items-center justify-center" style={{ background: "#F0DFE5" }}>
                   <div
                     className="w-36 h-36 rounded-full flex flex-col items-center justify-center"
-                    style={{ border: "2px solid #0F0E0C" }}
+                    style={{ border: "2px solid #3B1F2B" }}
                   >
                     <LogoMark dark size={0.5} />
                     <MDKLogo col="dark" size={0.22} />
@@ -898,13 +898,13 @@ export default function Index() {
             {/* Hero карточка */}
             <div className="rounded-xl overflow-hidden border border-brand-gold border-opacity-20 mb-6">
               <div className="grid md:grid-cols-2">
-                <div className="relative overflow-hidden bg-brand-cream min-h-72 flex items-center justify-center">
+                <div className="relative overflow-hidden min-h-72 flex items-center justify-center" style={{ background: "#F0DFE5" }}>
                   <img
                     src={IMG_DOOR}
                     alt="Дверь в эмалевом покрытии"
                     className="w-full h-full object-cover absolute inset-0"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent to-brand-cream opacity-30" />
+                  <div className="absolute inset-0 opacity-30" style={{ background: "linear-gradient(to right, transparent, #F0DFE5)" }} />
                   <div className="absolute top-4 left-4">
                     <span className="bg-brand-gold text-brand-dark text-xs font-sans font-600 tracking-widest uppercase px-3 py-1 rounded-sm">
                       Premium Line
