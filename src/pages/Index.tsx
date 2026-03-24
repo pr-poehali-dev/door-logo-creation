@@ -272,7 +272,7 @@ export default function Index() {
                   <div className="flex flex-col items-center justify-center py-16 gap-8 flex-1" style={{ background: "#0D0C0A" }}>
                     <Symbol col="#F5EFE0" size={1.15} />
                     <div className="text-center px-6">
-                      <p style={{ fontFamily: '"Cormorant Garamond", serif', fontWeight: 400, fontSize: 13, color: "#F5EFE0", letterSpacing: 6 }}>МДК</p>
+                      <MDKLogo size={0.38} />
                       <p style={{ fontFamily: "Montserrat", fontWeight: 300, fontSize: 5.5, color: "#4A4840", letterSpacing: 2.5, marginTop: 6, textTransform: "uppercase" }}>Международная дверная компания</p>
                     </div>
                   </div>
@@ -342,7 +342,7 @@ export default function Index() {
                       <rect x={22} y={54} width={36} height={20} rx={1} stroke="#F5EFE0" strokeWidth={1} fill="none" opacity={0.3}/>
                     </svg>
                     <div>
-                      <p style={{ fontFamily: '"Cormorant Garamond", serif', fontWeight: 600, fontSize: 40, color: "#F5EFE0", letterSpacing: 7, lineHeight: 1 }}>{BRAND_NAME}</p>
+                      <MDKLogo size={0.42} />
                       <p style={{ fontFamily: "Montserrat, sans-serif", fontWeight: 300, fontSize: 9, color: "#8A8070", letterSpacing: 3, marginTop: 5, textTransform: "uppercase" }}>{BRAND_TAGLINE}</p>
                     </div>
                   </div>
@@ -360,7 +360,7 @@ export default function Index() {
                       <rect x={22} y={54} width={36} height={20} rx={1} stroke="#0F0E0C" strokeWidth={1} fill="none" opacity={0.3}/>
                     </svg>
                     <div>
-                      <p style={{ fontFamily: '"Cormorant Garamond", serif', fontWeight: 600, fontSize: 32, color: "#0F0E0C", letterSpacing: 6, lineHeight: 1 }}>{BRAND_NAME}</p>
+                      <MDKLogo size={0.33} />
                       <p style={{ fontFamily: "Montserrat, sans-serif", fontWeight: 300, fontSize: 8, color: "#8A8070", letterSpacing: 3, marginTop: 4, textTransform: "uppercase" }}>{BRAND_TAGLINE}</p>
                     </div>
                   </div>
@@ -403,7 +403,7 @@ export default function Index() {
                       <rect x={22} y={54} width={36} height={20} rx={1} stroke="#F0DFE5" strokeWidth={1} fill="none" opacity={0.3}/>
                     </svg>
                     <div>
-                      <p style={{ fontFamily: '"Cormorant Garamond", serif', fontWeight: 600, fontSize: 40, color: "#F0DFE5", letterSpacing: 7, lineHeight: 1 }}>{BRAND_NAME}</p>
+                      <MDKLogo size={0.42} />
                       <p style={{ fontFamily: "Montserrat, sans-serif", fontWeight: 300, fontSize: 9, color: "#A07888", letterSpacing: 3, marginTop: 5, textTransform: "uppercase" }}>{BRAND_TAGLINE}</p>
                     </div>
                   </div>
@@ -421,7 +421,7 @@ export default function Index() {
                       <rect x={22} y={54} width={36} height={20} rx={1} stroke="#3B1F2B" strokeWidth={1} fill="none" opacity={0.3}/>
                     </svg>
                     <div>
-                      <p style={{ fontFamily: '"Cormorant Garamond", serif', fontWeight: 600, fontSize: 32, color: "#3B1F2B", letterSpacing: 6, lineHeight: 1 }}>{BRAND_NAME}</p>
+                      <MDKLogo size={0.33} />
                       <p style={{ fontFamily: "Montserrat, sans-serif", fontWeight: 300, fontSize: 8, color: "#A07888", letterSpacing: 3, marginTop: 4, textTransform: "uppercase" }}>{BRAND_TAGLINE}</p>
                     </div>
                   </div>
@@ -826,7 +826,7 @@ export default function Index() {
                   >
                     <LogoMark size={0.8} />
                     <div className="mt-3 text-center">
-                      <p className="font-display text-2xl text-brand-cream tracking-[0.2em]">{BRAND_NAME}</p>
+                      <MDKLogo size={0.35} />
                       <p className="font-sans text-xs text-brand-stone tracking-[0.2em] uppercase mt-1">{BRAND_TAGLINE}</p>
                     </div>
                   </div>
@@ -844,12 +844,7 @@ export default function Index() {
                     style={{ border: "2px solid #0F0E0C" }}
                   >
                     <LogoMark dark size={0.5} />
-                    <p
-                      className="font-sans text-xs tracking-[0.2em] uppercase mt-1"
-                      style={{ color: "#0F0E0C" }}
-                    >
-                      {BRAND_NAME}
-                    </p>
+                    <MDKLogo size={0.22} />
                   </div>
                 </div>
                 <div className="px-5 py-3 border-t border-brand-gold border-opacity-10">
@@ -921,9 +916,8 @@ export default function Index() {
                 <div className="bg-brand-charcoal p-8 flex flex-col justify-between">
                   <div>
                     <div className="flex items-center gap-3 mb-6">
-                      <LogoMark size={0.4} />
+                      <MDKLogo size={0.28} />
                       <div>
-                        <p className="font-display text-lg text-brand-cream tracking-[0.15em]">{BRAND_NAME}</p>
                         <p className="font-sans text-xs text-brand-stone tracking-widest uppercase" style={{ fontSize: 8 }}>{BRAND_TAGLINE}</p>
                       </div>
                     </div>
@@ -1044,7 +1038,7 @@ export default function Index() {
           <p className="font-sans text-xs text-brand-stone tracking-widest uppercase">
             МДК · Международная Дверная Компания © 2024
           </p>
-          <p className="font-display text-brand-gold text-lg tracking-[0.2em]">{BRAND_NAME}</p>
+          <MDKLogo size={0.28} />
         </div>
       </div>
     </div>
