@@ -74,7 +74,7 @@ const CONTACTS = [
   { label: "Режим работы", value: "Пн–Пт, 9:00–18:00 МСК" },
 ];
 
-export default function LandingLight() {
+export default function LandingLight({ onSwitchTheme }: { onSwitchTheme?: () => void }) {
   const [formSent, setFormSent] = useState(false);
   const [form, setForm] = useState({ company: "", name: "", phone: "", comment: "" });
 
@@ -102,21 +102,48 @@ export default function LandingLight() {
               </a>
             ))}
           </nav>
-          <a
-            href="#contact"
-            style={{
-              fontFamily: "Montserrat",
-              fontSize: 10,
-              letterSpacing: 2,
-              color: "#FAF7F5",
-              background: C.accent,
-              padding: "10px 24px",
-              textDecoration: "none",
-              textTransform: "uppercase",
-            }}
-          >
-            Стать партнёром
-          </a>
+          <div className="flex items-center gap-3">
+            {onSwitchTheme && (
+              <button
+                onClick={onSwitchTheme}
+                title="Тёмный вариант"
+                style={{
+                  fontFamily: "Montserrat",
+                  fontSize: 9,
+                  letterSpacing: 2,
+                  color: C.textMid,
+                  background: "transparent",
+                  border: `1px solid ${C.border}`,
+                  padding: "9px 16px",
+                  cursor: "pointer",
+                  textTransform: "uppercase",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 6,
+                  transition: "border-color 0.2s",
+                }}
+                onMouseEnter={e => (e.currentTarget.style.borderColor = C.accent)}
+                onMouseLeave={e => (e.currentTarget.style.borderColor = C.border)}
+              >
+                <span style={{ fontSize: 12 }}>☾</span> Тёмный
+              </button>
+            )}
+            <a
+              href="#contact"
+              style={{
+                fontFamily: "Montserrat",
+                fontSize: 10,
+                letterSpacing: 2,
+                color: "#FAF7F5",
+                background: C.accent,
+                padding: "10px 24px",
+                textDecoration: "none",
+                textTransform: "uppercase",
+              }}
+            >
+              Стать партнёром
+            </a>
+          </div>
         </div>
       </header>
 

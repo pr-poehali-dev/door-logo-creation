@@ -82,7 +82,7 @@ const CONTACTS = [
   { label: "Режим работы", value: "Пн–Пт, 9:00–18:00 МСК" },
 ];
 
-export default function Landing() {
+export default function Landing({ onSwitchTheme }: { onSwitchTheme?: () => void }) {
   const [formSent, setFormSent] = useState(false);
   const [form, setForm] = useState({ company: "", name: "", phone: "", comment: "" });
 
@@ -110,21 +110,48 @@ export default function Landing() {
               </a>
             ))}
           </nav>
-          <a
-            href="#contact"
-            style={{
-              fontFamily: "Montserrat",
-              fontSize: 10,
-              letterSpacing: 2,
-              color: "#200D17",
-              background: "#C9A0B0",
-              padding: "10px 24px",
-              textDecoration: "none",
-              textTransform: "uppercase",
-            }}
-          >
-            Стать партнёром
-          </a>
+          <div className="flex items-center gap-3">
+            {onSwitchTheme && (
+              <button
+                onClick={onSwitchTheme}
+                title="Светлый вариант"
+                style={{
+                  fontFamily: "Montserrat",
+                  fontSize: 9,
+                  letterSpacing: 2,
+                  color: "#A07888",
+                  background: "transparent",
+                  border: "1px solid rgba(201,160,176,0.2)",
+                  padding: "9px 16px",
+                  cursor: "pointer",
+                  textTransform: "uppercase",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 6,
+                  transition: "border-color 0.2s",
+                }}
+                onMouseEnter={e => (e.currentTarget.style.borderColor = "rgba(201,160,176,0.5)")}
+                onMouseLeave={e => (e.currentTarget.style.borderColor = "rgba(201,160,176,0.2)")}
+              >
+                <span style={{ fontSize: 12 }}>☀</span> Светлый
+              </button>
+            )}
+            <a
+              href="#contact"
+              style={{
+                fontFamily: "Montserrat",
+                fontSize: 10,
+                letterSpacing: 2,
+                color: "#200D17",
+                background: "#C9A0B0",
+                padding: "10px 24px",
+                textDecoration: "none",
+                textTransform: "uppercase",
+              }}
+            >
+              Стать партнёром
+            </a>
+          </div>
         </div>
       </header>
 
