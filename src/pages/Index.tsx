@@ -171,7 +171,8 @@ const tabs = [
   { id: "carriers", label: "Носители" },
   { id: "catalog", label: "Продуктовые карточки" },
   { id: "series", label: "Каталог серий" },
-  { id: "site", label: "Сайт · B2B" },
+  { id: "site", label: "Сайт · Тёмный" },
+  { id: "site-light", label: "Сайт · Светлый" },
 ];
 
 export default function Index() {
@@ -1357,6 +1358,96 @@ export default function Index() {
                   <p style={{ fontFamily: "Montserrat", fontSize: 11, color: "#A07888", lineHeight: 1.6 }}>{desc}</p>
                 </div>
               ))}
+            </div>
+          </Section>
+        )}
+
+        {/* SITE LIGHT PREVIEW */}
+        {activeTab === "site-light" && (
+          <Section id="site-light" label="08 · Сайт · Светлый вариант">
+            <p className="text-brand-stone text-sm mb-8">
+              Альтернативный вариант оформления — кремово-белый фон, тёмный баклажановый текст.
+            </p>
+
+            {/* Переключатель режима просмотра */}
+            <div className="flex items-center justify-between mb-6 flex-wrap gap-4">
+              <div className="flex gap-1 p-1 rounded-lg bg-brand-charcoal border border-brand-gold border-opacity-20 w-fit">
+                {([["desktop", "Десктоп"], ["mobile", "Мобильный"]] as const).map(([mode, label]) => (
+                  <button
+                    key={mode}
+                    onClick={() => setSiteViewMode(mode)}
+                    className={`px-5 py-2 rounded text-xs tracking-widest uppercase transition-all duration-200 ${
+                      siteViewMode === mode ? "font-semibold" : "text-brand-stone hover:text-brand-cream"
+                    }`}
+                    style={siteViewMode === mode ? { background: "#C9A0B0", color: "#200D17" } : {}}
+                  >
+                    {label}
+                  </button>
+                ))}
+              </div>
+              <a
+                href="/light"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xs tracking-widest uppercase transition-opacity hover:opacity-70"
+                style={{ color: "#C9A0B0", fontFamily: "Montserrat" }}
+              >
+                Открыть в новой вкладке ↗
+              </a>
+            </div>
+
+            {/* Рамка браузера */}
+            <div className="rounded-xl overflow-hidden" style={{ border: "1px solid rgba(201,160,176,0.2)" }}>
+              <div className="flex items-center gap-3 px-4 py-3" style={{ background: "#3B1F2B", borderBottom: "1px solid rgba(201,160,176,0.1)" }}>
+                <div className="flex gap-1.5">
+                  {["#5C2D45","#6A3A4E","#4A2838"].map(c => (
+                    <div key={c} className="w-3 h-3 rounded-full" style={{ background: c }} />
+                  ))}
+                </div>
+                <div className="flex-1 flex items-center gap-2 px-3 py-1 rounded" style={{ background: "rgba(32,13,23,0.6)", maxWidth: 400 }}>
+                  <div className="w-2 h-2 rounded-full opacity-40" style={{ background: "#C9A0B0" }} />
+                  <span style={{ fontFamily: "Montserrat", fontSize: 10, color: "#A07888", letterSpacing: 0.5 }}>
+                    mdk-doors.ru · светлый вариант
+                  </span>
+                </div>
+              </div>
+              <div
+                className="relative overflow-hidden mx-auto transition-all duration-300"
+                style={{
+                  width: siteViewMode === "mobile" ? 390 : "100%",
+                  height: siteViewMode === "mobile" ? 700 : 720,
+                  background: "#FAF7F5",
+                }}
+              >
+                <iframe
+                  src="/light"
+                  title="МДК — светлый вариант"
+                  style={{ width: "100%", height: "100%", border: "none", display: "block" }}
+                  scrolling="yes"
+                />
+              </div>
+            </div>
+
+            {/* Сравнение */}
+            <div className="mt-8 grid md:grid-cols-2 gap-4">
+              <div className="p-5 rounded-lg" style={{ background: "#2B1520", border: "1px solid rgba(201,160,176,0.1)" }}>
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-4 h-4 rounded-sm" style={{ background: "#200D17" }} />
+                  <span style={{ fontFamily: '"Cormorant Garamond", serif', fontSize: 18, color: "#F0DFE5" }}>Тёмный вариант</span>
+                </div>
+                <p style={{ fontFamily: "Montserrat", fontSize: 11, color: "#A07888", lineHeight: 1.6 }}>
+                  Фон баклажан #200D17. Подходит для премиум-сегмента и сайтов с атмосферой luxury.
+                </p>
+              </div>
+              <div className="p-5 rounded-lg" style={{ background: "#2B1520", border: "1px solid rgba(201,160,176,0.1)" }}>
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-4 h-4 rounded-sm" style={{ background: "#FAF7F5", border: "1px solid rgba(201,160,176,0.3)" }} />
+                  <span style={{ fontFamily: '"Cormorant Garamond", serif', fontSize: 18, color: "#F0DFE5" }}>Светлый вариант</span>
+                </div>
+                <p style={{ fontFamily: "Montserrat", fontSize: 11, color: "#A07888", lineHeight: 1.6 }}>
+                  Фон кремовый #FAF7F5. Лучше читается на дневном свете, подходит для широкой аудитории.
+                </p>
+              </div>
             </div>
           </Section>
         )}
