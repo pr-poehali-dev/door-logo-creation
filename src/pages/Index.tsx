@@ -311,6 +311,72 @@ export default function Index() {
                 ))}
               </div>
             </div>
+
+            {/* Фирменный знак — дверь + название */}
+            <div className="rounded-2xl overflow-hidden" style={{ border: "1px solid rgba(201,160,176,0.15)" }}>
+              {/* Тёмная версия */}
+              <div className="relative flex flex-col items-center justify-center py-20 overflow-hidden" style={{ background: "#200D17" }}>
+                {/* Декоративные линии-направляющие */}
+                <div className="absolute inset-0 pointer-events-none" style={{ opacity: 0.04 }}>
+                  <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+                    <line x1="50%" y1="0" x2="50%" y2="100%" stroke="#C9A0B0" strokeWidth="1"/>
+                    <line x1="0" y1="50%" x2="100%" y2="50%" stroke="#C9A0B0" strokeWidth="1"/>
+                  </svg>
+                </div>
+
+                {/* Крупный SVG двери по центру */}
+                <div className="relative flex flex-col items-center gap-10">
+                  <svg width={110} height={132} viewBox="0 0 80 96" fill="none" style={{ filter: "drop-shadow(0 0 32px rgba(201,160,176,0.18))" }}>
+                    <rect x={4} y={2} width={72} height={92} rx={2} stroke="#C9A0B0" strokeWidth={2} fill="none"/>
+                    <rect x={10} y={8} width={60} height={80} rx={1} stroke="#C9A0B0" strokeWidth={1} strokeDasharray="4 2" fill="none" opacity={0.35}/>
+                    <circle cx={64} cy={48} r={4} fill="#C9A0B0"/>
+                    <line x1={18} y1={48} x2={56} y2={48} stroke="#C9A0B0" strokeWidth={1.5}/>
+                    <rect x={22} y={22} width={36} height={20} rx={1} stroke="#F0DFE5" strokeWidth={1} fill="none" opacity={0.25}/>
+                    <rect x={22} y={54} width={36} height={20} rx={1} stroke="#F0DFE5" strokeWidth={1} fill="none" opacity={0.25}/>
+                  </svg>
+
+                  {/* Название */}
+                  <div className="flex flex-col items-center gap-3">
+                    <MDKLogo col="cream" size={0.52} />
+                    <div style={{ width: 200, height: 1, background: "linear-gradient(90deg, transparent, rgba(201,160,176,0.4), transparent)" }} />
+                    <p style={{ fontFamily: "Montserrat", fontWeight: 300, fontSize: 8, letterSpacing: 4.5, color: "#6A3A4E", textTransform: "uppercase", textAlign: "center" }}>
+                      {BRAND_TAGLINE}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Светлая версия */}
+              <div className="relative flex flex-col items-center justify-center py-16 overflow-hidden" style={{ background: "#F0DFE5" }}>
+                <div className="relative flex flex-col items-center gap-8">
+                  <svg width={80} height={96} viewBox="0 0 80 96" fill="none">
+                    <rect x={4} y={2} width={72} height={92} rx={2} stroke="#3B1F2B" strokeWidth={2} fill="none"/>
+                    <rect x={10} y={8} width={60} height={80} rx={1} stroke="#3B1F2B" strokeWidth={1} strokeDasharray="4 2" fill="none" opacity={0.35}/>
+                    <circle cx={64} cy={48} r={4} fill="#3B1F2B"/>
+                    <line x1={18} y1={48} x2={56} y2={48} stroke="#3B1F2B" strokeWidth={1.5}/>
+                    <rect x={22} y={22} width={36} height={20} rx={1} stroke="#200D17" strokeWidth={1} fill="none" opacity={0.25}/>
+                    <rect x={22} y={54} width={36} height={20} rx={1} stroke="#200D17" strokeWidth={1} fill="none" opacity={0.25}/>
+                  </svg>
+
+                  <div className="flex flex-col items-center gap-2">
+                    <MDKLogo col="dark" size={0.4} />
+                    <div style={{ width: 160, height: 1, background: "linear-gradient(90deg, transparent, rgba(59,31,43,0.25), transparent)" }} />
+                    <p style={{ fontFamily: "Montserrat", fontWeight: 300, fontSize: 7.5, letterSpacing: 4, color: "#A07888", textTransform: "uppercase", textAlign: "center" }}>
+                      {BRAND_TAGLINE}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Подпись */}
+              <div className="px-5 py-4 bg-brand-charcoal flex items-center justify-between">
+                <div>
+                  <p className="text-brand-cream text-sm font-medium">Фирменный знак · Дверь</p>
+                  <p className="text-xs text-brand-stone mt-0.5">Силуэт двери как основной символ бренда</p>
+                </div>
+                <span className="text-xs text-brand-gold tracking-wider opacity-70">Знак + Логотип</span>
+              </div>
+            </div>
           </Section>
         )}
 
