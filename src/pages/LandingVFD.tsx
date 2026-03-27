@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const LOGO_IMG = "https://cdn.poehali.dev/projects/09f16a6e-be66-48d6-bebd-d73db1df54a7/bucket/cda9d4dd-4e94-41c1-bb91-7862111aed04.png";
 const IMG_DOOR = "https://cdn.poehali.dev/projects/09f16a6e-be66-48d6-bebd-d73db1df54a7/files/fec91c7e-21e1-4d36-b11a-aa8af0b97337.jpg";
@@ -165,6 +166,13 @@ export default function LandingVFD() {
                 <span style={{ fontSize: 13 }}>{isDark ? "☀" : "☽"}</span>
                 {isDark ? "Светлый" : "Тёмный"}
               </button>
+              <Link to="/door-colors"
+                style={{ fontSize: 9, letterSpacing: 2, textTransform: "uppercase", color: C.accentMid, background: "transparent", border: `1px solid ${C.accentFaint}`, padding: "9px 14px", textDecoration: "none", transition: "border-color 0.2s, color 0.2s", display: "inline-flex", alignItems: "center", gap: 5 }}
+                onMouseEnter={e => { e.currentTarget.style.borderColor = C.accentMid; e.currentTarget.style.color = C.text; }}
+                onMouseLeave={e => { e.currentTarget.style.borderColor = C.accentFaint; e.currentTarget.style.color = C.accentMid; }}
+              >
+                <span style={{ fontSize: 11 }}>◈</span> Цвета
+              </Link>
               <a href="#contact"
                 style={{ fontSize: 9, letterSpacing: 2.5, textTransform: "uppercase", color: isDark ? C.bg : "#FAF6F3", background: C.accent, padding: "11px 24px", textDecoration: "none", fontWeight: 500, transition: "opacity 0.2s" }}
                 onMouseEnter={e => (e.currentTarget.style.opacity = "0.85")}
