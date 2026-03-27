@@ -1,0 +1,769 @@
+import { useState } from "react";
+
+const LOGO_IMG = "https://cdn.poehali.dev/projects/09f16a6e-be66-48d6-bebd-d73db1df54a7/bucket/cda9d4dd-4e94-41c1-bb91-7862111aed04.png";
+const IMG_DOOR = "https://cdn.poehali.dev/projects/09f16a6e-be66-48d6-bebd-d73db1df54a7/files/fec91c7e-21e1-4d36-b11a-aa8af0b97337.jpg";
+const IMG_SHOWROOM = "https://cdn.poehali.dev/projects/09f16a6e-be66-48d6-bebd-d73db1df54a7/files/faffcab9-610a41f8-be7a-adefe2227f7c.jpg";
+
+const C = {
+  bg: "#200D17",
+  dark: "#3B1F2B",
+  darker: "#2B1520",
+  gold: "#C9A0B0",
+  goldMid: "#A07888",
+  goldDim: "#6A3A4E",
+  goldFaint: "rgba(201,160,176,0.12)",
+  cream: "#F0DFE5",
+  stone: "#A07888",
+};
+
+const NAV_LINKS = [
+  ["О компании", "#about"],
+  ["Коллекции", "#collections"],
+  ["Производство", "#production"],
+  ["Партнёрам", "#partners"],
+  ["Контакты", "#contact"],
+];
+
+const STATS = [
+  { value: "17+", label: "лет на рынке" },
+  { value: "9", label: "серий коллекций" },
+  { value: "40+", label: "моделей в каталоге" },
+  { value: "B2B", label: "только оптовые партнёры" },
+];
+
+const SERIES = [
+  { name: "Аэлита", models: 8, tag: "Хит продаж" },
+  { name: "Гармония", models: 6, tag: "" },
+  { name: "Глория", models: 8, tag: "Новинка" },
+  { name: "Грация", models: 4, tag: "" },
+  { name: "Лондон", models: 2, tag: "" },
+  { name: "Неаполь", models: 4, tag: "" },
+  { name: "Премиум", models: 6, tag: "Топ сегмент" },
+  { name: "Стелла", models: 2, tag: "" },
+  { name: "Экстра", models: 6, tag: "" },
+];
+
+const FEATURES = [
+  {
+    num: "01",
+    title: "Собственное производство",
+    desc: "Полный цикл изготовления в России. Контроль качества на каждом этапе — от заготовки до упаковки.",
+  },
+  {
+    num: "02",
+    title: "Фиксированные сроки",
+    desc: "10 рабочих дней для стандартных позиций. Для нестандартных размеров — срок согласовывается индивидуально.",
+  },
+  {
+    num: "03",
+    title: "Нестандартные размеры",
+    desc: "Ширина 600–1000 мм, высота 1900–2300 мм с шагом 50 мм. Подберём решение под любой проём.",
+  },
+  {
+    num: "04",
+    title: "Гибкие условия",
+    desc: "Объёмные скидки, отсрочка платежа, персональный менеджер. Индивидуальный подход к каждому партнёру.",
+  },
+  {
+    num: "05",
+    title: "Широкая линейка отделки",
+    desc: "Эмаль, декошпан, патина. 3 базовых цвета и нанесение по RAL на заказ от 20 единиц.",
+  },
+  {
+    num: "06",
+    title: "Документация",
+    desc: "Полный пакет: сертификаты соответствия, декларации, технические паспорта на каждую серию.",
+  },
+];
+
+const PROCESS_STEPS = [
+  { n: "1", title: "Заявка", desc: "Оставьте запрос — менеджер свяжется в течение 2 часов" },
+  { n: "2", title: "Прайс и образцы", desc: "Вышлем актуальный прайс-лист и образцы материалов" },
+  { n: "3", title: "Договор", desc: "Согласуем условия и подпишем договор поставки" },
+  { n: "4", title: "Производство", desc: "Изготовление в срок с уведомлением о готовности" },
+  { n: "5", title: "Отгрузка", desc: "Самовывоз или доставка до склада партнёра" },
+];
+
+const DoorSVG = ({ col = "#C9A0B0", size = 1 }: { col?: string; size?: number }) => (
+  <svg width={32 * size} height={42 * size} viewBox="0 0 32 42" fill="none">
+    <rect x={1} y={1} width={30} height={40} rx={1} stroke={col} strokeWidth={1.5} fill="none" />
+    <rect x={4} y={4} width={24} height={34} rx={0.5} stroke={col} strokeWidth={0.75} strokeDasharray="3 2" fill="none" opacity={0.4} />
+    <circle cx={25} cy={21} r={2} fill={col} />
+    <line x1={8} y1={21} x2={21} y2={21} stroke={col} strokeWidth={1.2} />
+    <rect x={9} y={9} width={14} height={10} rx={0.5} stroke={col} strokeWidth={0.6} fill="none" opacity={0.25} />
+    <rect x={9} y={25} width={14} height={10} rx={0.5} stroke={col} strokeWidth={0.6} fill="none" opacity={0.25} />
+  </svg>
+);
+
+const Divider = () => (
+  <div className="h-px w-full" style={{ background: C.goldFaint }} />
+);
+
+const SectionTag = ({ index, label }: { index: string; label: string }) => (
+  <div className="flex items-center gap-6 mb-16">
+    <span style={{ fontFamily: "Montserrat", fontSize: 9, letterSpacing: 4, color: C.goldDim, fontWeight: 400 }} className="uppercase shrink-0">
+      {index}
+    </span>
+    <div className="h-px flex-1" style={{ background: C.goldFaint }} />
+    <span style={{ fontFamily: "Montserrat", fontSize: 9, letterSpacing: 4, color: C.goldMid, fontWeight: 300 }} className="uppercase shrink-0">
+      {label}
+    </span>
+  </div>
+);
+
+export default function LandingVFD() {
+  const [formSent, setFormSent] = useState(false);
+  const [form, setForm] = useState({ company: "", name: "", phone: "", region: "" });
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setFormSent(true);
+  };
+
+  return (
+    <div style={{ background: C.bg, color: C.cream, fontFamily: "Montserrat, sans-serif" }} className="min-h-screen">
+
+      {/* ════════════════════ ШАПКА ════════════════════ */}
+      <header
+        style={{
+          position: "sticky",
+          top: 0,
+          zIndex: 100,
+          background: "rgba(32,13,23,0.92)",
+          backdropFilter: "blur(16px)",
+          borderBottom: `1px solid ${C.goldFaint}`,
+        }}
+      >
+        <div className="max-w-7xl mx-auto px-6 md:px-10">
+          <div className="flex items-center justify-between py-4">
+            {/* Логотип */}
+            <img src={LOGO_IMG} alt="МДК" style={{ height: 32, width: "auto" }} />
+
+            {/* Навигация — десктоп */}
+            <nav className="hidden lg:flex items-center gap-8">
+              {NAV_LINKS.map(([label, href]) => (
+                <a
+                  key={label}
+                  href={href}
+                  style={{ fontSize: 10, letterSpacing: 2.5, color: C.stone, textDecoration: "none", textTransform: "uppercase", transition: "color 0.2s" }}
+                  onMouseEnter={e => (e.currentTarget.style.color = C.gold)}
+                  onMouseLeave={e => (e.currentTarget.style.color = C.stone)}
+                >
+                  {label}
+                </a>
+              ))}
+            </nav>
+
+            {/* CTA + телефон */}
+            <div className="hidden lg:flex items-center gap-5">
+              <a
+                href="tel:+78000000000"
+                style={{ fontSize: 14, fontWeight: 500, color: C.cream, textDecoration: "none", letterSpacing: 0.5 }}
+              >
+                +7 (800) 000-00-00
+              </a>
+              <a
+                href="#contact"
+                style={{
+                  fontSize: 9,
+                  letterSpacing: 2.5,
+                  textTransform: "uppercase",
+                  color: C.bg,
+                  background: C.gold,
+                  padding: "11px 24px",
+                  textDecoration: "none",
+                  fontWeight: 500,
+                  transition: "opacity 0.2s",
+                }}
+                onMouseEnter={e => (e.currentTarget.style.opacity = "0.85")}
+                onMouseLeave={e => (e.currentTarget.style.opacity = "1")}
+              >
+                Стать партнёром
+              </a>
+            </div>
+
+            {/* Бургер — мобильный */}
+            <button
+              className="lg:hidden flex flex-col gap-1.5 p-2"
+              onClick={() => setMenuOpen(!menuOpen)}
+            >
+              {[0, 1, 2].map(i => (
+                <span key={i} style={{ display: "block", width: 22, height: 1, background: C.gold }} />
+              ))}
+            </button>
+          </div>
+
+          {/* Мобильное меню */}
+          {menuOpen && (
+            <div className="lg:hidden pb-6 flex flex-col gap-5" style={{ borderTop: `1px solid ${C.goldFaint}`, paddingTop: 20 }}>
+              {NAV_LINKS.map(([label, href]) => (
+                <a
+                  key={label}
+                  href={href}
+                  onClick={() => setMenuOpen(false)}
+                  style={{ fontSize: 11, letterSpacing: 2.5, color: C.stone, textDecoration: "none", textTransform: "uppercase" }}
+                >
+                  {label}
+                </a>
+              ))}
+              <a href="#contact" style={{ fontSize: 9, letterSpacing: 2.5, textTransform: "uppercase", color: C.bg, background: C.gold, padding: "13px 24px", textDecoration: "none", display: "inline-block", alignSelf: "flex-start", marginTop: 4 }}>
+                Стать партнёром
+              </a>
+            </div>
+          )}
+        </div>
+      </header>
+
+      {/* ════════════════════ HERO ════════════════════ */}
+      <section style={{ position: "relative", minHeight: "96vh", display: "flex", flexDirection: "column" }}>
+        {/* Фон */}
+        <div style={{ position: "absolute", inset: 0, overflow: "hidden" }}>
+          <img src={IMG_DOOR} alt="" style={{ width: "100%", height: "100%", objectFit: "cover", opacity: 0.14 }} />
+          <div style={{ position: "absolute", inset: 0, background: `linear-gradient(110deg, ${C.bg} 38%, rgba(32,13,23,0.55) 100%)` }} />
+          {/* Вертикальная сетка */}
+          <div style={{ position: "absolute", inset: 0, backgroundImage: `repeating-linear-gradient(90deg, transparent, transparent 120px, rgba(201,160,176,0.025) 120px, rgba(201,160,176,0.025) 121px)` }} />
+        </div>
+
+        {/* Контент */}
+        <div className="relative flex-1 max-w-7xl mx-auto px-6 md:px-10 w-full flex items-center" style={{ paddingTop: 100, paddingBottom: 120 }}>
+          <div style={{ maxWidth: 680 }}>
+            {/* Бейдж */}
+            <div className="flex items-center gap-4 mb-10">
+              <div style={{ width: 36, height: 1, background: C.gold }} />
+              <span style={{ fontSize: 9, letterSpacing: 5, color: C.gold, textTransform: "uppercase" }}>
+                Производство · Оптовые поставки · B2B
+              </span>
+            </div>
+
+            {/* Заголовок */}
+            <h1
+              style={{
+                fontFamily: '"Cormorant Garamond", serif',
+                fontSize: "clamp(48px, 6.5vw, 88px)",
+                fontWeight: 300,
+                color: C.cream,
+                lineHeight: 1.06,
+                letterSpacing: 1,
+                marginBottom: 28,
+              }}
+            >
+              Межкомнатные двери
+              <br />
+              в&nbsp;эмалевом покрытии
+              <br />
+              <em style={{ color: C.gold, fontStyle: "italic" }}>с&nbsp;накладным багетом</em>
+            </h1>
+
+            {/* Подзаголовок */}
+            <p style={{ fontSize: 14, fontWeight: 300, color: C.stone, lineHeight: 1.85, maxWidth: 500, marginBottom: 48 }}>
+              МДК — производитель и оптовый поставщик дверей класса «комфорт» и «премиум».
+              Работаем с дилерами, застройщиками и дизайн-студиями по всей России.
+            </p>
+
+            {/* CTA */}
+            <div className="flex flex-wrap gap-3">
+              <a
+                href="#contact"
+                style={{
+                  fontSize: 10, letterSpacing: 3, textTransform: "uppercase",
+                  color: C.bg, background: C.gold,
+                  padding: "16px 44px", textDecoration: "none",
+                  fontWeight: 500, transition: "opacity 0.2s",
+                }}
+                onMouseEnter={e => (e.currentTarget.style.opacity = "0.85")}
+                onMouseLeave={e => (e.currentTarget.style.opacity = "1")}
+              >
+                Запросить прайс
+              </a>
+              <a
+                href="#collections"
+                style={{
+                  fontSize: 10, letterSpacing: 3, textTransform: "uppercase",
+                  color: C.gold, border: `1px solid rgba(201,160,176,0.35)`,
+                  padding: "16px 44px", textDecoration: "none",
+                  transition: "border-color 0.2s",
+                }}
+                onMouseEnter={e => (e.currentTarget.style.borderColor = "rgba(201,160,176,0.7)")}
+                onMouseLeave={e => (e.currentTarget.style.borderColor = "rgba(201,160,176,0.35)")}
+              >
+                Смотреть коллекции
+              </a>
+            </div>
+          </div>
+        </div>
+
+        {/* Строка статистики */}
+        <div
+          style={{
+            position: "absolute", bottom: 0, left: 0, right: 0,
+            background: "rgba(59,31,43,0.75)", backdropFilter: "blur(12px)",
+            borderTop: `1px solid ${C.goldFaint}`,
+          }}
+        >
+          <div className="max-w-7xl mx-auto px-6 md:px-10">
+            <div className="grid grid-cols-2 md:grid-cols-4">
+              {STATS.map(({ value, label }, i) => (
+                <div
+                  key={label}
+                  className="px-4 py-6 text-center"
+                  style={{ borderRight: i < 3 ? `1px solid ${C.goldFaint}` : "none" }}
+                >
+                  <p style={{ fontFamily: '"Cormorant Garamond", serif', fontSize: 38, fontWeight: 600, color: C.cream, lineHeight: 1 }}>
+                    {value}
+                  </p>
+                  <p style={{ fontSize: 9, letterSpacing: 2, color: C.stone, marginTop: 8, textTransform: "uppercase" }}>
+                    {label}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ════════════════════ О КОМПАНИИ ════════════════════ */}
+      <section id="about" style={{ paddingTop: 100, paddingBottom: 100, background: C.bg }}>
+        <div className="max-w-7xl mx-auto px-6 md:px-10">
+          <SectionTag index="01" label="О компании" />
+
+          <div className="grid md:grid-cols-2 gap-16 items-center">
+            <div>
+              <h2
+                style={{
+                  fontFamily: '"Cormorant Garamond", serif',
+                  fontSize: "clamp(34px, 4vw, 56px)",
+                  fontWeight: 300,
+                  color: C.cream,
+                  lineHeight: 1.15,
+                  marginBottom: 24,
+                }}
+              >
+                Лучшим людям —
+                <br />
+                <em style={{ color: C.gold }}>лучшие двери</em>
+              </h2>
+              <p style={{ fontSize: 13, fontWeight: 300, color: C.stone, lineHeight: 1.9, marginBottom: 20 }}>
+                МДК (Международная дверная компания) производит межкомнатные двери в эмалевом покрытии
+                с накладным багетом с 2007 года. За это время мы построили доверительные отношения
+                с сотнями дилеров по всей России.
+              </p>
+              <p style={{ fontSize: 13, fontWeight: 300, color: C.stone, lineHeight: 1.9 }}>
+                Наш продукт — это сочетание строгой геометрии, качественного покрытия и продуманной
+                системы сборки, которая упрощает установку и снижает процент рекламаций.
+              </p>
+
+              <div className="flex flex-col gap-4 mt-10">
+                {[
+                  "9 серий · 40+ моделей в ассортименте",
+                  "Производство на территории России",
+                  "Сертифицированная продукция с полным пакетом документов",
+                ].map(item => (
+                  <div key={item} className="flex items-start gap-4">
+                    <div style={{ width: 20, height: 1, background: C.gold, marginTop: 9, flexShrink: 0 }} />
+                    <p style={{ fontSize: 13, color: C.stone, fontWeight: 300, lineHeight: 1.6 }}>{item}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Фото + декор */}
+            <div style={{ position: "relative" }}>
+              <img
+                src={IMG_SHOWROOM}
+                alt="Шоурум МДК"
+                style={{
+                  width: "100%",
+                  aspectRatio: "4/5",
+                  objectFit: "cover",
+                  display: "block",
+                }}
+              />
+              {/* Рамка-декор */}
+              <div
+                style={{
+                  position: "absolute",
+                  inset: 0,
+                  border: `1px solid rgba(201,160,176,0.2)`,
+                  transform: "translate(12px, 12px)",
+                  pointerEvents: "none",
+                  zIndex: 0,
+                }}
+              />
+              {/* Бейдж поверх фото */}
+              <div
+                style={{
+                  position: "absolute",
+                  bottom: -16,
+                  left: -16,
+                  background: C.dark,
+                  border: `1px solid ${C.goldFaint}`,
+                  padding: "20px 24px",
+                }}
+              >
+                <p style={{ fontFamily: '"Cormorant Garamond", serif', fontSize: 32, fontWeight: 600, color: C.cream, lineHeight: 1 }}>17+</p>
+                <p style={{ fontSize: 9, letterSpacing: 2, color: C.stone, marginTop: 6, textTransform: "uppercase" }}>лет на рынке</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <Divider />
+
+      {/* ════════════════════ КОЛЛЕКЦИИ ════════════════════ */}
+      <section id="collections" style={{ paddingTop: 100, paddingBottom: 100, background: C.bg }}>
+        <div className="max-w-7xl mx-auto px-6 md:px-10">
+          <SectionTag index="02" label="Коллекции" />
+
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+            <h2 style={{ fontFamily: '"Cormorant Garamond", serif', fontSize: "clamp(30px, 3.5vw, 48px)", fontWeight: 300, color: C.cream, lineHeight: 1.15 }}>
+              9 серий · 40+ моделей
+            </h2>
+            <p style={{ fontSize: 12, color: C.stone, fontWeight: 300, maxWidth: 340, lineHeight: 1.7 }}>
+              Полный прайс-лист с артикулами, фото и актуальными ценами — по запросу.
+              Образцы материалов — бесплатно.
+            </p>
+          </div>
+
+          {/* Сетка серий */}
+          <div
+            className="grid sm:grid-cols-2 md:grid-cols-3"
+            style={{ border: `1px solid ${C.goldFaint}` }}
+          >
+            {SERIES.map(({ name, models, tag }, idx) => (
+              <div
+                key={name}
+                className="relative p-7 flex flex-col justify-between gap-6 cursor-default transition-colors duration-250"
+                style={{
+                  borderRight: (idx + 1) % 3 !== 0 ? `1px solid ${C.goldFaint}` : "none",
+                  borderBottom: idx < SERIES.length - 3 ? `1px solid ${C.goldFaint}` : "none",
+                  background: C.bg,
+                  minHeight: 160,
+                }}
+                onMouseEnter={e => (e.currentTarget.style.background = C.darker)}
+                onMouseLeave={e => (e.currentTarget.style.background = C.bg)}
+              >
+                {tag && (
+                  <span
+                    style={{
+                      position: "absolute", top: 16, right: 16,
+                      fontSize: 8, letterSpacing: 2, textTransform: "uppercase",
+                      color: C.bg, background: C.gold, padding: "4px 10px",
+                    }}
+                  >
+                    {tag}
+                  </span>
+                )}
+                <div className="flex items-start justify-between">
+                  <div>
+                    <p style={{ fontFamily: '"Cormorant Garamond", serif', fontSize: 26, fontWeight: 500, color: C.cream, lineHeight: 1 }}>
+                      {name}
+                    </p>
+                    <p style={{ fontSize: 10, color: C.goldDim, marginTop: 6, letterSpacing: 1 }}>
+                      {models} {models === 1 ? "модель" : models < 5 ? "модели" : "моделей"}
+                    </p>
+                  </div>
+                  <DoorSVG col={C.goldDim} size={0.85} />
+                </div>
+
+                <div>
+                  <div style={{ height: 1, background: C.goldFaint, marginBottom: 10 }} />
+                  <p style={{ fontSize: 10, color: C.goldDim, letterSpacing: 0.5 }}>
+                    Эмаль · Декошпон · Патина
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="flex justify-center mt-10">
+            <a
+              href="#contact"
+              style={{
+                fontSize: 10, letterSpacing: 3, textTransform: "uppercase",
+                color: C.gold, border: `1px solid rgba(201,160,176,0.3)`,
+                padding: "14px 40px", textDecoration: "none",
+                transition: "border-color 0.2s",
+              }}
+              onMouseEnter={e => (e.currentTarget.style.borderColor = "rgba(201,160,176,0.7)")}
+              onMouseLeave={e => (e.currentTarget.style.borderColor = "rgba(201,160,176,0.3)")}
+            >
+              Запросить полный каталог
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* ════════════════════ ЦИТАТА-РАЗДЕЛИТЕЛЬ ════════════════════ */}
+      <section style={{ background: C.dark, paddingTop: 80, paddingBottom: 80, borderTop: `1px solid ${C.goldFaint}`, borderBottom: `1px solid ${C.goldFaint}` }}>
+        <div className="max-w-7xl mx-auto px-6 md:px-10">
+          <div className="flex flex-col md:flex-row items-center gap-12 md:gap-20">
+            <DoorSVG col="rgba(201,160,176,0.2)" size={3.5} />
+            <div>
+              <p
+                style={{
+                  fontFamily: '"Cormorant Garamond", serif',
+                  fontSize: "clamp(26px, 3.5vw, 48px)",
+                  fontWeight: 300,
+                  fontStyle: "italic",
+                  color: C.cream,
+                  lineHeight: 1.4,
+                  marginBottom: 20,
+                }}
+              >
+                «Дверь — это не просто конструкция.
+                <br />
+                Это первое ощущение от интерьера.»
+              </p>
+              <div className="flex items-center gap-4">
+                <div style={{ width: 28, height: 1, background: "rgba(201,160,176,0.35)" }} />
+                <span style={{ fontSize: 9, letterSpacing: 4, color: C.goldMid, textTransform: "uppercase" }}>
+                  МДК · Международная Дверная Компания
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ════════════════════ ПРОИЗВОДСТВО ════════════════════ */}
+      <section id="production" style={{ paddingTop: 100, paddingBottom: 100, background: C.bg }}>
+        <div className="max-w-7xl mx-auto px-6 md:px-10">
+          <SectionTag index="03" label="Производство" />
+
+          <div className="grid md:grid-cols-2 gap-12 items-start">
+            <h2 style={{ fontFamily: '"Cormorant Garamond", serif', fontSize: "clamp(30px, 3.5vw, 50px)", fontWeight: 300, color: C.cream, lineHeight: 1.2 }}>
+              Полный цикл —
+              <br />
+              <em style={{ color: C.gold }}>от заготовки до упаковки</em>
+            </h2>
+            <div className="grid grid-cols-2 gap-px" style={{ background: C.goldFaint }}>
+              {[
+                { v: "MDF", l: "Влагостойкие плиты" },
+                { v: "Эмаль", l: "Порошковое покрытие" },
+                { v: "RAL", l: "Покраска под заказ" },
+                { v: "ISO", l: "Контроль качества" },
+              ].map(({ v, l }) => (
+                <div key={v} className="p-6 text-center" style={{ background: C.bg }}>
+                  <p style={{ fontFamily: '"Cormorant Garamond", serif', fontSize: 28, color: C.cream }}>{v}</p>
+                  <p style={{ fontSize: 9, color: C.stone, marginTop: 4, letterSpacing: 1.5, textTransform: "uppercase" }}>{l}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-px mt-12" style={{ background: C.goldFaint }}>
+            {FEATURES.map(({ num, title, desc }) => (
+              <div
+                key={num}
+                className="p-8 transition-colors duration-200"
+                style={{ background: C.bg }}
+                onMouseEnter={e => (e.currentTarget.style.background = C.darker)}
+                onMouseLeave={e => (e.currentTarget.style.background = C.bg)}
+              >
+                <div className="flex items-center gap-4 mb-6">
+                  <span style={{ fontSize: 9, letterSpacing: 2, color: C.goldDim }}>{num}</span>
+                  <div style={{ height: 1, flex: 1, background: C.goldFaint }} />
+                </div>
+                <h3 style={{ fontFamily: '"Cormorant Garamond", serif', fontSize: 22, fontWeight: 500, color: C.cream, marginBottom: 12, lineHeight: 1.25 }}>
+                  {title}
+                </h3>
+                <p style={{ fontSize: 12, fontWeight: 300, color: C.stone, lineHeight: 1.8 }}>{desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ════════════════════ КАК СТАТЬ ПАРТНЁРОМ ════════════════════ */}
+      <section id="partners" style={{ paddingTop: 100, paddingBottom: 100, background: C.dark, borderTop: `1px solid ${C.goldFaint}` }}>
+        <div className="max-w-7xl mx-auto px-6 md:px-10">
+          <SectionTag index="04" label="Партнёрам" />
+
+          <div className="grid md:grid-cols-2 gap-16 items-start mb-16">
+            <h2 style={{ fontFamily: '"Cormorant Garamond", serif', fontSize: "clamp(30px, 3.5vw, 50px)", fontWeight: 300, color: C.cream, lineHeight: 1.2 }}>
+              Как начать
+              <br />
+              <em style={{ color: C.gold }}>сотрудничество</em>
+            </h2>
+            <p style={{ fontSize: 13, fontWeight: 300, color: C.stone, lineHeight: 1.9, paddingTop: 12 }}>
+              Мы работаем только с юридическими лицами и ИП. Открыты для новых дилеров, застройщиков
+              и дизайн-студий. Ниже — простой путь к первой поставке.
+            </p>
+          </div>
+
+          {/* Шаги */}
+          <div className="flex flex-col md:flex-row gap-px" style={{ background: C.goldFaint }}>
+            {PROCESS_STEPS.map(({ n, title, desc }) => (
+              <div key={n} className="flex-1 p-7 flex flex-col gap-4" style={{ background: C.dark }}>
+                <div className="flex items-center gap-3">
+                  <span
+                    style={{
+                      width: 32, height: 32, border: `1px solid rgba(201,160,176,0.3)`,
+                      display: "flex", alignItems: "center", justifyContent: "center",
+                      fontSize: 12, fontWeight: 500, color: C.gold, flexShrink: 0,
+                    }}
+                  >
+                    {n}
+                  </span>
+                  <div style={{ height: 1, flex: 1, background: C.goldFaint }} />
+                </div>
+                <p style={{ fontFamily: '"Cormorant Garamond", serif', fontSize: 20, color: C.cream, fontWeight: 500 }}>{title}</p>
+                <p style={{ fontSize: 11, fontWeight: 300, color: C.stone, lineHeight: 1.75 }}>{desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ════════════════════ ФОРМА ЗАЯВКИ ════════════════════ */}
+      <section id="contact" style={{ paddingTop: 100, paddingBottom: 100, background: C.bg, borderTop: `1px solid ${C.goldFaint}` }}>
+        <div className="max-w-7xl mx-auto px-6 md:px-10">
+          <SectionTag index="05" label="Контакты" />
+
+          <div className="grid md:grid-cols-2 gap-16">
+            {/* Левая колонка — контакты */}
+            <div>
+              <h2 style={{ fontFamily: '"Cormorant Garamond", serif', fontSize: "clamp(30px, 3.5vw, 50px)", fontWeight: 300, color: C.cream, lineHeight: 1.2, marginBottom: 32 }}>
+                Запросить прайс
+                <br />
+                <em style={{ color: C.gold }}>или задать вопрос</em>
+              </h2>
+
+              <div className="flex flex-col gap-6">
+                {[
+                  { label: "Отдел продаж", value: "+7 (800) 000-00-00" },
+                  { label: "E-mail", value: "b2b@mdk-doors.ru" },
+                  { label: "Режим работы", value: "Пн–Пт, 9:00–18:00 МСК" },
+                  { label: "Сайт", value: "mdk-doors.ru" },
+                ].map(({ label, value }) => (
+                  <div key={label} style={{ borderBottom: `1px solid ${C.goldFaint}`, paddingBottom: 16 }}>
+                    <p style={{ fontSize: 9, letterSpacing: 2.5, color: C.goldDim, textTransform: "uppercase", marginBottom: 6 }}>{label}</p>
+                    <p style={{ fontSize: 16, color: C.cream, fontWeight: 300 }}>{value}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Правая колонка — форма */}
+            <div>
+              {formSent ? (
+                <div
+                  className="flex flex-col items-center justify-center text-center"
+                  style={{ border: `1px solid ${C.goldFaint}`, padding: "80px 40px", height: "100%" }}
+                >
+                  <DoorSVG col={C.gold} size={2.2} />
+                  <p style={{ fontFamily: '"Cormorant Garamond", serif', fontSize: 28, color: C.cream, marginTop: 28, marginBottom: 12 }}>
+                    Заявка отправлена
+                  </p>
+                  <p style={{ fontSize: 12, color: C.stone, lineHeight: 1.75, maxWidth: 280 }}>
+                    Менеджер свяжется с вами в течение 2 рабочих часов.
+                  </p>
+                </div>
+              ) : (
+                <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+                  {[
+                    { key: "company" as const, label: "Название компании / ИП", required: true },
+                    { key: "name" as const, label: "Контактное лицо", required: true },
+                    { key: "phone" as const, label: "Телефон", required: true },
+                    { key: "region" as const, label: "Регион работы", required: false },
+                  ].map(({ key, label, required }) => (
+                    <div key={key}>
+                      <label style={{ display: "block", fontSize: 9, letterSpacing: 2.5, color: C.goldDim, textTransform: "uppercase", marginBottom: 8 }}>
+                        {label}{required && <span style={{ color: C.gold }}> *</span>}
+                      </label>
+                      <input
+                        type={key === "phone" ? "tel" : "text"}
+                        required={required}
+                        value={form[key]}
+                        onChange={e => setForm({ ...form, [key]: e.target.value })}
+                        style={{
+                          width: "100%",
+                          background: "transparent",
+                          border: `1px solid rgba(201,160,176,0.22)`,
+                          color: C.cream,
+                          padding: "13px 16px",
+                          fontSize: 14,
+                          fontFamily: "Montserrat",
+                          fontWeight: 300,
+                          outline: "none",
+                          transition: "border-color 0.2s",
+                        }}
+                        onFocus={e => (e.target.style.borderColor = "rgba(201,160,176,0.6)")}
+                        onBlur={e => (e.target.style.borderColor = "rgba(201,160,176,0.22)")}
+                      />
+                    </div>
+                  ))}
+
+                  <button
+                    type="submit"
+                    style={{
+                      marginTop: 8,
+                      background: C.gold,
+                      color: C.bg,
+                      border: "none",
+                      padding: "16px 40px",
+                      fontSize: 10,
+                      letterSpacing: 3,
+                      textTransform: "uppercase",
+                      fontFamily: "Montserrat",
+                      fontWeight: 500,
+                      cursor: "pointer",
+                      transition: "opacity 0.2s",
+                      alignSelf: "flex-start",
+                    }}
+                    onMouseEnter={e => (e.currentTarget.style.opacity = "0.85")}
+                    onMouseLeave={e => (e.currentTarget.style.opacity = "1")}
+                  >
+                    Отправить заявку
+                  </button>
+                  <p style={{ fontSize: 10, color: C.goldDim, lineHeight: 1.7 }}>
+                    Нажимая кнопку, вы соглашаетесь с политикой конфиденциальности. Работаем только с юридическими лицами.
+                  </p>
+                </form>
+              )}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ════════════════════ ПОДВАЛ ════════════════════ */}
+      <footer style={{ background: C.darker, borderTop: `1px solid ${C.goldFaint}`, paddingTop: 40, paddingBottom: 40 }}>
+        <div className="max-w-7xl mx-auto px-6 md:px-10">
+          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
+            <div className="flex flex-col gap-3">
+              <img src={LOGO_IMG} alt="МДК" style={{ height: 26, width: "auto" }} />
+              <p style={{ fontSize: 10, color: C.goldDim, letterSpacing: 1 }}>Международная дверная компания</p>
+            </div>
+
+            <nav className="flex flex-wrap gap-x-8 gap-y-3">
+              {NAV_LINKS.map(([label, href]) => (
+                <a
+                  key={label}
+                  href={href}
+                  style={{ fontSize: 9, letterSpacing: 2, color: C.goldDim, textDecoration: "none", textTransform: "uppercase", transition: "color 0.2s" }}
+                  onMouseEnter={e => (e.currentTarget.style.color = C.stone)}
+                  onMouseLeave={e => (e.currentTarget.style.color = C.goldDim)}
+                >
+                  {label}
+                </a>
+              ))}
+            </nav>
+
+            <div className="flex flex-col gap-1 text-right">
+              <p style={{ fontSize: 11, color: C.stone }}>+7 (800) 000-00-00</p>
+              <p style={{ fontSize: 11, color: C.goldDim }}>b2b@mdk-doors.ru</p>
+            </div>
+          </div>
+
+          <div style={{ borderTop: `1px solid ${C.goldFaint}`, marginTop: 32, paddingTop: 24 }}>
+            <p style={{ fontSize: 10, color: C.goldDim, letterSpacing: 0.5 }}>
+              © 2007–2026 МДК. Все права защищены. Только для юридических лиц.
+            </p>
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
+}

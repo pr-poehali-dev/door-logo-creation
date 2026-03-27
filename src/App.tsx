@@ -8,6 +8,7 @@ import { useState } from "react";
 import Index from "./pages/Index";
 import Landing from "./pages/Landing";
 import LandingLight from "./pages/LandingLight";
+import LandingVFD from "./pages/LandingVFD";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -29,6 +30,7 @@ const App = () => (
           <Route path="/" element={<LandingWithTheme />} />
           <Route path="/brandbook" element={<Index />} />
           <Route path="/light" element={<LandingLight />} />
+          <Route path="/vfd" element={<LandingVFD />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
