@@ -111,6 +111,28 @@ export default function Landing({ onSwitchTheme }: { onSwitchTheme?: () => void 
             ))}
           </nav>
           <div className="flex items-center gap-3">
+            <a
+              href="/vfd"
+              style={{
+                fontFamily: "Montserrat",
+                fontSize: 9,
+                letterSpacing: 2,
+                color: "#A07888",
+                background: "transparent",
+                border: "1px solid rgba(201,160,176,0.15)",
+                padding: "9px 16px",
+                textDecoration: "none",
+                textTransform: "uppercase",
+                display: "flex",
+                alignItems: "center",
+                gap: 6,
+                transition: "border-color 0.2s, color 0.2s",
+              }}
+              onMouseEnter={e => { e.currentTarget.style.borderColor = "rgba(201,160,176,0.45)"; e.currentTarget.style.color = "#C9A0B0"; }}
+              onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(201,160,176,0.15)"; e.currentTarget.style.color = "#A07888"; }}
+            >
+              <span style={{ fontSize: 11 }}>↗</span> Новый вариант
+            </a>
             {onSwitchTheme && (
               <button
                 onClick={onSwitchTheme}
