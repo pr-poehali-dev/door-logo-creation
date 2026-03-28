@@ -50,6 +50,20 @@ export const TabCatalog = () => (
       </div>
     </div>
 
+    <div className="mb-6">
+      <a
+        href="/door-presentation"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="inline-flex items-center gap-3 px-6 py-3 rounded-lg transition-all duration-200 hover:opacity-80"
+        style={{ background: "rgba(201,160,176,0.08)", border: "1px solid rgba(201,160,176,0.25)", textDecoration: "none" }}
+      >
+        <span style={{ fontFamily: "Montserrat", fontSize: 10, letterSpacing: "0.2em", textTransform: "uppercase", color: "#C9A0B0" }}>
+          Открыть полную презентацию модели ↗
+        </span>
+      </a>
+    </div>
+
     <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
       {products.map((p) => (
         <div key={p.name} className="rounded-lg overflow-hidden border border-brand-gold border-opacity-20 bg-brand-charcoal flex flex-col">
