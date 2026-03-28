@@ -12,6 +12,7 @@ import LandingVFD from "./pages/LandingVFD";
 import DoorColors from "./pages/DoorColors";
 import DoorInterior from "./pages/DoorInterior";
 import BrandbookV3 from "./pages/BrandbookV3";
+import DoorPresentation from "./pages/DoorPresentation";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -37,6 +38,7 @@ const App = () => (
           <Route path="/door-colors" element={<DoorColors />} />
           <Route path="/door-interior" element={<DoorInterior />} />
           <Route path="/brandbook3" element={<BrandbookV3 />} />
+          <Route path="/door-presentation" element={<DoorPresentation />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
